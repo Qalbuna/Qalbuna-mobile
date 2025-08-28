@@ -7,10 +7,10 @@ void main() {
   runApp(
     GetMaterialApp(
       title: "Qalbuna",
-      initialRoute: AppPages.INITIAL,
+      initialRoute: AppPages.initila,
       getPages: AppPages.routes,
       theme: AppTheme.lightTheme,
-      themeMode: ThemeMode.system, 
+      themeMode: ThemeMode.system,
       debugShowCheckedModeBanner: false,
     ),
   );
