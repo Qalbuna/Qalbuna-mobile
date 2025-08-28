@@ -8,7 +8,7 @@ class AppTypography {
     fontFamily: fontFamily,
     fontSize: 36,
     fontWeight: FontWeight.bold,
-    height: 46/36, // line-height in Flutter is specified as a multiplier
+    height: 46/36, 
   );
 
   static const TextStyle h1SemiBold = TextStyle(

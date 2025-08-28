@@ -14,7 +14,7 @@ class AppTheme {
       displaySmall: AppTypography.h3Bold,
       headlineMedium: AppTypography.h4Bold,
       headlineSmall: AppTypography.h5Bold,
-      
+
       // Body styles
       bodyLarge: AppTypography.lRegular,
       bodyMedium: AppTypography.mRegular,
@@ -24,31 +24,6 @@ class AppTheme {
       primary: AppColors.v1Primary500,
       error: AppColors.v1Error500,
       onPrimary: Colors.white,
-    ),
-    // Add more theme configurations as needed
-  );
-
-  // Dark Theme (if needed)
-  static ThemeData darkTheme = ThemeData(
-    primaryColor: AppColors.v1Primary500,
-    scaffoldBackgroundColor: Colors.black,
-    textTheme: TextTheme(
-      // Headline styles
-      displayLarge: AppTypography.h1Bold.copyWith(color: Colors.white),
-      displayMedium: AppTypography.h2Bold.copyWith(color: Colors.white),
-      displaySmall: AppTypography.h3Bold.copyWith(color: Colors.white),
-      headlineMedium: AppTypography.h4Bold.copyWith(color: Colors.white),
-      headlineSmall: AppTypography.h5Bold.copyWith(color: Colors.white),
-      
-      // Body styles
-      bodyLarge: AppTypography.lRegular.copyWith(color: Colors.white),
-      bodyMedium: AppTypography.mRegular.copyWith(color: Colors.white),
-      bodySmall: AppTypography.sRegular.copyWith(color: Colors.white),
-    ),
-    colorScheme: ColorScheme.dark(
-      primary: AppColors.v1Primary500,
-      error: AppColors.v1Error500,
-      onPrimary: Colors.black,
     ),
     // Add more theme configurations as needed
   );
