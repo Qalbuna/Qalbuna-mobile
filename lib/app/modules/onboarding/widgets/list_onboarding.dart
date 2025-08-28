@@ -12,14 +12,13 @@ class ListOnboarding extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        SizedBox(height: 100,),
         SizedBox(
-          height: Get.height * 0.5,
           child: Image.network(image!, scale: 0.01, fit: BoxFit.contain),
         ),
-        Container(
-          height: Get.height * 0.25,
+        SizedBox(
+          height: Get.height * 0.2,
           width: Get.width,
-          padding: EdgeInsets.only(bottom: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [

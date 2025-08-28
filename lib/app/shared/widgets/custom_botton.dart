@@ -15,7 +15,7 @@ class CustomBotton extends StatelessWidget {
       children: [
         Container(
           width: Get.width,
-          height: 49,
+          height: 52,
           decoration: BoxDecoration(
             color: AppColors.v1Primary500,
             borderRadius: BorderRadius.circular(8),

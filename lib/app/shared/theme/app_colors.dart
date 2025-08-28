@@ -16,13 +16,13 @@ class AppColors {
   static const Color v1Primary950 = Color(0xFF050634); // AAA 17:07
 
   // Neutral Colors - BlueGray
-  static const Color v1Neutral25 = Color(0xFFF5F7FA); // AAA 21:00
-  static const Color v1Neutral50 = Color(0xFFEFF4FB); // AAA 19:48
-  static const Color v1Neutral100 = Color(0xFFE3EAF4); // AAA 17:47
+  static const Color v1Neutral25 = Color(0xFFE9ECEF); // AAA 21:00
+  static const Color v1Neutral50 = Color(0xFFE2E5EA); // AAA 19:48
+  static const Color v1Neutral100 = Color(0xFFD4D9E0); // AAA 17:47
   static const Color v1Neutral200 = Color(0xFFD0DBEA); // AAA 15:47
-  static const Color v1Neutral300 = Color(0xFFB3C2D8); // AAA 12:47
+  static const Color v1Neutral300 = Color(0xFF9BA6B7); // AAA 12:47
   static const Color v1Neutral400 = Color(0xFF8DA3C1); // AAA 9:47
-  static const Color v1Neutral500 = Color(0xFF6783A9); // AAA 6:47
+  static const Color v1Neutral500 = Color(0xFF64748B); // AAA 6:47
   static const Color v1Neutral600 = Color(0xFF4A678D); // AAA 5:14
   static const Color v1Neutral700 = Color(0xFF345174); // AAA 7:14
   static const Color v1Neutral800 = Color(0xFF1F3A5F); // AAA 10:14
