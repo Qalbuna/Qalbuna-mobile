@@ -75,7 +75,7 @@ class SignInController extends GetxController {
       isLoading.value = true;
 
       final response = await authServices.signInWithEmailPassword(
-        emailController.text.trim(),
+        emailController.text,
         passwordController.text,
       );
 

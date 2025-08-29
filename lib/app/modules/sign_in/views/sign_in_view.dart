@@ -42,7 +42,7 @@ class SignInView extends GetView<SignInController> {
                   ),
                   const SizedBox(height: 32),
                   CustomTextField(
-                    hintText: 'Email/Username',
+                    hintText: 'Email',
                     controller: controller.emailController,
                     keyboardType: TextInputType.emailAddress,
                     validator: controller.validateEmail,

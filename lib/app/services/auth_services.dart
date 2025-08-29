@@ -9,7 +9,7 @@ class AuthServices {
   ) async {
     try {
       return await _supabase.auth.signInWithPassword(
-        email: email,
+        email: email.trim(),
         password: password,
       );
     } on AuthException catch (e) {
@@ -25,7 +25,11 @@ class AuthServices {
     String password,
   ) async {
     try {
-      return await _supabase.auth.signUp(email: email, password: password, data: {'username': username});
+      return await _supabase.auth.signUp(
+        email: email.trim(),
+        password: password,
+        data: {'username': username},
+      );
     } on AuthException catch (e) {
       throw AuthException(e.message);
     } catch (e) {
