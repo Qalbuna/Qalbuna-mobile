@@ -10,6 +10,8 @@ class CustomBotton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //bool isButtonActive = true;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -28,6 +30,9 @@ class CustomBotton extends StatelessWidget {
               ),
             ],
           ),
+          // onTap: isButtonActive ? () {
+          //   color: AppColors.v1Primary500, || color: AppColors.v1neutral100,
+          // },
           child: InkWell(
             borderRadius: BorderRadius.circular(8),
             splashColor: Color(0xFFF8F8F8),

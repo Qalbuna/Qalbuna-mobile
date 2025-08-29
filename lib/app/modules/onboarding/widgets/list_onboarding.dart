@@ -12,10 +12,8 @@ class ListOnboarding extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: 100,),
-        SizedBox(
-          child: Image.network(image!, scale: 0.01, fit: BoxFit.contain),
-        ),
+        SizedBox(height: 100),
+        SizedBox(child: Image.asset(image!, fit: BoxFit.contain)),
         SizedBox(
           height: Get.height * 0.2,
           width: Get.width,

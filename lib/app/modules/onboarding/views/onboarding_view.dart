@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qalbuna_app/app/modules/onboarding/widgets/list_onboarding.dart';
-import 'package:qalbuna_app/app/shared/constant/uidata.dart';
 import 'package:qalbuna_app/app/shared/widgets/custom_botton.dart';
 import 'package:qalbuna_app/app/shared/theme/app_colors.dart';
 import 'package:qalbuna_app/app/shared/theme/app_typography.dart';
@@ -27,17 +26,17 @@ class OnboardingView extends GetView<OnboardingController> {
                   },
                   children: [
                     ListOnboarding(
-                      image: onboard1,
+                      image: 'assets/images/onboard1.png',
                       title: 'Temukan ketenangan hati',
                       description: 'Mulai perjalananmu dengan Qalbuna',
                     ),
                     ListOnboarding(
-                      image: onboard2,
+                      image: 'assets/images/onboard2.png',
                       title: 'Awali harimu dengan makna',
                       description: 'Kenali hatimu, resapi ayat-Nya',
                     ),
                     ListOnboarding(
-                      image: onboard3,
+                      image: 'assets/images/onboard3.png',
                       title: 'Tulis.Renungi.Tumbuh.',
                       description:
                           'Mulai journaling dan dekatkan diri pada Al-Qur\'an',
