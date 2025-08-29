@@ -10,7 +10,7 @@ class SplashScreenView extends GetView<SplashScreenController> {
   @override
   Widget build(BuildContext context) {
     Future.delayed(const Duration(seconds: 3), () {
-      Get.offAllNamed(Routes.ONBOARDING);
+      Get.offAllNamed(Routes.onboarding);
     });
     return Scaffold(
       backgroundColor: AppColors.white,

@@ -118,7 +118,7 @@ class SignUpView extends GetView<SignUpController> {
                 Obx(
                   () => SocialLoginButton(
                     text: 'Login dengan Google',
-                    icon: Image.network(google, height: 20,width: 20,),
+                    icon: Image.network(google, height: 20, width: 20),
                     onTap: controller.isLoading.value
                         ? null
                         : controller.signUpWithGoogle,
@@ -130,7 +130,7 @@ class SignUpView extends GetView<SignUpController> {
                     questionText: 'Sudah punya akun?',
                     actionText: 'Sign In',
                     onActionTap: () {
-                      Get.toNamed(Routes.SIGN_IN);
+                      Get.toNamed(Routes.signIn);
                     },
                   ),
                 ),

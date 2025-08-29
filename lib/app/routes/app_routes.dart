@@ -3,18 +3,18 @@ part of 'app_pages.dart';
 
 abstract class Routes {
   Routes._();
-  static const HOME = _Paths.HOME;
-  static const SPLASH_SCREEN = _Paths.SPLASH_SCREEN;
-  static const ONBOARDING = _Paths.ONBOARDING;
-  static const SIGN_UP = _Paths.SIGN_UP;
-  static const SIGN_IN = _Paths.SIGN_IN;
+  static const home = _Paths.home;
+  static const splashScreen = _Paths.splashScreen;
+  static const onboarding = _Paths.onboarding;
+  static const signUp = _Paths.signUp;
+  static const signIn = _Paths.signIn;
 }
 
 abstract class _Paths {
   _Paths._();
-  static const HOME = '/home';
-  static const SPLASH_SCREEN = '/splash-screen';
-  static const ONBOARDING = '/onboarding';
-  static const SIGN_UP = '/sign-up';
-  static const SIGN_IN = '/sign-in';
+  static const home = '/home';
+  static const splashScreen = '/splash-screen';
+  static const onboarding = '/onboarding';
+  static const signUp = '/sign-up';
+  static const signIn = '/sign-in';
 }

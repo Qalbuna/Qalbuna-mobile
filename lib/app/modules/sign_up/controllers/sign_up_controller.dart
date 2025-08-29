@@ -76,7 +76,7 @@ class SignUpController extends GetxController {
         backgroundColor: AppColors.v1Success500,
         colorText: AppColors.white,
       );
-      Get.offAllNamed(Routes.HOME);
+      Get.offAllNamed(Routes.home);
     } catch (e) {
       Get.snackbar(
         'Error',

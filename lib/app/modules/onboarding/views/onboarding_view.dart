@@ -82,7 +82,7 @@ class OnboardingView extends GetView<OnboardingController> {
                         : CustomBotton(
                             text: 'Daftar sekarang',
                             onTap: () {
-                              Get.offAllNamed(Routes.SIGN_UP);
+                              Get.offAllNamed(Routes.signUp);
                             },
                           ),
                   ),
@@ -99,7 +99,7 @@ class OnboardingView extends GetView<OnboardingController> {
                       SizedBox(width: 4),
                       GestureDetector(
                         onTap: () {
-                          Get.toNamed(Routes.SIGN_UP);
+                          Get.toNamed(Routes.signIn);
                         },
                         child: Text(
                           'Sign In',
