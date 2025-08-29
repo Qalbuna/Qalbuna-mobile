@@ -27,10 +27,10 @@ class SignUpView extends GetView<SignUpController> {
               children: [
                 const SizedBox(height: 70),
                 Text(
-                  'Hallo!',
+                  'Hallo!👋🏻',
                   style: AppTypography.h2Bold.copyWith(color: AppColors.black),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 12),
                 Text(
                   'Temukan fitur-fitur yang dapat membimbing hatimu lebih dekat kepada Al-Qur\'an, setiap hari.',
                   style: AppTypography.sRegular.copyWith(
@@ -77,7 +77,7 @@ class SignUpView extends GetView<SignUpController> {
                           width: double.infinity,
                           height: 52,
                           decoration: BoxDecoration(
-                            color: AppColors.v1Primary300,
+                            color: AppColors.v1Primary300, 
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: const Center(
@@ -86,7 +86,7 @@ class SignUpView extends GetView<SignUpController> {
                             ),
                           ),
                         )
-                      : CustomBotton(text: 'Daftar', onTap: controller.signUp),
+                      : CustomBotton(text: 'Daftar', onTap: controller.signUp, isEnabled: !controller.isLoading.value && controller.isFormValid.value),
                 ),
                 const SizedBox(height: 24),
                 Row(

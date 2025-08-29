@@ -6,12 +6,11 @@ import 'package:qalbuna_app/app/shared/theme/app_typography.dart';
 class CustomBotton extends StatelessWidget {
   final String? text;
   final VoidCallback? onTap;
-  const CustomBotton({super.key, this.text, this.onTap});
+  final bool isEnabled;
+  const CustomBotton({super.key, this.text, this.onTap, this.isEnabled = true});
 
   @override
   Widget build(BuildContext context) {
-    //bool isButtonActive = true;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -19,7 +18,7 @@ class CustomBotton extends StatelessWidget {
           width: Get.width,
           height: 52,
           decoration: BoxDecoration(
-            color: AppColors.v1Primary500,
+            color: isEnabled ? AppColors.v1Primary500 : AppColors.v1Neutral100,
             borderRadius: BorderRadius.circular(8),
             boxShadow: [
               BoxShadow(
@@ -30,13 +29,10 @@ class CustomBotton extends StatelessWidget {
               ),
             ],
           ),
-          // onTap: isButtonActive ? () {
-          //   color: AppColors.v1Primary500, || color: AppColors.v1neutral100,
-          // },
           child: InkWell(
             borderRadius: BorderRadius.circular(8),
-            splashColor: Color(0xFFF8F8F8),
-            onTap: onTap,
+            splashColor: isEnabled ? Color(0xFFF8F8F8) : Colors.transparent,
+            onTap: isEnabled ? onTap : null,
             child: Container(
               decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
               child: Row(

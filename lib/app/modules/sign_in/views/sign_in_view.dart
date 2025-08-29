@@ -27,12 +27,12 @@ class SignInView extends GetView<SignInController> {
                 children: [
                   const SizedBox(height: 70),
                   Text(
-                    'Selamat Datang',
+                    'Selamat Datang!👋🏻',
                     style: AppTypography.h2Bold.copyWith(
                       color: AppColors.black,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 12),
                   Text(
                     'Temukan fitur-fitur yang dapat membimbing hatimu lebih dekat kepada Al-Qur\'an, setiap hari.',
                     style: AppTypography.sRegular.copyWith(
@@ -83,7 +83,7 @@ class SignInView extends GetView<SignInController> {
                               ),
                             ),
                           )
-                        : CustomBotton(text: 'Masuk', onTap: controller.signIn),
+                        : CustomBotton(text: 'Masuk', onTap: controller.signIn, isEnabled: !controller.isLoading.value && controller.isFormValid.value),
                   ),
                   const SizedBox(height: 24),
                   Row(

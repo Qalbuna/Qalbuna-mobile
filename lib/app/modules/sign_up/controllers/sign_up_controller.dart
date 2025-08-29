@@ -1,32 +1,51 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qalbuna_app/app/shared/theme/app_colors.dart';
-
 import '../../../routes/app_pages.dart';
 
 class SignUpController extends GetxController {
-  // Text controllers
   final usernameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  // Form state
   final formKey = GlobalKey<FormState>();
   final isRememberMe = false.obs;
   final isPasswordVisible = false.obs;
   final isLoading = false.obs;
+  final isFormValid = false.obs;
+  
+  @override
+  void onInit() {
+    super.onInit();
+    
+    usernameController.addListener(_validateForm);
+    emailController.addListener(_validateForm);
+    passwordController.addListener(_validateForm);
+  }
 
-  // Toggle password visibility
+  @override
+  void onClose() {
+    usernameController.removeListener(_validateForm);
+    emailController.removeListener(_validateForm);
+    passwordController.removeListener(_validateForm);
+    usernameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    super.onClose();
+  }
+
+  void _validateForm() {
+    final usernameValid = usernameController.text.length >= 3;
+    final emailValid = emailController.text.isNotEmpty && 
+                      GetUtils.isEmail(emailController.text);
+    final passwordValid = passwordController.text.length >= 6;
+    
+    isFormValid.value = usernameValid && emailValid && passwordValid;
+  }
   void togglePasswordVisibility() {
     isPasswordVisible.value = !isPasswordVisible.value;
   }
 
-  // Toggle remember me
-  void toggleRememberMe(bool? value) {
-    isRememberMe.value = value ?? false;
-  }
-
-  // Validate form
   String? validateUsername(String? value) {
     if (value == null || value.isEmpty) {
       return 'Username tidak boleh kosong';
@@ -59,6 +78,10 @@ class SignUpController extends GetxController {
 
   // Sign up action
   Future<void> signUp() async {
+    if (!isFormValid.value || isLoading.value) {
+      return;
+    }
+
     if (!formKey.currentState!.validate()) {
       return;
     }
@@ -104,6 +127,7 @@ class SignUpController extends GetxController {
         backgroundColor: AppColors.v1Success500,
         colorText: AppColors.white,
       );
+      Get.offAllNamed(Routes.home);
     } catch (e) {
       Get.snackbar(
         'Error',
@@ -114,13 +138,5 @@ class SignUpController extends GetxController {
     } finally {
       isLoading.value = false;
     }
-  }
-
-  @override
-  void onClose() {
-    usernameController.dispose();
-    emailController.dispose();
-    passwordController.dispose();
-    super.onClose();
   }
 }
