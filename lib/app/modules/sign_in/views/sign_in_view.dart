@@ -83,7 +83,7 @@ class SignInView extends GetView<SignInController> {
                               ),
                             ),
                           )
-                        : CustomBotton(text: 'Masuk', onTap: controller.signIn, isEnabled: !controller.isLoading.value && controller.isFormValid.value),
+                        : CustomBotton(text: 'Masuk', onTap: controller.signIn),
                   ),
                   const SizedBox(height: 24),
                   Row(

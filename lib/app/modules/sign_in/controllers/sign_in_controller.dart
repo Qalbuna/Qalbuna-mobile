@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:qalbuna_app/app/shared/theme/app_colors.dart';
 import '../../../routes/app_pages.dart';
+import '../../../services/auth_services.dart';
 
 class SignInController extends GetxController {
-  final formKey = GlobalKey<FormState>();
+  // Text controllers
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  var isPasswordVisible = false.obs;
-  var isLoading = false.obs;
-  var isFormValid = false.obs;
+  // Form state
+  final formKey = GlobalKey<FormState>();
+  final isPasswordVisible = false.obs;
+  final isLoading = false.obs;
+  final isFormValid = false.obs;
+
+  final authServices = AuthServices();
 
   @override
   void onInit() {
@@ -29,10 +35,10 @@ class SignInController extends GetxController {
   }
 
   void _validateForm() {
-    final emailValid =
-        emailController.text.isNotEmpty && emailController.text.contains('@');
+    final emailValid = emailController.text.isNotEmpty && 
+                      GetUtils.isEmail(emailController.text);
     final passwordValid = passwordController.text.length >= 6;
-
+    
     isFormValid.value = emailValid && passwordValid;
   }
 
@@ -44,7 +50,7 @@ class SignInController extends GetxController {
     if (value == null || value.isEmpty) {
       return 'Email tidak boleh kosong';
     }
-    if (!value.contains('@')) {
+    if (!GetUtils.isEmail(value)) {
       return 'Format email tidak valid';
     }
     return null;
@@ -60,19 +66,63 @@ class SignInController extends GetxController {
     return null;
   }
 
-  void signIn() {
-    if (isFormValid.value && !isLoading.value) {
+  Future<void> signIn() async {
+    if (!formKey.currentState!.validate()) {
+      return;
+    }
+
+    try {
       isLoading.value = true;
-      // Implementasi login
-      Future.delayed(Duration(seconds: 2), () {
-        isLoading.value = false;
-        // Handle login result
-      });
+
+      final response = await authServices.signInWithEmailPassword(
+        emailController.text.trim(),
+        passwordController.text,
+      );
+
+      if (response.session != null) {
+        Get.snackbar(
+          'Success',
+          'Login berhasil!',
+          backgroundColor: AppColors.v1Success500,
+          colorText: AppColors.white,
+        );
+        Get.offAllNamed(Routes.home);
+      }
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        'Gagal login: ${e.toString()}',
+        backgroundColor: AppColors.v1Error500,
+        colorText: AppColors.white,
+      );
+    } finally {
+      isLoading.value = false;
     }
   }
 
-  void signInWithGoogle() {
-    // Implementasi Google Sign In
+  Future<void> signInWithGoogle() async {
+    try {
+      isLoading.value = true;
+
+      // TODO: Implement Google sign in dengan Supabase
+      // await Supabase.instance.client.auth.signInWithOAuth(Provider.google);
+      
+      Get.snackbar(
+        'Info',
+        'Google Sign In belum tersedia',
+        backgroundColor: AppColors.v1Neutral400,
+        colorText: AppColors.white,
+      );
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        'Gagal login dengan Google: ${e.toString()}',
+        backgroundColor: AppColors.v1Error500,
+        colorText: AppColors.white,
+      );
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   void goToSignUp() {

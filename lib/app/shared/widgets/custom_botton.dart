@@ -20,14 +20,14 @@ class CustomBotton extends StatelessWidget {
           decoration: BoxDecoration(
             color: isEnabled ? AppColors.v1Primary500 : AppColors.v1Neutral100,
             borderRadius: BorderRadius.circular(8),
-            boxShadow: [
+            boxShadow: isEnabled ? [
               BoxShadow(
                 color: Color(0xFFE1E2FC).withValues(alpha: 0.8),
                 offset: Offset(0, 20),
                 blurRadius: 40,
                 spreadRadius: 0,
               ),
-            ],
+            ] : null,
           ),
           child: InkWell(
             borderRadius: BorderRadius.circular(8),

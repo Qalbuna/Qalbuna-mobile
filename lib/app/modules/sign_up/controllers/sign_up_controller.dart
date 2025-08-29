@@ -2,22 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qalbuna_app/app/shared/theme/app_colors.dart';
 import '../../../routes/app_pages.dart';
+import '../../../services/auth_services.dart';
 
 class SignUpController extends GetxController {
+  // Text controllers
   final usernameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
+  // Form state
   final formKey = GlobalKey<FormState>();
   final isRememberMe = false.obs;
   final isPasswordVisible = false.obs;
   final isLoading = false.obs;
   final isFormValid = false.obs;
-  
+
+  final authServices = AuthServices();
+
   @override
   void onInit() {
     super.onInit();
-    
+
     usernameController.addListener(_validateForm);
     emailController.addListener(_validateForm);
     passwordController.addListener(_validateForm);
@@ -25,9 +30,12 @@ class SignUpController extends GetxController {
 
   @override
   void onClose() {
+    // Remove listeners
     usernameController.removeListener(_validateForm);
     emailController.removeListener(_validateForm);
     passwordController.removeListener(_validateForm);
+
+    // Dispose controllers
     usernameController.dispose();
     emailController.dispose();
     passwordController.dispose();
@@ -36,16 +44,20 @@ class SignUpController extends GetxController {
 
   void _validateForm() {
     final usernameValid = usernameController.text.length >= 3;
-    final emailValid = emailController.text.isNotEmpty && 
-                      GetUtils.isEmail(emailController.text);
+    final emailValid =
+        emailController.text.isNotEmpty &&
+        GetUtils.isEmail(emailController.text);
     final passwordValid = passwordController.text.length >= 6;
-    
+
     isFormValid.value = usernameValid && emailValid && passwordValid;
   }
+
+  // Toggle password visibility
   void togglePasswordVisibility() {
     isPasswordVisible.value = !isPasswordVisible.value;
   }
 
+  // Validate form
   String? validateUsername(String? value) {
     if (value == null || value.isEmpty) {
       return 'Username tidak boleh kosong';
@@ -78,10 +90,6 @@ class SignUpController extends GetxController {
 
   // Sign up action
   Future<void> signUp() async {
-    if (!isFormValid.value || isLoading.value) {
-      return;
-    }
-
     if (!formKey.currentState!.validate()) {
       return;
     }
@@ -89,17 +97,24 @@ class SignUpController extends GetxController {
     try {
       isLoading.value = true;
 
-      // Simulate API call
-      await Future.delayed(const Duration(seconds: 2));
-
-      // TODO: Implement actual sign up logic
-      Get.snackbar(
-        'Success',
-        'Akun berhasil dibuat!',
-        backgroundColor: AppColors.v1Success500,
-        colorText: AppColors.white,
+      final response = await authServices.signUpWithEmailPassword(
+        usernameController.text.trim(),
+        emailController.text.trim(),
+        passwordController.text,
       );
-      Get.offAllNamed(Routes.home);
+
+      if (response.user != null) {
+        Future.delayed(Duration(milliseconds: 500), () {
+          Get.offAllNamed(Routes.home);
+          Get.snackbar(
+            'Success',
+            'Akun berhasil dibuat.',
+            backgroundColor: AppColors.v1Success500,
+            colorText: AppColors.white,
+            duration: Duration(seconds: 2),
+          );
+        });
+      }
     } catch (e) {
       Get.snackbar(
         'Error',
@@ -112,22 +127,19 @@ class SignUpController extends GetxController {
     }
   }
 
-  // Google sign up
   Future<void> signUpWithGoogle() async {
     try {
       isLoading.value = true;
 
-      // Simulate Google sign up
-      await Future.delayed(const Duration(seconds: 2));
+      // TODO: Implement Google sign up dengan Supabase
+      // await _supabase.auth.signInWithOAuth(Provider.google);
 
-      // TODO: Implement Google sign up logic
       Get.snackbar(
-        'Success',
-        'Berhasil daftar dengan Google!',
-        backgroundColor: AppColors.v1Success500,
+        'Info',
+        'Google Sign Up belum tersedia',
+        backgroundColor: AppColors.v1Neutral400,
         colorText: AppColors.white,
       );
-      Get.offAllNamed(Routes.home);
     } catch (e) {
       Get.snackbar(
         'Error',

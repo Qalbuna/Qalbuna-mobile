@@ -86,7 +86,7 @@ class SignUpView extends GetView<SignUpController> {
                             ),
                           ),
                         )
-                      : CustomBotton(text: 'Daftar', onTap: controller.signUp, isEnabled: !controller.isLoading.value && controller.isFormValid.value),
+                      : CustomBotton(text: 'Daftar', onTap: controller.signUp),
                 ),
                 const SizedBox(height: 24),
                 Row(
