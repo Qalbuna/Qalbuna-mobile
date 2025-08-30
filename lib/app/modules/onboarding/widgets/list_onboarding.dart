@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:get/get.dart';
 import 'package:qalbuna_app/app/shared/theme/index.dart';
 
 class ListOnboarding extends StatelessWidget {
@@ -10,33 +9,39 @@ class ListOnboarding extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(height: 100),
-        SizedBox(child: Image.asset(image!, fit: BoxFit.contain)),
-        SizedBox(
-          height: Get.height * 0.2,
-          width: Get.width,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                title!,
-                style: AppTypography.h4Bold,
-                selectionColor: AppColors.black,
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 10),
-              Text(
-                description!,
-                style: AppTypography.sRegular,
-                selectionColor: AppColors.black,
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
-        ),
-      ],
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: constraints.maxHeight * 0.5,
+              child: Image.asset(image!, fit: BoxFit.contain),
+            ),
+            SizedBox(height: 32),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  title!,
+                  style: AppTypography.h4Bold,
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                SizedBox(height: 12),
+                Text(
+                  description!,
+                  style: AppTypography.sRegular,
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+          ],
+        );
+      },
     );
   }
 }

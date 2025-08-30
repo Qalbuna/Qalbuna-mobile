@@ -16,8 +16,8 @@ class SplashScreenView extends GetView<SplashScreenController> {
       body: SafeArea(
         child: Center(
           child: SizedBox(
-            width: Get.width * 0.8,
-            height: Get.width * 0.8,
+            width: Get.width * 0.9,
+            height: Get.width * 0.9,
             child: Image.asset('assets/images/logo.png', fit: BoxFit.contain),
           ),
         ),
