@@ -117,7 +117,7 @@ class SignUpController extends GetxController {
         );
 
         Future.delayed(Duration(milliseconds: 500), () {
-          Get.offAllNamed(Routes.home);
+          Get.offAllNamed(Routes.moodTracker);
         });
       }
     } on AuthException catch (e) {
@@ -155,10 +155,8 @@ class SignUpController extends GetxController {
           colorText: AppColors.white,
           duration: Duration(seconds: 2),
         );
-
-        // Navigate to home after successful Google sign up
         Future.delayed(Duration(milliseconds: 500), () {
-          Get.offAllNamed(Routes.home);
+          Get.offAllNamed(Routes.moodTracker);
         });
       }
     } on AuthException catch (e) {

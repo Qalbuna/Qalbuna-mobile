@@ -278,19 +278,6 @@ class AppColors {
   static const Color v1Sky800 = Color(0xFF065986); // AAA 10:14
   static const Color v1Sky900 = Color(0xFF0B4A6F); // AAA 14:14
 
-  // Zinc
-  static const Color v1Zinc25 = Color(0xFFFCFCFD); // AAA 19:47
-  static const Color v1Zinc50 = Color(0xFFF9FAFB); // AAA 18:47
-  static const Color v1Zinc100 = Color(0xFFF3F4F6); // AAA 16:47
-  static const Color v1Zinc200 = Color(0xFFE4E4E7); // AAA 13:47
-  static const Color v1Zinc300 = Color(0xFFD1D1D6); // AAA 10:47
-  static const Color v1Zinc400 = Color(0xFFA0A0AB); // AAA 7:47
-  static const Color v1Zinc500 = Color(0xFF70707B); // AAA 5:47
-  static const Color v1Zinc600 = Color(0xFF51525C); // AAA 5:14
-  static const Color v1Zinc700 = Color(0xFF3F3F46); // AAA 7:14
-  static const Color v1Zinc800 = Color(0xFF26272B); // AAA 10:14
-  static const Color v1Zinc900 = Color(0xFF18181B); // AAA 14:14
-
   // Cool Gray
   static const Color v1CoolGray25 = Color(0xFFF9FAFB); // AAA 19:47
   static const Color v1CoolGray50 = Color(0xFFF5F7FA); // AAA 18:47

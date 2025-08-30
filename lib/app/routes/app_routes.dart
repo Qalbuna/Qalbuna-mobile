@@ -8,6 +8,7 @@ abstract class Routes {
   static const onboarding = _Paths.onboarding;
   static const signUp = _Paths.signUp;
   static const signIn = _Paths.signIn;
+  static const moodTracker = _Paths.moodTracker;
 }
 
 abstract class _Paths {
@@ -17,4 +18,5 @@ abstract class _Paths {
   static const onboarding = '/onboarding';
   static const signUp = '/sign-up';
   static const signIn = '/sign-in';
+  static const moodTracker = '/mood-tracker';
 }

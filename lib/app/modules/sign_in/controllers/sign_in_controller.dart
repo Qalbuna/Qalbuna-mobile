@@ -90,7 +90,7 @@ class SignInController extends GetxController {
         );
         emailController.clear();
         passwordController.clear();
-        Get.offAllNamed(Routes.home);
+        Get.offAllNamed(Routes.moodTracker);
       }
     } on AuthException catch (e) {
       String errorMessage = _getAuthErrorMessage(e.message);
@@ -129,7 +129,7 @@ class SignInController extends GetxController {
         );
 
         Future.delayed(Duration(milliseconds: 500), () {
-          Get.offAllNamed(Routes.home);
+          Get.offAllNamed(Routes.moodTracker);
         });
       }
     } on AuthException catch (e) {

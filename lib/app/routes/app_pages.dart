@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/mood_tracker/bindings/mood_tracker_binding.dart';
+import '../modules/mood_tracker/views/mood_tracker_view.dart';
 import '../modules/onboarding/bindings/onboarding_binding.dart';
 import '../modules/onboarding/views/onboarding_view.dart';
 import '../modules/sign_in/bindings/sign_in_binding.dart';
@@ -43,6 +45,11 @@ class AppPages {
       name: _Paths.signIn,
       page: () => const SignInView(),
       binding: SignInBinding(),
+    ),
+    GetPage(
+      name: _Paths.moodTracker,
+      page: () => const MoodTrackerView(),
+      binding: MoodTrackerBinding(),
     ),
   ];
 }
