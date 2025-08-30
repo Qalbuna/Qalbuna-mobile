@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qalbuna_app/app/shared/theme/app_colors.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/auth_services.dart';
 
@@ -12,7 +13,6 @@ class SignUpController extends GetxController {
 
   // Form state
   final formKey = GlobalKey<FormState>();
-  final isRememberMe = false.obs;
   final isPasswordVisible = false.obs;
   final isLoading = false.obs;
   final isFormValid = false.obs;
@@ -104,21 +104,35 @@ class SignUpController extends GetxController {
       );
 
       if (response.user != null) {
+        usernameController.clear();
+        emailController.clear();
+        passwordController.clear();
+
+        Get.snackbar(
+          'Success',
+          'Selamat datang, ${response.user!.userMetadata!['username']}!',
+          backgroundColor: AppColors.v1Success500,
+          colorText: AppColors.white,
+          duration: Duration(seconds: 3),
+        );
+
         Future.delayed(Duration(milliseconds: 500), () {
           Get.offAllNamed(Routes.home);
-          Get.snackbar(
-            'Success',
-            'Akun berhasil dibuat.',
-            backgroundColor: AppColors.v1Success500,
-            colorText: AppColors.white,
-            duration: Duration(seconds: 2),
-          );
         });
       }
+    } on AuthException catch (e) {
+      String errorMessage = _getAuthErrorMessage(e.message);
+      Get.snackbar(
+        'Registrasi Gagal',
+        errorMessage,
+        backgroundColor: AppColors.v1Error500,
+        colorText: AppColors.white,
+        duration: Duration(seconds: 3),
+      );
     } catch (e) {
       Get.snackbar(
         'Error',
-        'Gagal membuat akun: ${e.toString()}',
+        'Terjadi kesalahan: ${e.toString()}',
         backgroundColor: AppColors.v1Error500,
         colorText: AppColors.white,
       );
@@ -131,14 +145,30 @@ class SignUpController extends GetxController {
     try {
       isLoading.value = true;
 
-      // TODO: Implement Google sign up dengan Supabase
-      // await _supabase.auth.signInWithOAuth(Provider.google);
+      final response = await authServices.signUpWithGoogle();
 
+      if (response.session != null) {
+        Get.snackbar(
+          'Success',
+          'Registrasi dengan Google berhasil!',
+          backgroundColor: AppColors.v1Success500,
+          colorText: AppColors.white,
+          duration: Duration(seconds: 2),
+        );
+
+        // Navigate to home after successful Google sign up
+        Future.delayed(Duration(milliseconds: 500), () {
+          Get.offAllNamed(Routes.home);
+        });
+      }
+    } on AuthException catch (e) {
+      String errorMessage = _getAuthErrorMessage(e.message);
       Get.snackbar(
-        'Info',
-        'Google Sign Up belum tersedia',
-        backgroundColor: AppColors.v1Neutral400,
+        'Registrasi Google Gagal',
+        errorMessage,
+        backgroundColor: AppColors.v1Error500,
         colorText: AppColors.white,
+        duration: Duration(seconds: 3),
       );
     } catch (e) {
       Get.snackbar(
@@ -150,5 +180,22 @@ class SignUpController extends GetxController {
     } finally {
       isLoading.value = false;
     }
+  }
+
+  String _getAuthErrorMessage(String error) {
+    if (error.contains('User already registered')) {
+      return 'Email sudah terdaftar. Silakan gunakan email lain atau login';
+    } else if (error.contains('Password should be at least')) {
+      return 'Password terlalu lemah. Gunakan kombinasi huruf, angka, dan simbol';
+    } else if (error.contains('Invalid email')) {
+      return 'Format email tidak valid';
+    } else if (error.contains('Too many requests')) {
+      return 'Terlalu banyak percobaan. Coba lagi nanti';
+    }
+    return error;
+  }
+
+  void goToSignIn() {
+    Get.back();
   }
 }

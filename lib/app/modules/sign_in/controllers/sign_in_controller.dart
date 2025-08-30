@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qalbuna_app/app/shared/theme/app_colors.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/auth_services.dart';
 
@@ -35,10 +36,11 @@ class SignInController extends GetxController {
   }
 
   void _validateForm() {
-    final emailValid = emailController.text.isNotEmpty && 
-                      GetUtils.isEmail(emailController.text);
+    final emailValid =
+        emailController.text.isNotEmpty &&
+        GetUtils.isEmail(emailController.text);
     final passwordValid = passwordController.text.length >= 6;
-    
+
     isFormValid.value = emailValid && passwordValid;
   }
 
@@ -86,8 +88,19 @@ class SignInController extends GetxController {
           backgroundColor: AppColors.v1Success500,
           colorText: AppColors.white,
         );
+        emailController.clear();
+        passwordController.clear();
         Get.offAllNamed(Routes.home);
       }
+    } on AuthException catch (e) {
+      String errorMessage = _getAuthErrorMessage(e.message);
+      Get.snackbar(
+        'Login Gagal',
+        errorMessage,
+        backgroundColor: AppColors.v1Error500,
+        colorText: AppColors.white,
+        duration: Duration(seconds: 3),
+      );
     } catch (e) {
       Get.snackbar(
         'Error',
@@ -104,14 +117,29 @@ class SignInController extends GetxController {
     try {
       isLoading.value = true;
 
-      // TODO: Implement Google sign in dengan Supabase
-      // await Supabase.instance.client.auth.signInWithOAuth(Provider.google);
-      
+      final response = await authServices.signInWithGoogle();
+
+      if (response.session != null) {
+        Get.snackbar(
+          'Success',
+          'Login dengan Google berhasil!',
+          backgroundColor: AppColors.v1Success500,
+          colorText: AppColors.white,
+          duration: Duration(seconds: 2),
+        );
+
+        Future.delayed(Duration(milliseconds: 500), () {
+          Get.offAllNamed(Routes.home);
+        });
+      }
+    } on AuthException catch (e) {
+      String errorMessage = _getAuthErrorMessage(e.message);
       Get.snackbar(
-        'Info',
-        'Google Sign In belum tersedia',
-        backgroundColor: AppColors.v1Neutral400,
+        'Login Google Gagal',
+        errorMessage,
+        backgroundColor: AppColors.v1Error500,
         colorText: AppColors.white,
+        duration: Duration(seconds: 3),
       );
     } catch (e) {
       Get.snackbar(
@@ -123,6 +151,17 @@ class SignInController extends GetxController {
     } finally {
       isLoading.value = false;
     }
+  }
+
+  String _getAuthErrorMessage(String error) {
+    if (error.contains('Invalid login credentials')) {
+      return 'Email atau password salah';
+    } else if (error.contains('Email not confirmed')) {
+      return 'Silakan konfirmasi email Anda terlebih dahulu';
+    } else if (error.contains('Too many requests')) {
+      return 'Terlalu banyak percobaan. Coba lagi nanti';
+    }
+    return error;
   }
 
   void goToSignUp() {

@@ -2,12 +2,12 @@
   "project_info": {
     "project_number": "990120265277",
     "project_id": "qalbuna",
-    "storage_bucket": "qalbuna.appspot.com"
+    "storage_bucket": "qalbuna.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:990120265277:android:u3e36r8c5949saktgrkucc2",
+        "mobilesdk_app_id": "1:990120265277:android:ec10b22f99e32605948c54",
         "android_client_info": {
           "package_name": "qalbuna.qalbuna_app"
         }
@@ -18,7 +18,7 @@
           "client_type": 1,
           "android_info": {
             "package_name": "qalbuna.qalbuna_app",
-            "certificate_hash": "49e1e6f68cece6177dc73f3d3a2733114878cd48e"
+            "certificate_hash": "49e1e6f68cece6177dc73fd3a2733114878cd48e"
           }
         },
         {
@@ -28,7 +28,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBvOiM_V1T9yOp6Gp7aKJj7wK0A1B2C3D4"
+          "current_key": "AIzaSyBqlqQIuwvvj67WqfbZb0KR0QtIrlLmiUI"
         }
       ],
       "services": {

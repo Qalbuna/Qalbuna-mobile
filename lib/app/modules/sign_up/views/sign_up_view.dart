@@ -77,7 +77,7 @@ class SignUpView extends GetView<SignUpController> {
                           width: double.infinity,
                           height: 52,
                           decoration: BoxDecoration(
-                            color: AppColors.v1Primary300, 
+                            color: AppColors.v1Primary400, 
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: const Center(
@@ -117,7 +117,7 @@ class SignUpView extends GetView<SignUpController> {
                 const SizedBox(height: 24),
                 Obx(
                   () => SocialLoginButton(
-                    text: 'Login dengan Google',
+                    text: 'Daftar dengan Google',
                     icon: Image.network(google, height: 20, width: 20),
                     onTap: controller.isLoading.value
                         ? null
