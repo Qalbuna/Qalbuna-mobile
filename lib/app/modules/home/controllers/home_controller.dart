@@ -1,15 +1,19 @@
 import 'package:get/get.dart';
-import 'package:qalbuna_app/app/data/modules/mood_tracker_data.dart';
-
+import '../../../data/modules/connection_type.dart';
+import '../../../data/modules/mood_type.dart';
+import '../../../data/modules/need_type.dart';
 import '../../../services/auth_services.dart';
+import '../../../services/supabas_service.dart';
 
 class HomeController extends GetxController {
-  // Mock data untuk menampilkan mood yang dipilih
-  var currentMoodData = Rx<MoodTrackerData?>(null);
+  var currentMoodData = Rx<Map<String, dynamic>?>(null);
   var isLoading = false.obs;
   var selectedDate = DateTime.now().obs;
 
-  // Auth services untuk mengambil user data
+  var moodTypes = <MoodType>[].obs;
+  var needTypes = <NeedType>[].obs;
+  var connectionTypes = <ConnectionType>[].obs;
+
   final authServices = AuthServices();
   var userName = 'User'.obs;
   var userEmail = ''.obs;
@@ -17,6 +21,7 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    loadMasterData();
     loadTodayMood();
   }
 
@@ -26,101 +31,106 @@ class HomeController extends GetxController {
     loadUserData();
   }
 
+  Future<void> loadMasterData() async {
+    try {
+      final results = await Future.wait([
+        SupabaseService.getMoodTypes(),
+        SupabaseService.getNeedTypes(),
+        SupabaseService.getConnectionTypes(),
+      ]);
+
+      moodTypes.value = results[0] as List<MoodType>;
+      needTypes.value = results[1] as List<NeedType>;
+      connectionTypes.value = results[2] as List<ConnectionType>;
+    } catch (e) {
+      print('Error loading master data: $e');
+    }
+  }
+
   void loadUserData() {
     try {
       final user = authServices.getCurrentUser();
 
       if (user != null) {
-        String? displayName;
-        displayName = authServices.getCurrentUserDisplayName();
+        String? displayName = authServices.getCurrentUserDisplayName();
 
         if (displayName != null && displayName.isNotEmpty) {
           userName.value = displayName.split(' ').first;
         }
+
+        userEmail.value = authServices.getCurrentUserEmail() ?? '';
       } else {
         userName.value = 'User';
+        userEmail.value = '';
       }
     } catch (e) {
       userName.value = 'User';
+      userEmail.value = '';
     }
   }
 
-  void loadTodayMood() {
-    // Simulasi data mood diganti dengan data dari storage/API
-    currentMoodData.value = MoodTrackerData(
-      mood: 'takut',
-      needs: ['ketenangan'],
-      spiritualConnection: 'ingin_mendekat',
-      timestamp: DateTime.now(),
-      notes: 'Merasa takut dan butuh ketenangan',
-    );
-  }
+  Future<void> loadTodayMood() async {
+    try {
+      isLoading.value = true;
 
-  String getMoodEmoji(String mood) {
-    switch (mood) {
-      case 'sedih':
-        return '😢';
-      case 'cemas':
-        return '😟';
-      case 'bersalah':
-        return '😔';
-      case 'marah':
-        return '😡';
-      case 'bahagia':
-        return '😊';
-      case 'takut':
-        return '😰';
-      default:
-        return '😊';
+      if (!SupabaseService.isSignedIn) {
+        currentMoodData.value = null;
+        return;
+      }
+
+      // Get today's mood entry from Supabase
+      final todayEntry = await SupabaseService.getTodayMoodEntry();
+      
+      if (todayEntry != null) {
+        currentMoodData.value = todayEntry;
+      } else {
+        currentMoodData.value = null;
+      }
+
+    } catch (e) {
+      print('Error loading today mood: $e');
+      currentMoodData.value = null;
+    } finally {
+      isLoading.value = false;
     }
   }
 
-  String getMoodLabel(String mood) {
-    switch (mood) {
-      case 'sedih':
-        return 'Sedih';
-      case 'cemas':
-        return 'Cemas';
-      case 'bersalah':
-        return 'Bersalah';
-      case 'marah':
-        return 'Marah';
-      case 'bahagia':
-        return 'Bahagia';
-      case 'takut':
-        return 'Takut';
-      default:
-        return 'Baik';
-    }
+  // Helper methods untuk mendapatkan data berdasarkan value
+  String getMoodEmoji(String moodValue) {
+    final mood = moodTypes.firstWhereOrNull((m) => m.value == moodValue);
+    return mood?.emoji ?? '😊';
   }
 
-  String getNeedIcon(String need) {
-    switch (need) {
-      case 'ketenangan':
-        return '🤲';
-      case 'kekuatan':
-        return '💪';
-      case 'arahan':
-        return '🎯';
-      case 'kasih_sayang':
-        return '🥰';
-      default:
-        return '🤲';
-    }
+  String getMoodLabel(String moodValue) {
+    final mood = moodTypes.firstWhereOrNull((m) => m.value == moodValue);
+    return mood?.label ?? 'Baik';
   }
 
-  String getNeedLabel(String need) {
-    switch (need) {
-      case 'ketenangan':
-        return 'Ketenangan';
-      case 'kekuatan':
-        return 'Kekuatan';
-      case 'arahan':
-        return 'Arahan';
-      case 'kasih_sayang':
-        return 'Kasih Sayang';
-      default:
-        return 'Ketenangan';
-    }
+  String getNeedIcon(String needValue) {
+    final need = needTypes.firstWhereOrNull((n) => n.value == needValue);
+    return need?.icon ?? '🤲';
+  }
+
+  String getNeedLabel(String needValue) {
+    final need = needTypes.firstWhereOrNull((n) => n.value == needValue);
+    return need?.label ?? 'Ketenangan';
+  }
+
+  String getConnectionIcon(String connectionValue) {
+    final connection = connectionTypes.firstWhereOrNull((c) => c.value == connectionValue);
+    return connection?.icon ?? '⭐';
+  }
+
+  String getConnectionLabel(String connectionValue) {
+    final connection = connectionTypes.firstWhereOrNull((c) => c.value == connectionValue);
+    return connection?.label ?? 'Merasa dekat dan terhubung';
+  }
+
+  Future<void> refreshTodayMood() async {
+    await loadTodayMood();
+  }
+
+  void navigateToMoodTracker() {
+    Get.toNamed('/mood-tracker');
   }
 }

@@ -15,13 +15,6 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.v1CoolGray50,
-      appBar: AppBar(
-        backgroundColor: AppColors.v1Primary500,
-        elevation: 0,
-        automaticallyImplyLeading: false,
-        toolbarHeight: 0,
-      ),
       body: RefreshIndicator(
         onRefresh: () async {
           controller.loadTodayMood();
@@ -30,78 +23,51 @@ class HomeView extends GetView<HomeController> {
           physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             children: [
-              // Header dengan greeting
+              const SizedBox(height: 32),
               const GreetingHeaderWidget(),
-              
-              const SizedBox(height: 16),
-              
+              const SizedBox(height: 8),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Mood Status Card
-                    Obx(() => MoodStatusWidget(
-                      moodData: controller.currentMoodData.value,
-                    )),
-                    
+                    const MoodStatusWidget(),
                     const SizedBox(height: 24),
-                    
-                    // Section Title
                     Text(
                       'Pelukan khusus Untukmu',
                       style: AppTypography.h5Bold.copyWith(
                         color: AppColors.black,
                       ),
                     ),
-                    
                     const SizedBox(height: 16),
-                    
-                    // Verse Recommendation
                     const VerseRecommendationWidget(),
-                    
                     const SizedBox(height: 24),
-                    
-                    // Inspirational Story Section
                     Text(
                       'Kisah Inspiratif',
                       style: AppTypography.h5Bold.copyWith(
                         color: AppColors.black,
                       ),
                     ),
-                    
                     const SizedBox(height: 16),
-                    
                     const InspirationalStoryWidget(),
-                    
                     const SizedBox(height: 24),
-                    
-                    // Dhikr/Amalan Section
                     Text(
                       'Amalan untuk ketenangan',
                       style: AppTypography.h5Bold.copyWith(
                         color: AppColors.black,
                       ),
                     ),
-                    
                     const SizedBox(height: 16),
-                    
                     const DhikrAmalanWidget(),
-                    
                     const SizedBox(height: 24),
-                    
-                    // Prophet Story Section
                     Text(
                       'Kisah Rasul dan Sahabat',
                       style: AppTypography.h5Bold.copyWith(
                         color: AppColors.black,
                       ),
                     ),
-                    
                     const SizedBox(height: 16),
-                    
                     const ProphetStoryWidget(),
-                    
                     const SizedBox(height: 32),
                   ],
                 ),

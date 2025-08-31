@@ -1,29 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:qalbuna_app/app/shared/theme/index.dart';
+import '../controllers/mood_tracker_controller.dart';
 
-import '../../../data/modules/mood_item.dart';
-
-class MoodSelectionWidget extends StatelessWidget {
-  final String selectedMood;
-  final Function(String) onMoodSelected;
-
-  const MoodSelectionWidget({
-    super.key,
-    required this.selectedMood,
-    required this.onMoodSelected,
-  });
+class MoodSelectionWidget extends GetView<MoodTrackerController> {
+  const MoodSelectionWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final List<MoodItem> moods = [
-      const MoodItem(emoji: '😢', label: 'Sedih', value: 'sedih'),
-      const MoodItem(emoji: '😟', label: 'Cemas', value: 'cemas'),
-      const MoodItem(emoji: '😔', label: 'Bersalah', value: 'bersalah'),
-      const MoodItem(emoji: '😡', label: 'Marah', value: 'marah'),
-      const MoodItem(emoji: '😊', label: 'Bahagia', value: 'bahagia'),
-      const MoodItem(emoji: '😰', label: 'Takut', value: 'takut'),
-    ];
-
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -35,10 +19,7 @@ class MoodSelectionWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const SizedBox(height: 6),
-          Text(
-            'Bagaimana Perasaanmu hari ini?',
-            style: AppTypography.h5Bold,
-          ),
+          Text('Bagaimana Perasaanmu hari ini?', style: AppTypography.h5Bold),
           const SizedBox(height: 12),
           Text(
             'Pilih yang paling mewakili hatimu sekarang 💜',
@@ -48,55 +29,62 @@ class MoodSelectionWidget extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 24),
-          GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              childAspectRatio: 0.8,
-              crossAxisSpacing: 16,
-              mainAxisSpacing: 16,
-            ),
-            itemCount: moods.length,
-            itemBuilder: (context, index) {
-              final mood = moods[index];
-              final isSelected = selectedMood == mood.value;
+          Obx(() {
+            if (controller.isLoading.value) {
+              return const Center(child: CircularProgressIndicator());
+            }
 
-              return GestureDetector(
-                onTap: () => onMoodSelected(mood.value),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: isSelected
-                        ? AppColors.v1Primary50
-                        : AppColors.v1Gray25,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
+            return GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                childAspectRatio: 0.8,
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
+              ),
+              itemCount: controller.moodTypes.length,
+              itemBuilder: (context, index) {
+                final mood = controller.moodTypes[index];
+                final isSelected =
+                    controller.selectedMoodValue.value == mood.value;
+
+                return GestureDetector(
+                  onTap: () => controller.selectMood(mood.value),
+                  child: Container(
+                    decoration: BoxDecoration(
                       color: isSelected
-                          ? AppColors.v1Primary500
-                          : AppColors.v1Gray200,
-                      width: isSelected ? 2 : 1,
+                          ? AppColors.v1Primary50
+                          : AppColors.v1Gray25,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: isSelected
+                            ? AppColors.v1Primary500
+                            : AppColors.v1Gray200,
+                        width: isSelected ? 2 : 1,
+                      ),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(mood.emoji, style: TextStyle(fontSize: 40)),
+                        const SizedBox(height: 8),
+                        Text(
+                          mood.label,
+                          style: AppTypography.sMedium.copyWith(
+                            color: isSelected
+                                ? AppColors.v1Primary500
+                                : AppColors.black,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
                     ),
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(mood.emoji, style: TextStyle(fontSize: 40)),
-                      const SizedBox(height: 8),
-                      Text(
-                        mood.label,
-                        style: AppTypography.sMedium.copyWith(
-                          color: isSelected
-                              ? AppColors.v1Primary500
-                              : AppColors.black,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            },
-          ),
+                );
+              },
+            );
+          }),
           const SizedBox(height: 12),
         ],
       ),

@@ -37,34 +37,21 @@ class MoodTrackerView extends GetView<MoodTrackerController> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              Obx(
-                () => MoodSelectionWidget(
-                  selectedMood: controller.selectedMood.value,
-                  onMoodSelected: controller.selectMood,
-                ),
-              ),
+              const MoodSelectionWidget(),
               SizedBox(height: 16),
-              Obx(
-                () => NeedSelectionWidget(
-                  selectedNeeds: controller.selectedNeeds.toList(),
-                  onNeedToggled: controller.toggleNeed,
-                ),
-              ),
+              const NeedSelectionWidget(),
               SizedBox(height: 16),
-              Obx(
-                () => SpiritualConnectionWidget(
-                  selectedConnection: controller.selectedConnection.value,
-                  onConnectionSelected: controller.selectConnection,
-                ),
-              ),
+              const SpiritualConnectionWidget(),
               SizedBox(height: 24),
-              Obx(
-                () => CustomBotton(
-                  text: 'Temukan Pelukan Qur\'an Untukku',
-                  onTap: controller.submitMoodTracker,
-                  isEnabled: controller.isFormCompletelyValid,
-                ),
-              ),
+              Obx(() => CustomBotton(
+                text: controller.isSubmitting.value 
+                  ? 'Menyimpan...' 
+                  : 'Temukan Pelukan Qur\'an Untukku',
+                onTap: controller.isSubmitting.value 
+                  ? null 
+                  : controller.submitMoodTracker,
+                isEnabled: controller.isFormCompletelyValid && !controller.isSubmitting.value,
+              )),
               SizedBox(height: 32),
             ],
           ),
