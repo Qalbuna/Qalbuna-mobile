@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import '../../../data/modules/connection_type.dart';
 import '../../../data/modules/mood_type.dart';
 import '../../../data/modules/need_type.dart';
+import '../../../routes/app_pages.dart';
 import '../../../services/auth_services.dart';
 import '../../../services/supabas_service.dart';
 
@@ -50,7 +51,6 @@ class HomeController extends GetxController {
   void loadUserData() {
     try {
       final user = authServices.getCurrentUser();
-
       if (user != null) {
         String? displayName = authServices.getCurrentUserDisplayName();
 
@@ -76,7 +76,6 @@ class HomeController extends GetxController {
         currentMoodData.value = null;
         return;
       }
-      // Get today's mood entry from Supabase
       final todayEntry = await SupabaseService.getTodayMoodEntry();
 
       if (todayEntry != null) {
@@ -140,6 +139,6 @@ class HomeController extends GetxController {
   }
 
   void navigateToMoodTracker() {
-    Get.toNamed('/mood-tracker');
+    Get.offAllNamed(Routes.moodTracker);
   }
 }

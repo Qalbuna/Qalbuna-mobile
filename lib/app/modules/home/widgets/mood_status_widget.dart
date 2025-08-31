@@ -23,38 +23,7 @@ class MoodStatusWidget extends GetView<HomeController> {
       }
 
       final moodData = controller.currentMoodData.value;
-
-      if (moodData == null) {
-        return Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: AppColors.white,
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: AppColors.v1Primary500),
-          ),
-          child: Column(
-            children: [
-              Text(
-                'Belum ada data mood hari ini',
-                style: AppTypography.h5Medium,
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 8),
-              ElevatedButton(
-                onPressed: controller.navigateToMoodTracker,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.v1Primary500,
-                  foregroundColor: AppColors.white,
-                ),
-                child: const Text('Isi Mood Tracker'),
-              ),
-            ],
-          ),
-        );
-      }
-
-      // Extract data from Supabase response
-      final entry = moodData['entry'] as Map<String, dynamic>;
+      final entry = moodData!['entry'] as Map<String, dynamic>;
       final moodType = entry['mood_types'] as Map<String, dynamic>;
       final needs = moodData['needs'] as List<dynamic>;
       final connection = moodData['connection'] as Map<String, dynamic>?;
@@ -82,7 +51,7 @@ class MoodStatusWidget extends GetView<HomeController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Hari ini, ${DateFormat('d MMMM yyyy', 'id_ID').format(DateTime.now())}',
+                        'Perasaanmu hari ini, ${DateFormat('d MMMM', 'id_ID').format(DateTime.now())}',
                         style: AppTypography.sMedium.copyWith(
                           color: AppColors.v1Neutral500,
                         ),
@@ -145,8 +114,34 @@ class MoodStatusWidget extends GetView<HomeController> {
                   ],
                 ],
               ),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextButton.icon(
+                      onPressed: () => controller.navigateToMoodTracker(),
+                      icon: Icon(
+                        Icons.refresh_rounded,
+                        color: AppColors.v1Primary400,
+                      ),
+                      label: Text(
+                        'Perbarui Perasaan',
+                        style: AppTypography.sMedium.copyWith(
+                          color: AppColors.v1Primary400,
+                        ),
+                      ),
+                      style: TextButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18),
+                        ),
+                        backgroundColor: AppColors.v1Purple25,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
             ],
-            const SizedBox(height: 8),
           ],
         ),
       );
