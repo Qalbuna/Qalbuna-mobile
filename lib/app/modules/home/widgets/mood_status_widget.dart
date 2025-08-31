@@ -18,9 +18,7 @@ class MoodStatusWidget extends GetView<HomeController> {
             borderRadius: BorderRadius.circular(16),
             border: Border.all(color: AppColors.v1Primary500),
           ),
-          child: const Center(
-            child: CircularProgressIndicator(),
-          ),
+          child: const Center(child: CircularProgressIndicator()),
         );
       }
 
@@ -37,7 +35,7 @@ class MoodStatusWidget extends GetView<HomeController> {
           child: Column(
             children: [
               Text(
-                'Belum ada data mood hari ini', 
+                'Belum ada data mood hari ini',
                 style: AppTypography.h5Medium,
                 textAlign: TextAlign.center,
               ),
@@ -71,13 +69,14 @@ class MoodStatusWidget extends GetView<HomeController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const SizedBox(height: 8),
             Row(
               children: [
                 Text(
                   moodType['emoji'] ?? '😊',
-                  style: const TextStyle(fontSize: 32),
+                  style: const TextStyle(fontSize: 42),
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: 16),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -98,13 +97,11 @@ class MoodStatusWidget extends GetView<HomeController> {
                 ),
               ],
             ),
-            const SizedBox(height: 12),
-            
-            // Show needs and spiritual connection
+            const SizedBox(height: 16),
             if (needs.isNotEmpty || connection != null) ...[
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  // Show first need if available
                   if (needs.isNotEmpty) ...[
                     Text(
                       needs.first['need_types']['icon'] ?? '🤲',
@@ -118,21 +115,18 @@ class MoodStatusWidget extends GetView<HomeController> {
                       ),
                     ),
                   ],
-                  
                   if (needs.isNotEmpty && connection != null) ...[
                     const SizedBox(width: 8),
                     Container(
-                      width: 4,
-                      height: 4,
+                      width: 10,
+                      height: 10,
                       decoration: BoxDecoration(
-                        color: AppColors.v1Neutral300,
-                        borderRadius: BorderRadius.circular(2),
+                        color: AppColors.v1Neutral200,
+                        borderRadius: BorderRadius.circular(8),
                       ),
                     ),
                     const SizedBox(width: 8),
                   ],
-                  
-                  // Show spiritual connection if available
                   if (connection != null) ...[
                     Text(
                       connection['connection_types']['icon'] ?? '⭐',
@@ -141,48 +135,18 @@ class MoodStatusWidget extends GetView<HomeController> {
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
-                        connection['connection_types']['label'] ?? 'Merasa dekat dan terhubung',
-                        style: AppTypography.sMedium.copyWith(
-                          color: AppColors.v1Primary500,
+                        connection['connection_types']['label'] ??
+                            'Merasa dekat dan terhubung',
+                        style: AppTypography.sRegular.copyWith(
+                          color: AppColors.black,
                         ),
                       ),
                     ),
                   ],
                 ],
               ),
-              const SizedBox(height: 8),
             ],
-
-            // Show notes if available
-            if (entry['notes'] != null && entry['notes'].toString().isNotEmpty) ...[
-              Text(
-                'Catatan: ${entry['notes']}',
-                style: AppTypography.sRegular.copyWith(
-                  color: AppColors.v1Neutral500,
-                  fontStyle: FontStyle.italic,
-                ),
-              ),
-              const SizedBox(height: 8),
-            ],
-
-            // Refresh button
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton.icon(
-                onPressed: controller.refreshTodayMood,
-                icon: Icon(
-                  Icons.refresh,
-                  size: 16,
-                  color: AppColors.v1Primary500,
-                ),
-                label: Text(
-                  'Refresh',
-                  style: AppTypography.sRegular.copyWith(
-                    color: AppColors.v1Primary500,
-                  ),
-                ),
-              ),
-            ),
+            const SizedBox(height: 8),
           ],
         ),
       );

@@ -15,6 +15,7 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(backgroundColor: AppColors.white, elevation: 0, toolbarHeight: 0),
       body: RefreshIndicator(
         onRefresh: () async {
           controller.loadTodayMood();
