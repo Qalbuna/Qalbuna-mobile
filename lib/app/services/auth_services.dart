@@ -65,9 +65,9 @@ class AuthServices {
 
   String? getCurrentUserDisplayName() {
     final user = _supabase.auth.currentUser;
-    return user?.userMetadata?['display_name'] ??
-        user?.userMetadata?['full_name'] ??
-        user?.userMetadata?['name'];
+    if (user == null) return null;
+    String? name = user.userMetadata?['name'];
+    return name;
   }
 
   String? getCurrentUserAvatarUrl() {
@@ -89,7 +89,6 @@ class AuthServices {
 
   Future<AuthResponse> signInWithGoogle() async {
     try {
-
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
 
       if (googleUser == null) {

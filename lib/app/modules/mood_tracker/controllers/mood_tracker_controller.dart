@@ -7,7 +7,6 @@ class MoodTrackerController extends GetxController {
   var selectedConnection = ''.obs;
   var isLoading = false.obs;
 
-  // Computed properties untuk validasi
   bool get isFormValid => selectedMood.value.isNotEmpty;
 
   bool get isFormCompletelyValid =>
@@ -34,21 +33,13 @@ class MoodTrackerController extends GetxController {
     selectedConnection.value = connection;
   }
 
-  // Submit method dengan loading state
   Future<void> submitMoodTracker() async {
     isLoading.value = true;
 
     try {
-      // Simulate API call delay
-      await Future.delayed(const Duration(seconds: 2));
-
-      // Show success message
-      Get.snackbar('Berhasil!', 'Mood kamu telah tersimpan');
-
       Get.toNamed(Routes.home);
       resetForm();
     } catch (e) {
-      // Handle error
       Get.snackbar('Error!', 'Terjadi kesalahan: ${e.toString()}');
     } finally {
       isLoading.value = false;

@@ -23,7 +23,7 @@ class MoodTrackerView extends GetView<MoodTrackerController> {
             ),
             SizedBox(height: 6),
             Text(
-              'Bagaimana hatimu hari ini? ❤️',
+              'Bagaimana suasana hatimu hari ini? ❤️',
               style: AppTypography.sMedium.copyWith(color: AppColors.white),
             ),
           ],
@@ -37,7 +37,6 @@ class MoodTrackerView extends GetView<MoodTrackerController> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              SizedBox(height: 16),
               Obx(
                 () => MoodSelectionWidget(
                   selectedMood: controller.selectedMood.value,
