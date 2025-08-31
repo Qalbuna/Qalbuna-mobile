@@ -32,25 +32,17 @@ class NeedSelectionWidget extends GetView<MoodTrackerController> {
             if (controller.isLoading.value) {
               return const Center(child: CircularProgressIndicator());
             }
-
-            return GridView.builder(
+            return GridView.count(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 3,
-                crossAxisSpacing: 12,
-                mainAxisSpacing: 12,
-              ),
-              itemCount: controller.needTypes.length,
-              itemBuilder: (context, index) {
-                final need = controller.needTypes[index];
-                final isSelected = controller.selectedNeedValues.contains(
-                  need.value,
-                );
-
+              crossAxisCount: 2,
+              childAspectRatio: 3,
+              crossAxisSpacing: 12,
+              mainAxisSpacing: 12,
+              children: controller.needTypes.map((need) {
+                final isSelected = controller.selectedNeedValue.value == need.value;
                 return GestureDetector(
-                  onTap: () => controller.toggleNeed(need.value),
+                  onTap: () => controller.selectNeed(need.value),
                   child: Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 12,
@@ -86,7 +78,7 @@ class NeedSelectionWidget extends GetView<MoodTrackerController> {
                     ),
                   ),
                 );
-              },
+              }).toList(),
             );
           }),
           const SizedBox(height: 12),

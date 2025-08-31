@@ -33,19 +33,14 @@ class MoodSelectionWidget extends GetView<MoodTrackerController> {
             if (controller.isLoading.value) {
               return const Center(child: CircularProgressIndicator());
             }
-
-            return GridView.builder(
+            return GridView.count(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                childAspectRatio: 0.8,
-                crossAxisSpacing: 16,
-                mainAxisSpacing: 16,
-              ),
-              itemCount: controller.moodTypes.length,
-              itemBuilder: (context, index) {
-                final mood = controller.moodTypes[index];
+              crossAxisCount: 3,
+              childAspectRatio: 0.8,
+              crossAxisSpacing: 16,
+              mainAxisSpacing: 16,
+              children: controller.moodTypes.map((mood) {
                 final isSelected =
                     controller.selectedMoodValue.value == mood.value;
 
@@ -82,7 +77,7 @@ class MoodSelectionWidget extends GetView<MoodTrackerController> {
                     ),
                   ),
                 );
-              },
+              }).toList(),
             );
           }),
           const SizedBox(height: 12),

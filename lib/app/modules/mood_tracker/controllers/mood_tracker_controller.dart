@@ -7,7 +7,7 @@ import '../../../services/supabas_service.dart';
 
 class MoodTrackerController extends GetxController {
   var selectedMoodValue = ''.obs;
-  var selectedNeedValues = <String>[].obs;
+  var selectedNeedValue = ''.obs;
   var selectedConnectionValue = ''.obs;
   var isLoading = false.obs;
   var isSubmitting = false.obs;
@@ -19,7 +19,7 @@ class MoodTrackerController extends GetxController {
   bool get isFormValid => selectedMoodValue.value.isNotEmpty;
   bool get isFormCompletelyValid =>
       selectedMoodValue.value.isNotEmpty &&
-      selectedNeedValues.isNotEmpty &&
+      selectedNeedValue .value.isNotEmpty &&
       selectedConnectionValue.value.isNotEmpty;
 
   @override
@@ -31,7 +31,7 @@ class MoodTrackerController extends GetxController {
   Future<void> loadMasterData() async {
     try {
       isLoading.value = true;
-      
+
       final results = await Future.wait([
         SupabaseService.getMoodTypes(),
         SupabaseService.getNeedTypes(),
@@ -41,10 +41,9 @@ class MoodTrackerController extends GetxController {
       moodTypes.value = results[0] as List<MoodType>;
       needTypes.value = results[1] as List<NeedType>;
       connectionTypes.value = results[2] as List<ConnectionType>;
-      
     } catch (e) {
       Get.snackbar(
-        'Error!', 
+        'Error!',
         'Gagal memuat data: ${e.toString()}',
         snackPosition: SnackPosition.TOP,
       );
@@ -53,17 +52,12 @@ class MoodTrackerController extends GetxController {
     }
   }
 
-  // Methods for selections
   void selectMood(String moodValue) {
     selectedMoodValue.value = moodValue;
   }
 
-  void toggleNeed(String needValue) {
-    if (selectedNeedValues.contains(needValue)) {
-      selectedNeedValues.remove(needValue);
-    } else {
-      selectedNeedValues.add(needValue);
-    }
+  void selectNeed(String needValue) {
+    selectedNeedValue.value = needValue;
   }
 
   void selectConnection(String connectionValue) {
@@ -71,45 +65,26 @@ class MoodTrackerController extends GetxController {
   }
 
   Future<void> submitMoodTracker() async {
-    if (!isFormCompletelyValid) {
-      Get.snackbar(
-        'Peringatan!', 
-        'Mohon lengkapi semua pilihan',
-        snackPosition: SnackPosition.TOP,
-      );
-      return;
-    }
-
     try {
       isSubmitting.value = true;
-      if (!SupabaseService.isSignedIn) {
-        Get.snackbar(
-          'Error!', 
-          'Silakan login terlebih dahulu',
-          snackPosition: SnackPosition.TOP,
-        );
-        Get.toNamed(Routes.signIn);
-        return;
-      }
 
       await SupabaseService.createMoodEntry(
         moodValue: selectedMoodValue.value,
-        needValues: selectedNeedValues.toList(),
+        needValues: [selectedNeedValue.value],
         connectionValue: selectedConnectionValue.value,
       );
 
       Get.snackbar(
-        'Berhasil!', 
+        'Berhasil!',
         'Mood tracker berhasil disimpan',
         snackPosition: SnackPosition.TOP,
       );
-      
+
       Get.toNamed(Routes.home);
       resetForm();
-
     } catch (e) {
       Get.snackbar(
-        'Error!', 
+        'Error!',
         'Gagal menyimpan mood tracker: ${e.toString()}',
         snackPosition: SnackPosition.TOP,
       );
@@ -120,12 +95,7 @@ class MoodTrackerController extends GetxController {
 
   void resetForm() {
     selectedMoodValue.value = '';
-    selectedNeedValues.clear();
+    selectedNeedValue.value = '';
     selectedConnectionValue.value = '';
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
   }
 }

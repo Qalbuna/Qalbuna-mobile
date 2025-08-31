@@ -52,7 +52,7 @@ class MoodTrackerView extends GetView<MoodTrackerController> {
                   : controller.submitMoodTracker,
                 isEnabled: controller.isFormCompletelyValid && !controller.isSubmitting.value,
               )),
-              SizedBox(height: 32),
+              SizedBox(height: 16),
             ],
           ),
         ),
