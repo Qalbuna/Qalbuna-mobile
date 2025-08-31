@@ -72,30 +72,35 @@ class HomeController extends GetxController {
   Future<void> loadTodayMood() async {
     try {
       isLoading.value = true;
-
       if (!SupabaseService.isSignedIn) {
         currentMoodData.value = null;
         return;
       }
-
       // Get today's mood entry from Supabase
       final todayEntry = await SupabaseService.getTodayMoodEntry();
-      
+
       if (todayEntry != null) {
         currentMoodData.value = todayEntry;
       } else {
         currentMoodData.value = null;
       }
-
     } catch (e) {
-      print('Error loading today mood: $e');
       currentMoodData.value = null;
     } finally {
       isLoading.value = false;
     }
   }
 
-  // Helper methods untuk mendapatkan data berdasarkan value
+  Future<List<Map<String, dynamic>>> loadAllTodayMoods() async {
+    try {
+      if (!SupabaseService.isSignedIn) return [];
+
+      return await SupabaseService.getMoodEntriesByDate(DateTime.now());
+    } catch (e) {
+      return [];
+    }
+  }
+  
   String getMoodEmoji(String moodValue) {
     final mood = moodTypes.firstWhereOrNull((m) => m.value == moodValue);
     return mood?.emoji ?? '😊';
@@ -117,12 +122,16 @@ class HomeController extends GetxController {
   }
 
   String getConnectionIcon(String connectionValue) {
-    final connection = connectionTypes.firstWhereOrNull((c) => c.value == connectionValue);
+    final connection = connectionTypes.firstWhereOrNull(
+      (c) => c.value == connectionValue,
+    );
     return connection?.icon ?? '⭐';
   }
 
   String getConnectionLabel(String connectionValue) {
-    final connection = connectionTypes.firstWhereOrNull((c) => c.value == connectionValue);
+    final connection = connectionTypes.firstWhereOrNull(
+      (c) => c.value == connectionValue,
+    );
     return connection?.label ?? 'Merasa dekat dan terhubung';
   }
 

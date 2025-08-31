@@ -26,7 +26,6 @@ class MoodTrackerController extends GetxController {
   void onInit() {
     super.onInit();
     loadMasterData();
-    checkTodayEntry();
   }
 
   Future<void> loadMasterData() async {
@@ -51,29 +50,6 @@ class MoodTrackerController extends GetxController {
       );
     } finally {
       isLoading.value = false;
-    }
-  }
-
-  Future<void> checkTodayEntry() async {
-    try {
-      // Check if user is signed in
-      if (!SupabaseService.isSignedIn) {
-        // User not signed in, redirect to login
-        print('User not signed in');
-        return;
-      }
-
-      final hasEntry = await SupabaseService.hasTodayEntry();
-      if (hasEntry) {
-        Get.snackbar(
-          'Info', 
-          'Kamu sudah mengisi mood tracker hari ini!',
-          snackPosition: SnackPosition.TOP,
-        );
-        // Optionally navigate to home or show today's entry
-      }
-    } catch (e) {
-      print('Error checking today entry: $e');
     }
   }
 
@@ -106,27 +82,13 @@ class MoodTrackerController extends GetxController {
 
     try {
       isSubmitting.value = true;
-
-      // Check if user is signed in
       if (!SupabaseService.isSignedIn) {
         Get.snackbar(
           'Error!', 
           'Silakan login terlebih dahulu',
           snackPosition: SnackPosition.TOP,
         );
-        // Navigate to login page
-        // Get.toNamed(Routes.LOGIN);
-        return;
-      }
-
-      // Check if already submitted today
-      final hasEntry = await SupabaseService.hasTodayEntry();
-      if (hasEntry) {
-        Get.snackbar(
-          'Info', 
-          'Kamu sudah mengisi mood tracker hari ini!',
-          snackPosition: SnackPosition.TOP,
-        );
+        Get.toNamed(Routes.signIn);
         return;
       }
 

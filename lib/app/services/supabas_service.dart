@@ -83,7 +83,7 @@ class SupabaseService {
 
       // Create mood entry
       final now = DateTime.now();
-      final timeString = '${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}';
+     final timeString = '${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}';
       
       final entryResponse = await _client
           .from('mood_entries')
@@ -132,24 +132,6 @@ class SupabaseService {
     }
   }
 
-  static Future<bool> hasTodayEntry() async {
-    try {
-      if (currentUserId == null) return false;
-
-      final today = DateTime.now().toIso8601String().split('T')[0];
-      final response = await _client
-          .from('mood_entries')
-          .select('id')
-          .eq('user_id', currentUserId!)
-          .eq('entry_date', today)
-          .maybeSingle();
-
-      return response != null;
-    } catch (e) {
-      return false;
-    }
-  }
-
   static Future<Map<String, dynamic>?> getTodayMoodEntry() async {
     try {
       if (currentUserId == null) return null;
@@ -160,11 +142,13 @@ class SupabaseService {
       final entryResponse = await _client
           .from('mood_entries')
           .select('''
-            id, entry_date, entry_time, notes,
+            id, entry_date, entry_time, notes, created_at,
             mood_types(emoji, label, value)
           ''')
           .eq('user_id', currentUserId!)
           .eq('entry_date', today)
+          .order('created_at', ascending: false)
+          .limit(1)
           .maybeSingle();
 
       if (entryResponse == null) return null;
@@ -192,9 +176,90 @@ class SupabaseService {
     }
   }
 
-  // ============== AUTHENTICATION HELPERS ==============
+  static Future<List<Map<String, dynamic>>> getMoodEntriesByDate(DateTime date) async {
+    try {
+      if (currentUserId == null) return [];
+
+      final dateString = date.toIso8601String().split('T')[0];
+      
+      final entriesResponse = await _client
+          .from('mood_entries')
+          .select('''
+            id, entry_date, entry_time, notes, created_at,
+            mood_types(emoji, label, value)
+          ''')
+          .eq('user_id', currentUserId!)
+          .eq('entry_date', dateString)
+          .order('created_at', ascending: false);
+
+      List<Map<String, dynamic>> results = [];
+
+      for (var entry in entriesResponse) {
+        // Get needs for this entry
+        final needsResponse = await _client
+            .from('mood_entry_needs')
+            .select('need_types(icon, label, value)')
+            .eq('mood_entry_id', entry['id']);
+
+        // Get connection for this entry
+        final connectionResponse = await _client
+            .from('mood_entry_connections')
+            .select('connection_types(icon, label, value)')
+            .eq('mood_entry_id', entry['id'])
+            .maybeSingle();
+
+        results.add({
+          'entry': entry,
+          'needs': needsResponse,
+          'connection': connectionResponse,
+        });
+      }
+
+      return results;
+    } catch (e) {
+      throw Exception('Failed to get mood entries by date: $e');
+    }
+  }
+
+  static Future<Map<String, dynamic>> getMoodStatistics({
+    required DateTime startDate,
+    required DateTime endDate,
+  }) async {
+    try {
+      if (currentUserId == null) return {};
+
+      final startDateString = startDate.toIso8601String().split('T')[0];
+      final endDateString = endDate.toIso8601String().split('T')[0];
+
+      final response = await _client
+          .from('mood_entries')
+          .select('''
+            mood_types(label, value, emoji)
+          ''')
+          .eq('user_id', currentUserId!)
+          .gte('entry_date', startDateString)
+          .lte('entry_date', endDateString);
+
+      // Count mood frequencies
+      Map<String, int> moodCounts = {};
+      for (var entry in response) {
+        final moodLabel = entry['mood_types']['label'] as String;
+        moodCounts[moodLabel] = (moodCounts[moodLabel] ?? 0) + 1;
+      }
+
+      return {
+        'total_entries': response.length,
+        'mood_counts': moodCounts,
+        'date_range': {
+          'start': startDateString,
+          'end': endDateString,
+        }
+      };
+    } catch (e) {
+      throw Exception('Failed to get mood statistics: $e');
+    }
+  }
   
   static bool get isSignedIn => _authServices.isSignedIn();
-  
   static Stream<AuthState> get authStateChanges => _authServices.authStateChanges;
 }
