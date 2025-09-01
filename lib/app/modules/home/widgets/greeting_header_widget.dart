@@ -10,7 +10,7 @@ class GreetingHeaderWidget extends StatelessWidget {
 
   String getGreetingText() {
     final hour = DateTime.now().hour;
-    if (hour < 10) {
+    if (hour < 11) {
       return 'Selamat Pagi';
     } else if (hour < 15) {
       return 'Selamat Siang';

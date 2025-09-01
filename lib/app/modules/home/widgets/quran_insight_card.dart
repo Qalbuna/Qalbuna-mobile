@@ -59,7 +59,7 @@ class QuranInsightCard extends GetView<HomeController> {
                     textAlign: TextAlign.justify,
                     style: AppTypography.sRegular.copyWith(
                       color: AppColors.black,
-                      height: 1.5,
+                      height: 1.4,
                     ),
                   );
                 }

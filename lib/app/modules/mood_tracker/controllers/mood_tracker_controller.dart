@@ -69,7 +69,7 @@ class MoodTrackerController extends GetxController {
         needValues: [selectedNeedValue.value],
         connectionValue: selectedConnectionValue.value,
       );
-      Get.toNamed(Routes.home);
+      Get.toNamed(Routes.bottomNavigation);
       resetForm();
     } catch (e) {
       throw Exception('Gagal menyimpan mood tracker:: $e');

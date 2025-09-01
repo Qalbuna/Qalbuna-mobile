@@ -1,7 +1,15 @@
 import 'package:get/get.dart';
 
+import '../modules/account/bindings/account_binding.dart';
+import '../modules/account/views/account_view.dart';
+import '../modules/bottom_navigation/bindings/bottom_navigation_binding.dart';
+import '../modules/bottom_navigation/views/bottom_navigation_view.dart';
+import '../modules/challenge/bindings/challenge_binding.dart';
+import '../modules/challenge/views/challenge_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/journal/bindings/journal_binding.dart';
+import '../modules/journal/views/journal_view.dart';
 import '../modules/mood_tracker/bindings/mood_tracker_binding.dart';
 import '../modules/mood_tracker/views/mood_tracker_view.dart';
 import '../modules/onboarding/bindings/onboarding_binding.dart';
@@ -50,6 +58,26 @@ class AppPages {
       name: _Paths.moodTracker,
       page: () => const MoodTrackerView(),
       binding: MoodTrackerBinding(),
+    ),
+    GetPage(
+      name: _Paths.bottomNavigation,
+      page: () => const BottomNavigationView(),
+      binding: BottomNavigationBinding(),
+    ),
+    GetPage(
+      name: _Paths.challenge,
+      page: () => const ChallengeView(),
+      binding: ChallengeBinding(),
+    ),
+    GetPage(
+      name: _Paths.journal,
+      page: () => const JournalView(),
+      binding: JournalBinding(),
+    ),
+    GetPage(
+      name: _Paths.account ,
+      page: () => const AccountView(),
+      binding: AccountBinding(),
     ),
   ];
 }

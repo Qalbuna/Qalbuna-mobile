@@ -31,7 +31,7 @@ class HomeView extends GetView<HomeController> {
           physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             children: [
-              const SizedBox(height: 16),
+              const SizedBox(height: 12),
               const GreetingHeaderWidget(),
               const SizedBox(height: 8),
               Padding(
