@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
-import '../../../data/modules/connection_type.dart';
-import '../../../data/modules/mood_type.dart';
-import '../../../data/modules/need_type.dart';
+import '../../../data/models/connection_type.dart';
+import '../../../data/models/mood_type.dart';
+import '../../../data/models/need_type.dart';
 import '../../../routes/app_pages.dart';
-import '../../../services/auth_services.dart';
+import '../../../services/auth/auth_services.dart';
 import '../../../services/supabas_service.dart';
 
 class HomeController extends GetxController {
@@ -44,7 +44,7 @@ class HomeController extends GetxController {
       needTypes.value = results[1] as List<NeedType>;
       connectionTypes.value = results[2] as List<ConnectionType>;
     } catch (e) {
-      print('Error loading master data: $e');
+      throw Exception('Gagal memuat data:: $e');
     }
   }
 
@@ -100,39 +100,6 @@ class HomeController extends GetxController {
     }
   }
   
-  String getMoodEmoji(String moodValue) {
-    final mood = moodTypes.firstWhereOrNull((m) => m.value == moodValue);
-    return mood?.emoji ?? '😊';
-  }
-
-  String getMoodLabel(String moodValue) {
-    final mood = moodTypes.firstWhereOrNull((m) => m.value == moodValue);
-    return mood?.label ?? 'Baik';
-  }
-
-  String getNeedIcon(String needValue) {
-    final need = needTypes.firstWhereOrNull((n) => n.value == needValue);
-    return need?.icon ?? '🤲';
-  }
-
-  String getNeedLabel(String needValue) {
-    final need = needTypes.firstWhereOrNull((n) => n.value == needValue);
-    return need?.label ?? 'Ketenangan';
-  }
-
-  String getConnectionIcon(String connectionValue) {
-    final connection = connectionTypes.firstWhereOrNull(
-      (c) => c.value == connectionValue,
-    );
-    return connection?.icon ?? '⭐';
-  }
-
-  String getConnectionLabel(String connectionValue) {
-    final connection = connectionTypes.firstWhereOrNull(
-      (c) => c.value == connectionValue,
-    );
-    return connection?.label ?? 'Merasa dekat dan terhubung';
-  }
 
   Future<void> refreshTodayMood() async {
     await loadTodayMood();

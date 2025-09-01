@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:qalbuna_app/app/shared/theme/app_colors.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../routes/app_pages.dart';
-import '../../../services/auth_services.dart';
+import '../../../services/auth/auth_services.dart';
 
 class SignInController extends GetxController {
   // Text controllers
@@ -120,14 +120,6 @@ class SignInController extends GetxController {
       final response = await authServices.signInWithGoogle();
 
       if (response.session != null) {
-        Get.snackbar(
-          'Success',
-          'Login dengan Google berhasil!',
-          backgroundColor: AppColors.v1Success500,
-          colorText: AppColors.white,
-          duration: Duration(seconds: 2),
-        );
-
         Future.delayed(Duration(milliseconds: 500), () {
           Get.offAllNamed(Routes.moodTracker);
         });

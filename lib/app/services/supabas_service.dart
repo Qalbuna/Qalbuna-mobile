@@ -1,8 +1,8 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../data/modules/connection_type.dart';
-import '../data/modules/mood_type.dart';
-import '../data/modules/need_type.dart';
-import 'auth_services.dart';
+import '../data/models/connection_type.dart';
+import '../data/models/mood_type.dart';
+import '../data/models/need_type.dart';
+import 'auth/auth_services.dart';
 
 class SupabaseService {
   static final _client = Supabase.instance.client;
@@ -13,7 +13,6 @@ class SupabaseService {
   static String? get currentUserId => currentUser?.id;
 
   // ============== MASTER DATA ==============
-  
   static Future<List<MoodType>> getMoodTypes() async {
     try {
       final response = await _client
@@ -60,7 +59,6 @@ class SupabaseService {
   }
 
   // ============== MOOD ENTRIES ==============
-
   static Future<String> createMoodEntry({
     required String moodValue,
     required List<String> needValues,

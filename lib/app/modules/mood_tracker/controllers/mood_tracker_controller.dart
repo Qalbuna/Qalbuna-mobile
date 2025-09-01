@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import '../../../data/modules/connection_type.dart';
-import '../../../data/modules/mood_type.dart';
-import '../../../data/modules/need_type.dart';
+import '../../../data/models/connection_type.dart';
+import '../../../data/models/mood_type.dart';
+import '../../../data/models/need_type.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/supabas_service.dart';
 
@@ -19,7 +19,7 @@ class MoodTrackerController extends GetxController {
   bool get isFormValid => selectedMoodValue.value.isNotEmpty;
   bool get isFormCompletelyValid =>
       selectedMoodValue.value.isNotEmpty &&
-      selectedNeedValue .value.isNotEmpty &&
+      selectedNeedValue.value.isNotEmpty &&
       selectedConnectionValue.value.isNotEmpty;
 
   @override
@@ -42,11 +42,7 @@ class MoodTrackerController extends GetxController {
       needTypes.value = results[1] as List<NeedType>;
       connectionTypes.value = results[2] as List<ConnectionType>;
     } catch (e) {
-      Get.snackbar(
-        'Error!',
-        'Gagal memuat data: ${e.toString()}',
-        snackPosition: SnackPosition.TOP,
-      );
+      throw Exception('Failed to fetch connection types: $e');
     } finally {
       isLoading.value = false;
     }
@@ -73,21 +69,10 @@ class MoodTrackerController extends GetxController {
         needValues: [selectedNeedValue.value],
         connectionValue: selectedConnectionValue.value,
       );
-
-      Get.snackbar(
-        'Berhasil!',
-        'Mood tracker berhasil disimpan',
-        snackPosition: SnackPosition.TOP,
-      );
-
       Get.toNamed(Routes.home);
       resetForm();
     } catch (e) {
-      Get.snackbar(
-        'Error!',
-        'Gagal menyimpan mood tracker: ${e.toString()}',
-        snackPosition: SnackPosition.TOP,
-      );
+      throw Exception('Gagal menyimpan mood tracker:: $e');
     } finally {
       isSubmitting.value = false;
     }

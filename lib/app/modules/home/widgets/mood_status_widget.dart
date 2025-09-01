@@ -67,6 +67,13 @@ class MoodStatusWidget extends GetView<HomeController> {
               ],
             ),
             const SizedBox(height: 16),
+            Text(
+              'Qalbuna memahami kebutuhan hatimu akan: ',
+              style: AppTypography.sMedium.copyWith(
+                color: AppColors.v1Primary500,
+              ),
+            ),
+            const SizedBox(height: 8),
             if (needs.isNotEmpty || connection != null) ...[
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -76,7 +83,7 @@ class MoodStatusWidget extends GetView<HomeController> {
                       needs.first['need_types']['icon'] ?? '🤲',
                       style: const TextStyle(fontSize: 16),
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: 4),
                     Text(
                       needs.first['need_types']['label'] ?? 'Ketenangan',
                       style: AppTypography.sRegular.copyWith(
@@ -85,7 +92,7 @@ class MoodStatusWidget extends GetView<HomeController> {
                     ),
                   ],
                   if (needs.isNotEmpty && connection != null) ...[
-                    const SizedBox(width: 8),
+                    const SizedBox(width: 14),
                     Container(
                       width: 10,
                       height: 10,
@@ -94,14 +101,14 @@ class MoodStatusWidget extends GetView<HomeController> {
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: 14),
                   ],
                   if (connection != null) ...[
                     Text(
                       connection['connection_types']['icon'] ?? '⭐',
                       style: const TextStyle(fontSize: 16),
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: 4),
                     Expanded(
                       child: Text(
                         connection['connection_types']['label'] ??
@@ -112,32 +119,6 @@ class MoodStatusWidget extends GetView<HomeController> {
                       ),
                     ),
                   ],
-                ],
-              ),
-              const SizedBox(height: 16),
-              Row(
-                children: [
-                  Expanded(
-                    child: TextButton.icon(
-                      onPressed: () => controller.navigateToMoodTracker(),
-                      icon: Icon(
-                        Icons.refresh_rounded,
-                        color: AppColors.v1Primary400,
-                      ),
-                      label: Text(
-                        'Perbarui Perasaan',
-                        style: AppTypography.sMedium.copyWith(
-                          color: AppColors.v1Primary400,
-                        ),
-                      ),
-                      style: TextButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18),
-                        ),
-                        backgroundColor: AppColors.v1Purple25,
-                      ),
-                    ),
-                  ),
                 ],
               ),
               const SizedBox(height: 8),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:get/get.dart';
-import '../routes/app_pages.dart';
+import '../../routes/app_pages.dart';
 
 class AuthGate extends StatelessWidget {
   const AuthGate({super.key});
