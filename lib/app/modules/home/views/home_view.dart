@@ -19,7 +19,7 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColors.white,
+        backgroundColor: AppColors.black,
         elevation: 0,
         toolbarHeight: 0,
       ),
@@ -51,7 +51,7 @@ class HomeView extends GetView<HomeController> {
                     const QuranInsightCard(),
                     const SizedBox(height: 24),
                     Text(
-                      'Pelukan khusus Untukmu',
+                      'Pelukan Qur\'an Untukmu',
                       style: AppTypography.h5Bold.copyWith(
                         color: AppColors.black,
                       ),

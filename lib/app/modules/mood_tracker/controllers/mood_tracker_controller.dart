@@ -3,7 +3,7 @@ import '../../../data/models/connection_type.dart';
 import '../../../data/models/mood_type.dart';
 import '../../../data/models/need_type.dart';
 import '../../../routes/app_pages.dart';
-import '../../../services/supabas_service.dart';
+import '../../../services/core/supabas_service.dart';
 
 class MoodTrackerController extends GetxController {
   var selectedMoodValue = ''.obs;

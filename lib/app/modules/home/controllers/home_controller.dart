@@ -2,13 +2,20 @@ import 'package:get/get.dart';
 import '../../../data/models/connection_type.dart';
 import '../../../data/models/mood_type.dart';
 import '../../../data/models/need_type.dart';
+import '../../../data/models/verse.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/auth/auth_services.dart';
-import '../../../services/supabas_service.dart';
+import '../../../services/core/quran_service.dart';
+import '../../../services/core/supabas_service.dart';
 
 class HomeController extends GetxController {
   var currentMoodData = Rx<Map<String, dynamic>?>(null);
+  var currentVerse = Rx<Verse?>(null);
+  var currentVerseAudioUrl = Rx<String?>(null);
+  var isVerseFavorited = false.obs;
   var isLoading = false.obs;
+  var isVerseLoading = false.obs;
+  var isAudioLoading = false.obs;
   var selectedDate = DateTime.now().obs;
 
   var moodTypes = <MoodType>[].obs;
@@ -80,8 +87,10 @@ class HomeController extends GetxController {
 
       if (todayEntry != null) {
         currentMoodData.value = todayEntry;
+        await loadVerseForCurrentMood();
       } else {
         currentMoodData.value = null;
+        currentVerse.value = null;
       }
     } catch (e) {
       currentMoodData.value = null;
@@ -99,7 +108,112 @@ class HomeController extends GetxController {
       return [];
     }
   }
-  
+
+  Future<void> loadVerseForCurrentMood() async {
+    try {
+      isVerseLoading.value = true;
+
+      if (currentMoodData.value == null) return;
+
+      final moodData = currentMoodData.value!;
+      final entry = moodData['entry'] as Map<String, dynamic>;
+      final moodType = entry['mood_types'] as Map<String, dynamic>;
+      final emotionValue = moodType['value'] as String;
+
+      // Ambil ayat berdasarkan emosi
+      final verse = await QuranService.getRandomVerseByEmotion(emotionValue);
+
+      if (verse != null) {
+        currentVerse.value = verse;
+
+        // Load audio URL
+        await loadAudioForCurrentVerse();
+
+        // Catat bahwa user telah melihat ayat ini
+        await QuranService.recordVerseReading(
+          verseId: verse.id,
+          moodEntryId: entry['id'],
+        );
+      } else {
+        currentVerse.value = null;
+      }
+    } catch (e) {
+      print('Error loading verse: $e');
+      currentVerse.value = null;
+    } finally {
+      isVerseLoading.value = false;
+    }
+  }
+
+  Future<void> loadAudioForCurrentVerse() async {
+    try {
+      if (currentVerse.value == null) return;
+
+      isAudioLoading.value = true;
+
+      final audioUrl = await QuranService.getAudioUrl(currentVerse.value!.id);
+
+      // Cek apakah audio tersedia
+      if (audioUrl != null) {
+        final isAvailable = await QuranService.checkAudioAvailability(audioUrl);
+        currentVerseAudioUrl.value = isAvailable ? audioUrl : null;
+      } else {
+        currentVerseAudioUrl.value = null;
+      }
+    } catch (e) {
+      print('Error loading audio: $e');
+      currentVerseAudioUrl.value = null;
+    } finally {
+      isAudioLoading.value = false;
+    }
+  }
+
+  Future<void> getAnotherVerse() async {
+    try {
+      if (currentMoodData.value == null) return;
+
+      // Reset current verse
+      currentVerse.value = null;
+      currentVerseAudioUrl.value = null;
+      
+      // Load verse baru
+      await loadVerseForCurrentMood();
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        'Gagal memuat ayat lain: $e',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
+  }
+
+  Future<void> playVerseAudio() async {
+    try {
+      if (currentVerseAudioUrl.value != null) {
+        // Implementasi untuk memutar audio
+        // Bisa menggunakan audioplayers package
+        print('Playing audio: ${currentVerseAudioUrl.value}');
+        
+        Get.snackbar(
+          'Audio',
+          'Memutar audio ayat...',
+          snackPosition: SnackPosition.TOP,
+        );
+      } else {
+        Get.snackbar(
+          'Info',
+          'Audio tidak tersedia untuk ayat ini',
+          snackPosition: SnackPosition.TOP,
+        );
+      }
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        'Gagal memutar audio: $e',
+        snackPosition: SnackPosition.TOP,
+      );
+    }
+  }
 
   Future<void> refreshTodayMood() async {
     await loadTodayMood();
@@ -107,5 +221,8 @@ class HomeController extends GetxController {
 
   void navigateToMoodTracker() {
     Get.offAllNamed(Routes.moodTracker);
+  }
+   void navigateToVerseDetail() {
+      // Get.toNamed(Routes.verseDetail, arguments: currentVerse.value);
   }
 }
