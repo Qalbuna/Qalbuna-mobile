@@ -5,6 +5,7 @@ import '../../../data/models/need_type.dart';
 import '../../../data/models/verse.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/auth/auth_services.dart';
+import '../../../services/core/audio_service.dart';
 import '../../../services/core/quran_service.dart';
 import '../../../services/core/supabas_service.dart';
 
@@ -23,6 +24,7 @@ class HomeController extends GetxController {
   var connectionTypes = <ConnectionType>[].obs;
 
   final authServices = AuthServices();
+  late AudioService audioService;
   var userName = 'User'.obs;
   var userEmail = ''.obs;
 
@@ -31,6 +33,7 @@ class HomeController extends GetxController {
     super.onInit();
     loadMasterData();
     loadTodayMood();
+    audioService = Get.put(AudioService()); 
   }
 
   @override
@@ -175,7 +178,7 @@ class HomeController extends GetxController {
       // Reset current verse
       currentVerse.value = null;
       currentVerseAudioUrl.value = null;
-      
+
       // Load verse baru
       await loadVerseForCurrentMood();
     } catch (e) {
@@ -190,15 +193,17 @@ class HomeController extends GetxController {
   Future<void> playVerseAudio() async {
     try {
       if (currentVerseAudioUrl.value != null) {
-        // Implementasi untuk memutar audio
-        // Bisa menggunakan audioplayers package
-        print('Playing audio: ${currentVerseAudioUrl.value}');
-        
-        Get.snackbar(
-          'Audio',
-          'Memutar audio ayat...',
-          snackPosition: SnackPosition.TOP,
+        final success = await audioService.playFromUrl(
+          currentVerseAudioUrl.value!,
         );
+
+        if (!success) {
+          Get.snackbar(
+            'Info',
+            'Gagal memutar audio. Coba lagi atau periksa koneksi internet.',
+            snackPosition: SnackPosition.TOP,
+          );
+        }
       } else {
         Get.snackbar(
           'Info',
@@ -222,7 +227,8 @@ class HomeController extends GetxController {
   void navigateToMoodTracker() {
     Get.offAllNamed(Routes.moodTracker);
   }
-   void navigateToVerseDetail() {
-      // Get.toNamed(Routes.verseDetail, arguments: currentVerse.value);
+
+  void navigateToVerseDetail() {
+    // Get.toNamed(Routes.verseDetail, arguments: currentVerse.value);
   }
 }

@@ -1,4 +1,3 @@
-// lib/app/modules/home/widgets/verse_recommendation_widget.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qalbuna_app/app/shared/theme/index.dart';
@@ -12,36 +11,27 @@ class VerseRecommendationWidget extends GetView<HomeController> {
     return Obx(() {
       // Loading state
       if (controller.isLoading.value || controller.isVerseLoading.value) {
-        return _buildLoadingContainer();
+        return _buildLoadingState();
       }
 
-      // No mood data state
-      if (controller.currentMoodData.value == null || 
-          controller.currentVerse.value == null) {
-        return _buildNoMoodContainer();
+      // No verse state
+      if (controller.currentVerse.value == null) {
+        return _buildEmptyState();
       }
 
-      final verse = controller.currentVerse.value!;
-      final moodData = controller.currentMoodData.value!;
-      final entry = moodData['entry'] as Map<String, dynamic>;
-      final moodType = entry['mood_types'] as Map<String, dynamic>;
-
-      return _buildVerseContainer(verse, moodType);
+      // Show verse
+      return _buildVerseCard();
     });
   }
 
-  Widget _buildLoadingContainer() {
+  Widget _buildLoadingState() {
     return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.v1Primary25,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.v1Primary100),
-      ),
+      padding: const EdgeInsets.all(20),
+      decoration: _cardDecoration(),
       child: Column(
         children: [
           const CircularProgressIndicator(),
-          const SizedBox(height: 16),
+          const SizedBox(height: 12),
           Text(
             'Memuat ayat untukmu...',
             style: AppTypography.sMedium.copyWith(
@@ -53,24 +43,16 @@ class VerseRecommendationWidget extends GetView<HomeController> {
     );
   }
 
-  Widget _buildNoMoodContainer() {
+  Widget _buildEmptyState() {
     return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.v1Primary25,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.v1Primary100),
-      ),
+      padding: const EdgeInsets.all(20),
+      decoration: _cardDecoration(),
       child: Column(
         children: [
-          Icon(
-            Icons.book_outlined,
-            size: 48,
-            color: AppColors.v1Primary300,
-          ),
+          Icon(Icons.book_outlined, size: 48, color: AppColors.v1Primary300),
           const SizedBox(height: 16),
           Text(
-            'Bagikan suasana hatimu terlebih dahulu untuk mendapatkan ayat yang sesuai',
+            'Bagikan perasaanmu untuk mendapat ayat yang sesuai',
             style: AppTypography.sMedium.copyWith(
               color: AppColors.v1Primary500,
             ),
@@ -79,235 +61,159 @@ class VerseRecommendationWidget extends GetView<HomeController> {
           const SizedBox(height: 16),
           ElevatedButton(
             onPressed: controller.navigateToMoodTracker,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.v1Primary500,
-              foregroundColor: AppColors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ),
-            child: Text('Bagikan Perasaan', style: AppTypography.sMedium),
+            child: const Text('Bagikan Perasaan'),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildVerseContainer(dynamic verse, Map<String, dynamic> moodType) {
+  Widget _buildVerseCard() {
+    final verse = controller.currentVerse.value!;
+
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.v1Primary25,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.v1Primary100),
-      ),
+      decoration: _cardDecoration(),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // Header dengan kategori ayat
-          _buildHeader(moodType['value']),
+          // Header
+          _buildHeader(),
           const SizedBox(height: 16),
 
-          // Teks Arab
-          _buildArabicText(verse.arabicText),
-          const SizedBox(height: 12),
-
-          // Terjemahan
-          _buildTranslation(verse.translationId),
-          const SizedBox(height: 8),
-
-          // Referensi ayat
-          _buildReference(verse),
-
-          // Tafsir singkat jika ada
-          if (verse.interpretation?.briefInterpretation != null)
-            _buildBriefTafsir(verse.interpretation!.briefInterpretation!),
-          
-          const SizedBox(height: 16),
-
-          // Tombol aksi utama
-          _buildMainActionButtons(),
-          const SizedBox(height: 12),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildHeader(String emotionValue) {
-    return Container(
-      alignment: Alignment.topLeft,
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      child: Text(
-        _getVerseCategory(emotionValue),
-        style: AppTypography.sSemiBold.copyWith(
-          color: AppColors.v1Primary500,
-        ),
-        textAlign: TextAlign.left,
-      ),
-    );
-  }
-
-  Widget _buildArabicText(String arabicText) {
-    return Text(
-      arabicText,
-      style: AppTypography.h5Bold.copyWith(
-        color: AppColors.black,
-        height: 1.8,
-        fontSize: 18,
-      ),
-      textAlign: TextAlign.right,
-    );
-  }
-
-  Widget _buildTranslation(String translation) {
-    return Text(
-      '"$translation"',
-      style: AppTypography.sMedium.copyWith(
-        color: AppColors.v1Neutral600,
-        fontStyle: FontStyle.italic,
-        height: 1.4,
-      ),
-      textAlign: TextAlign.center,
-    );
-  }
-
-  Widget _buildReference(dynamic verse) {
-    return Text(
-      verse.reference,
-      style: AppTypography.sMedium.copyWith(
-        color: AppColors.v1Primary500,
-        fontWeight: FontWeight.w600,
-      ),
-      textAlign: TextAlign.center,
-    );
-  }
-
-  Widget _buildBriefTafsir(String briefTafsir) {
-    return Column(
-      children: [
-        const SizedBox(height: 12),
-        Container(
-          padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            color: AppColors.v1Primary50,
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: AppColors.v1Primary200),
+          // Arabic text
+          Text(
+            verse.arabicText,
+            style: AppTypography.h5Bold.copyWith(height: 1.8, fontSize: 18),
+            textAlign: TextAlign.right,
           ),
-          child: Text(
-            briefTafsir,
-            style: AppTypography.sRegular.copyWith(
-              color: AppColors.v1Primary700,
+          const SizedBox(height: 12),
+
+          // Translation
+          Text(
+            '"${verse.translationId}"',
+            style: AppTypography.sMedium.copyWith(
+              color: AppColors.v1Neutral600,
               fontStyle: FontStyle.italic,
             ),
             textAlign: TextAlign.center,
           ),
-        ),
-      ],
+          const SizedBox(height: 8),
+
+          // Reference
+          Text(
+            verse.reference,
+            style: AppTypography.sMedium.copyWith(
+              color: AppColors.v1Primary500,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          const SizedBox(height: 16),
+
+          // Action buttons
+          _buildActionButtons(),
+        ],
+      ),
     );
   }
 
-  Widget _buildMainActionButtons() {
+  Widget _buildHeader() {
+    // Get emotion from current mood
+    String category = 'Ayat untuk Kehidupan';
+    if (controller.currentMoodData.value != null) {
+      final entry =
+          controller.currentMoodData.value!['entry'] as Map<String, dynamic>;
+      final moodType = entry['mood_types'] as Map<String, dynamic>;
+      category = _getCategoryByEmotion(moodType['value']);
+    }
+
     return Row(
       children: [
-        // Tombol Audio
-        Expanded(
-          child: Obx(() => ElevatedButton.icon(
-            onPressed: _getAudioButtonAction(),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: _getAudioButtonColor(),
-              foregroundColor: AppColors.white,
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ),
-            icon: _getAudioButtonIcon(),
-            label: Text(_getAudioButtonText(), style: AppTypography.sMedium),
-          )),
-        ),
-        const SizedBox(width: 12),
-
-        // Tombol Tafsir
-        OutlinedButton(
-          onPressed: controller.currentVerse.value?.interpretation != null
-              ? controller.navigateToVerseDetail
-              : null,
-          style: OutlinedButton.styleFrom(
-            foregroundColor: AppColors.v1Primary500,
-            side: BorderSide(color: AppColors.v1Primary500),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            disabledForegroundColor: AppColors.v1Neutral400,
+        Icon(Icons.auto_awesome, color: AppColors.v1Primary500, size: 18),
+        const SizedBox(width: 8),
+        Text(
+          category,
+          style: AppTypography.sSemiBold.copyWith(
+            color: AppColors.v1Primary500,
           ),
-          child: Text('Tafsir', style: AppTypography.sMedium),
         ),
       ],
     );
   }
 
- 
-  // Helper methods untuk audio button
-  VoidCallback? _getAudioButtonAction() {
-    if (controller.isAudioLoading.value) return null;
-    
-    if (controller.currentVerseAudioUrl.value != null) {
-      return controller.playVerseAudio;
-    }
-    
-    return null;
-  }
+  Widget _buildActionButtons() {
+    return Row(
+      children: [
+        // Audio button
+        Expanded(child: _buildAudioButton()),
+        const SizedBox(width: 12),
 
-  Color _getAudioButtonColor() {
-    if (controller.currentVerseAudioUrl.value != null) {
-      return AppColors.v1Primary500;
-    }
-    return AppColors.v1Neutral300;
-  }
-
-  Widget _getAudioButtonIcon() {
-    if (controller.isAudioLoading.value) {
-      return const SizedBox(
-        width: 18,
-        height: 18,
-        child: CircularProgressIndicator(
-          strokeWidth: 2,
-          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+        // Get another verse button
+        Expanded(
+          child: OutlinedButton(
+            onPressed: controller.getAnotherVerse,
+            style: OutlinedButton.styleFrom(
+              foregroundColor: AppColors.v1Primary500,
+              side: BorderSide(color: AppColors.v1Primary500),
+            ),
+            child: const Text('Ayat Lain'),
+          ),
         ),
+      ],
+    );
+  }
+
+  Widget _buildAudioButton() {
+    return Obx(() {
+      // Audio loading
+      if (controller.isAudioLoading.value) {
+        return ElevatedButton.icon(
+          onPressed: null,
+          icon: const SizedBox(
+            width: 16,
+            height: 16,
+            child: CircularProgressIndicator(strokeWidth: 2),
+          ),
+          label: const Text('Loading...'),
+        );
+      }
+
+      // Audio not available
+      return ElevatedButton.icon(
+        onPressed: null,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.v1Neutral300,
+        ),
+        icon: const Icon(Icons.volume_off, size: 18),
+        label: const Text('Audio N/A'),
       );
-    }
-    
-    return const Icon(Icons.play_arrow, size: 18);
+    });
   }
 
-  String _getAudioButtonText() {
-    if (controller.isAudioLoading.value) {
-      return 'Loading...';
-    }
-    
-    if (controller.currentVerseAudioUrl.value != null) {
-      return 'Dengar Audio';
-    }
-    
-    return 'Audio N/A';
+  BoxDecoration _cardDecoration() {
+    return BoxDecoration(
+      color: AppColors.v1Primary25,
+      borderRadius: BorderRadius.circular(16),
+      border: Border.all(color: AppColors.v1Primary100),
+      boxShadow: [
+        BoxShadow(
+          color: AppColors.v1Primary50,
+          blurRadius: 8,
+          offset: const Offset(0, 2),
+        ),
+      ],
+    );
   }
 
-  String _getVerseCategory(String emotionValue) {
-    switch (emotionValue) {
-      case 'sedih':
-        return 'Ayat untuk Penghiburan';
-      case 'cemas':
-        return 'Ayat untuk Ketenangan';
-      case 'bersalah':
-        return 'Ayat untuk Ampunan';
-      case 'marah':
-        return 'Ayat untuk Kesabaran';
-      case 'bahagia':
-        return 'Ayat untuk Syukur';
-      case 'takut':
-        return 'Ayat untuk Perlindungan';
-      default:
-        return 'Ayat untuk Kehidupan';
-    }
+  String _getCategoryByEmotion(String emotion) {
+    final categories = {
+      'sedih': 'Ayat untuk Penghiburan',
+      'cemas': 'Ayat untuk Ketenangan',
+      'bersalah': 'Ayat untuk Ampunan',
+      'marah': 'Ayat untuk Kesabaran',
+      'bahagia': 'Ayat untuk Syukur',
+      'takut': 'Ayat untuk Perlindungan',
+    };
+
+    return categories[emotion] ?? 'Ayat untuk Kehidupan';
   }
 }
