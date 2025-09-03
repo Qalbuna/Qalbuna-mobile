@@ -33,7 +33,7 @@ class HomeController extends GetxController {
     super.onInit();
     loadMasterData();
     loadTodayMood();
-    audioService = Get.put(AudioService()); 
+    audioService = Get.put(AudioService());
   }
 
   @override
@@ -123,26 +123,22 @@ class HomeController extends GetxController {
       final moodType = entry['mood_types'] as Map<String, dynamic>;
       final emotionValue = moodType['value'] as String;
 
-      // Ambil ayat berdasarkan emosi
       final verse = await QuranService.getRandomVerseByEmotion(emotionValue);
 
       if (verse != null) {
         currentVerse.value = verse;
-
-        // Load audio URL
         await loadAudioForCurrentVerse();
-
-        // Catat bahwa user telah melihat ayat ini
+        currentVerseAudioUrl.value = verse.audioUrl;
         await QuranService.recordVerseReading(
           verseId: verse.id,
           moodEntryId: entry['id'],
         );
       } else {
         currentVerse.value = null;
+        currentVerseAudioUrl.value = null;
       }
     } catch (e) {
-      print('Error loading verse: $e');
-      currentVerse.value = null;
+      throw Exception('Error loading verse: $e');
     } finally {
       isVerseLoading.value = false;
     }
@@ -151,12 +147,8 @@ class HomeController extends GetxController {
   Future<void> loadAudioForCurrentVerse() async {
     try {
       if (currentVerse.value == null) return;
-
       isAudioLoading.value = true;
-
       final audioUrl = await QuranService.getAudioUrl(currentVerse.value!.id);
-
-      // Cek apakah audio tersedia
       if (audioUrl != null) {
         final isAvailable = await QuranService.checkAudioAvailability(audioUrl);
         currentVerseAudioUrl.value = isAvailable ? audioUrl : null;
@@ -164,8 +156,7 @@ class HomeController extends GetxController {
         currentVerseAudioUrl.value = null;
       }
     } catch (e) {
-      print('Error loading audio: $e');
-      currentVerseAudioUrl.value = null;
+      throw Exception('Error loading audio: $e');
     } finally {
       isAudioLoading.value = false;
     }
@@ -175,48 +166,12 @@ class HomeController extends GetxController {
     try {
       if (currentMoodData.value == null) return;
 
-      // Reset current verse
       currentVerse.value = null;
       currentVerseAudioUrl.value = null;
 
-      // Load verse baru
       await loadVerseForCurrentMood();
     } catch (e) {
-      Get.snackbar(
-        'Error',
-        'Gagal memuat ayat lain: $e',
-        snackPosition: SnackPosition.BOTTOM,
-      );
-    }
-  }
-
-  Future<void> playVerseAudio() async {
-    try {
-      if (currentVerseAudioUrl.value != null) {
-        final success = await audioService.playFromUrl(
-          currentVerseAudioUrl.value!,
-        );
-
-        if (!success) {
-          Get.snackbar(
-            'Info',
-            'Gagal memutar audio. Coba lagi atau periksa koneksi internet.',
-            snackPosition: SnackPosition.TOP,
-          );
-        }
-      } else {
-        Get.snackbar(
-          'Info',
-          'Audio tidak tersedia untuk ayat ini',
-          snackPosition: SnackPosition.TOP,
-        );
-      }
-    } catch (e) {
-      Get.snackbar(
-        'Error',
-        'Gagal memutar audio: $e',
-        snackPosition: SnackPosition.TOP,
-      );
+      throw Exception('Gagal memuat ayat lain: $e');
     }
   }
 
@@ -230,5 +185,25 @@ class HomeController extends GetxController {
 
   void navigateToVerseDetail() {
     // Get.toNamed(Routes.verseDetail, arguments: currentVerse.value);
+  }
+  Future<void> togglePlayPause() async {
+    if (currentVerseAudioUrl.value == null) return;
+
+    final isCurrentlyPlaying =
+        audioService.isPlaying.value &&
+        audioService.currentUrl.value == currentVerseAudioUrl.value;
+
+    if (isCurrentlyPlaying) {
+      await audioService.pause();
+    } else if (audioService.isPaused.value &&
+        audioService.currentUrl.value == currentVerseAudioUrl.value) {
+      await audioService.resume();
+    } else {
+      await audioService.playFromUrl(currentVerseAudioUrl.value!);
+    }
+  }
+
+  Future<void> stopAudio() async {
+    await audioService.stop();
   }
 }

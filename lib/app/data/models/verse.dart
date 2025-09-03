@@ -1,4 +1,3 @@
-// lib/app/data/models/verse.dart - UPDATE FINAL
 import 'surah.dart';
 import 'verse_interpretation.dart';
 
@@ -8,9 +7,10 @@ class Verse {
   final int verseNumber;
   final String arabicText;
   final String translationId;
+  final int actualSurahNumber;
+  final int actualVerseNumber;
   final String reciterCode;
-  final int? ayahNumber;
-  final String? audioUrl; // Untuk caching URL yang sudah di-generate
+  final String? audioUrl; 
   final DateTime createdAt;
   final Surah? surah;
   final VerseInterpretation? interpretation;
@@ -21,8 +21,9 @@ class Verse {
     required this.verseNumber,
     required this.arabicText,
     required this.translationId,
+    required this.actualSurahNumber,
+    required this.actualVerseNumber,
     required this.reciterCode,
-    this.ayahNumber,
     this.audioUrl,
     required this.createdAt,
     this.surah,
@@ -36,9 +37,10 @@ class Verse {
       verseNumber: json['verse_number'] ?? 0,
       arabicText: json['arabic_text'] ?? '',
       translationId: json['translation_id'] ?? '',
+      actualSurahNumber: json['actual_surah_number'] ?? 0,
+      actualVerseNumber: json['actual_verse_number'] ?? 0,
       reciterCode: json['reciter_code'] ?? 'ar.alafasy',
-      ayahNumber: json['ayah_number'],
-      audioUrl: json['audio_url'], // Bisa null jika belum di-generate
+      audioUrl: json['audio_url'], 
       createdAt: DateTime.tryParse(json['created_at'] ?? '') ?? DateTime.now(),
       surah: json['surahs'] != null ? Surah.fromJson(json['surahs']) : null,
       interpretation: json['verse_interpretations'] != null && 
@@ -55,8 +57,9 @@ class Verse {
       'verse_number': verseNumber,
       'arabic_text': arabicText,
       'translation_id': translationId,
+      'actual_surah_number': actualSurahNumber,
+      'actual_verse_number': actualVerseNumber,
       'reciter_code': reciterCode,
-      'ayah_number': ayahNumber,
       'audio_url': audioUrl,
       'created_at': createdAt.toIso8601String(),
     };
@@ -68,8 +71,9 @@ class Verse {
     int? verseNumber,
     String? arabicText,
     String? translationId,
+    int? actualSurahNumber,
+    int? actualVerseNumber,
     String? reciterCode,
-    int? ayahNumber,
     String? audioUrl,
     DateTime? createdAt,
     Surah? surah,
@@ -81,8 +85,9 @@ class Verse {
       verseNumber: verseNumber ?? this.verseNumber,
       arabicText: arabicText ?? this.arabicText,
       translationId: translationId ?? this.translationId,
+      actualSurahNumber: actualSurahNumber ?? this.actualSurahNumber,
+      actualVerseNumber: actualVerseNumber ?? this.actualVerseNumber,
       reciterCode: reciterCode ?? this.reciterCode,
-      ayahNumber: ayahNumber ?? this.ayahNumber,
       audioUrl: audioUrl ?? this.audioUrl,
       createdAt: createdAt ?? this.createdAt,
       surah: surah ?? this.surah,
@@ -94,6 +99,12 @@ class Verse {
     if (surah != null) {
       return 'QS. ${surah!.nameLatin}: $verseNumber';
     }
-    return 'QS. $verseNumber';
+    return 'QS. $actualSurahNumber: $verseNumber';
   }
+
+  /// Getter untuk ayah number global (untuk audio)
+  int get ayahNumber => actualVerseNumber;
+  
+  /// Getter untuk nomor surah yang actual
+  int get surahNumber => actualSurahNumber;
 }

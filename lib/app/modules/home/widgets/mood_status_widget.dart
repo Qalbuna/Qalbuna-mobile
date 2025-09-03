@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:qalbuna_app/app/shared/theme/index.dart';
+import '../../../shared/widgets/shimmer_placeholder.dart';
 import '../controllers/home_controller.dart';
 
 class MoodStatusWidget extends GetView<HomeController> {
@@ -11,15 +12,7 @@ class MoodStatusWidget extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Obx(() {
       if (controller.isLoading.value) {
-        return Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: AppColors.white,
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: AppColors.v1Primary500),
-          ),
-          child: const Center(child: CircularProgressIndicator()),
-        );
+        return const Center(child: ShimmerPlaceholder(),);
       }
 
       final moodData = controller.currentMoodData.value;

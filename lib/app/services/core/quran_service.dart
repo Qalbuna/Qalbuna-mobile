@@ -1,4 +1,3 @@
-// lib/app/services/quran_service.dart
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:http/http.dart' as http;
 import '../../data/models/verse.dart';
@@ -11,21 +10,36 @@ class QuranService {
   static User? get currentUser => _authServices.getCurrentUser();
   static String? get currentUserId => currentUser?.id;
 
-  // ============== MENDAPATKAN AYAT BERDASARKAN EMOSI ==============
-  
-  /// Mendapatkan ayat berdasarkan emosi dari mood_types.value existing
+  // Format EveryAyah untuk audio yang benar
+  static String generateEveryAyahUrl(int surahNumber, int verseNumber) {
+    final surahPadded = surahNumber.toString().padLeft(3, '0');
+    final versePadded = verseNumber.toString().padLeft(3, '0');
+    return 'https://everyayah.com/data/Alafasy_128kbps/$surahPadded$versePadded.mp3';
+  }
+
   static Future<List<Verse>> getVersesByEmotion(
     String emotionValue, {
     int limit = 5,
     int offset = 0,
   }) async {
     try {
-      final response = await _client
+      final emotionResponse = await _client
           .from('verse_emotions')
-          .select('''
-            verses!inner(
-              id, surah_id, verse_number, arabic_text, translation_id, 
-              reciter_code, ayah_number, created_at,
+          .select('verse_id, relevance_score, tags')
+          .eq('emotion_value', emotionValue)
+          .order('relevance_score', ascending: false)
+          .range(offset, offset + limit - 1);
+
+      if (emotionResponse.isEmpty) return [];
+
+      List<Verse> verses = [];
+
+      for (final emotion in emotionResponse) {
+        final verseResponse = await _client
+            .from('verses')
+            .select('''
+              id, surah_id, verse_number, arabic_text, translation_id,
+              actual_surah_number, actual_verse_number, reciter_code, created_at,
               surahs!inner(
                 id, number, name_arabic, name_latin, translation, 
                 revelation_place, total_verses
@@ -34,23 +48,25 @@ class QuranService {
                 id, verse_id, tafsir_source, interpretation_text, 
                 brief_interpretation
               )
-            ),
-            relevance_score, tags
-          ''')
-          .eq('emotion_value', emotionValue)
-          .order('relevance_score', ascending: false)
-          .range(offset, offset + limit - 1);
+            ''')
+            .eq('id', emotion['verse_id'])
+            .single();
 
-      return response.map<Verse>((item) {
-        final verseData = item['verses'];
-        return Verse.fromJson(verseData);
-      }).toList();
+        final verse = Verse.fromJson(verseResponse);
+        final audioUrl = generateEveryAyahUrl(
+          verse.actualSurahNumber,
+          verse.actualVerseNumber,
+        );
+        final verseWithAudio = verse.copyWith(audioUrl: audioUrl);
+        verses.add(verseWithAudio);
+      }
+
+      return verses;
     } catch (e) {
-      throw Exception('Gagal memuat ayat untuk emosi $emotionValue: $e');
+      throw Exception('Error in getVersesByEmotion: $e');
     }
   }
 
-  /// Mendapatkan satu ayat acak berdasarkan emosi untuk home widget
   static Future<Verse?> getRandomVerseByEmotion(String emotionValue) async {
     try {
       final verses = await getVersesByEmotion(emotionValue, limit: 10);
@@ -59,61 +75,27 @@ class QuranService {
       final randomIndex = DateTime.now().millisecondsSinceEpoch % verses.length;
       return verses[randomIndex];
     } catch (e) {
-      print('Error getting random verse: $e');
-      return null;
+      throw Exception('Error getting random verse: $e');
     }
   }
 
-  // ============== AUDIO MANAGEMENT ==============
-  
-  /// Generate URL audio menggunakan function database
   static Future<String?> getAudioUrl(String verseId, {int bitrate = 128}) async {
     try {
       final response = await _client
-          .rpc('get_audio_url', params: {
-            'p_ayah_number': await _getAyahNumber(verseId),
-            'p_reciter_code': await _getReciterCode(verseId),
-            'p_bitrate': bitrate,
-          });
-      
-      return response as String?;
-    } catch (e) {
-      print('Error generating audio URL: $e');
-      return null;
-    }
-  }
-
-  /// Helper untuk mendapatkan ayah number
-  static Future<int?> _getAyahNumber(String verseId) async {
-    try {
-      final response = await _client
           .from('verses')
-          .select('ayah_number')
+          .select('actual_surah_number, actual_verse_number')
           .eq('id', verseId)
           .single();
       
-      return response['ayah_number'] as int?;
-    } catch (e) {
-      return null;
-    }
-  }
-
-  /// Helper untuk mendapatkan reciter code
-  static Future<String> _getReciterCode(String verseId) async {
-    try {
-      final response = await _client
-          .from('verses')
-          .select('reciter_code')
-          .eq('id', verseId)
-          .single();
+      final surahNumber = response['actual_surah_number'] as int;
+      final verseNumber = response['actual_verse_number'] as int;
       
-      return response['reciter_code'] ?? 'ar.alafasy';
+      return generateEveryAyahUrl(surahNumber, verseNumber);
     } catch (e) {
-      return 'ar.alafasy';
+      throw Exception('Error generating audio URL: $e');
     }
   }
 
-  /// Cek ketersediaan audio
   static Future<bool> checkAudioAvailability(String audioUrl) async {
     try {
       final response = await http.head(Uri.parse(audioUrl));
@@ -123,9 +105,6 @@ class QuranService {
     }
   }
 
-  // ============== TRACKING USER VERSE READINGS ==============
-  
-  /// Catat bacaan ayat user dengan referensi ke mood_entries
   static Future<void> recordVerseReading({
     required String verseId,
     String? moodEntryId,
@@ -140,11 +119,10 @@ class QuranService {
         'read_at': DateTime.now().toIso8601String(),
       });
     } catch (e) {
-      print('Error recording verse reading: $e');
+      throw Exception('Error recording verse reading: $e');
     }
   }
 
-  /// Toggle favorite ayat
   static Future<void> toggleVerseFavorite(String verseId) async {
     try {
       if (currentUserId == null) return;
@@ -159,7 +137,7 @@ class QuranService {
       if (existing != null) {
         await _client
             .from('user_verse_readings')
-            .update({'is_favorited': !existing['is_favorited']})
+            .update({'is_favorited': !(existing['is_favorited'] ?? false)})
             .eq('id', existing['id']);
       } else {
         await _client.from('user_verse_readings').insert({
@@ -174,7 +152,6 @@ class QuranService {
     }
   }
 
-  /// Cek apakah ayat sudah difavorite
   static Future<bool> isVerseFavorited(String verseId) async {
     try {
       if (currentUserId == null) return false;
@@ -193,28 +170,18 @@ class QuranService {
     }
   }
 
-  // ============== INTEGRATION HELPER ==============
-  
-  /// Ambil ayat berdasarkan mood entry yang sudah ada
   static Future<Verse?> getVerseForMoodEntry(String moodEntryId) async {
     try {
-      // Ambil mood type dari mood entry
       final moodEntry = await _client
           .from('mood_entries')
-          .select('''
-            id,
-            mood_types!inner(value)
-          ''')
+          .select('id, mood_types!inner(value)')
           .eq('id', moodEntryId)
           .single();
 
       final emotionValue = moodEntry['mood_types']['value'] as String;
-      
-      // Ambil ayat random untuk emosi ini
       final verse = await getRandomVerseByEmotion(emotionValue);
       
       if (verse != null) {
-        // Catat bacaan ini
         await recordVerseReading(
           verseId: verse.id,
           moodEntryId: moodEntryId,
@@ -223,8 +190,7 @@ class QuranService {
       
       return verse;
     } catch (e) {
-      print('Error getting verse for mood entry: $e');
-      return null;
+      throw Exception('Error getting verse for mood entry: $e');
     }
   }
 }

@@ -19,7 +19,7 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColors.black,
+        backgroundColor: AppColors.white,
         elevation: 0,
         toolbarHeight: 0,
       ),

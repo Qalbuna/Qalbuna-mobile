@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 
 class AudioService extends GetxController {
   static AudioService get instance => Get.find<AudioService>();
-  
+
   late AudioPlayer _audioPlayer;
-  
+
   var isPlaying = false.obs;
   var isPaused = false.obs;
   var isLoading = false.obs;
@@ -21,7 +21,7 @@ class AudioService extends GetxController {
 
   void _initializePlayer() {
     _audioPlayer = AudioPlayer();
-    
+
     // Listen to player state changes
     _audioPlayer.onPlayerStateChanged.listen((PlayerState state) {
       isPlaying.value = state == PlayerState.playing;
@@ -49,33 +49,27 @@ class AudioService extends GetxController {
   Future<bool> playFromUrl(String url) async {
     try {
       isLoading.value = true;
-      
+
       // Stop current audio if playing different URL
       if (currentUrl.value != url && isPlaying.value) {
         await stop();
       }
-      
+
       currentUrl.value = url;
-      
+
       // Play the audio
       await _audioPlayer.play(UrlSource(url));
-      
+
       Get.snackbar(
         'Audio',
         'Memulai murotal...',
         snackPosition: SnackPosition.TOP,
         duration: Duration(seconds: 2),
       );
-      
+
       return true;
     } catch (e) {
-      print('Error playing audio: $e');
-      Get.snackbar(
-        'Error',
-        'Gagal memutar audio: ${e.toString()}',
-        snackPosition: SnackPosition.TOP,
-      );
-      return false;
+      throw Exception('Error playing audio: $e');
     } finally {
       isLoading.value = false;
     }
@@ -85,7 +79,7 @@ class AudioService extends GetxController {
     try {
       await _audioPlayer.pause();
     } catch (e) {
-      print('Error pausing audio: $e');
+      throw Exception('Error pausing audio: $e');
     }
   }
 
@@ -93,7 +87,7 @@ class AudioService extends GetxController {
     try {
       await _audioPlayer.resume();
     } catch (e) {
-      print('Error resuming audio: $e');
+      throw Exception('Error resuming audio: $e');
     }
   }
 
@@ -102,15 +96,7 @@ class AudioService extends GetxController {
       await _audioPlayer.stop();
       currentPosition.value = Duration.zero;
     } catch (e) {
-      print('Error stopping audio: $e');
-    }
-  }
-
-  Future<void> seek(Duration position) async {
-    try {
-      await _audioPlayer.seek(position);
-    } catch (e) {
-      print('Error seeking audio: $e');
+      throw Exception('Error stopping audio: $e');
     }
   }
 
@@ -118,7 +104,7 @@ class AudioService extends GetxController {
     try {
       await _audioPlayer.setVolume(volume.clamp(0.0, 1.0));
     } catch (e) {
-      print('Error setting volume: $e');
+      throw Exception('Error setting volume: $e');
     }
   }
 
