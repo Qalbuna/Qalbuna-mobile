@@ -10,7 +10,6 @@ class QuranService {
   static User? get currentUser => _authServices.getCurrentUser();
   static String? get currentUserId => currentUser?.id;
 
-  // Format EveryAyah untuk audio yang benar
   static String generateEveryAyahUrl(int surahNumber, int verseNumber) {
     final surahPadded = surahNumber.toString().padLeft(3, '0');
     final versePadded = verseNumber.toString().padLeft(3, '0');

@@ -68,6 +68,7 @@ class DhikrAmalanWidget extends GetView<HomeController> {
             color: AppColors.v1Neutral600,
             height: 1.3,
           ),
+          textAlign: TextAlign.justify
         ),
         const SizedBox(height: 12),
         Text(

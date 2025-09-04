@@ -74,7 +74,7 @@ class BottomNavigationView extends GetView<BottomNavigationController> {
                     ),
                   ),
                 ),
-                label: 'Home',
+                label: 'Beranda',
               ),
               BottomNavigationBarItem(
                 icon: Padding(
@@ -93,7 +93,7 @@ class BottomNavigationView extends GetView<BottomNavigationController> {
                     ),
                   ),
                 ),
-                label: 'Challenge',
+                label: 'Tantangan',
               ),
               BottomNavigationBarItem(
                 icon: Padding(
@@ -110,7 +110,7 @@ class BottomNavigationView extends GetView<BottomNavigationController> {
                     ),
                   ),
                 ),
-                label: 'Journal',
+                label: 'Jurnal',
               ),
               BottomNavigationBarItem(
                 icon: Padding(
@@ -127,7 +127,7 @@ class BottomNavigationView extends GetView<BottomNavigationController> {
                     ),
                   ),
                 ),
-                label: 'Account',
+                label: 'Akun',
               ),
             ],
           ),

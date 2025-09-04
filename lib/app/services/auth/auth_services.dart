@@ -4,7 +4,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 class AuthServices {
   final SupabaseClient _supabase = Supabase.instance.client;
 
-  // Use the Android client ID for Android apps
   final GoogleSignIn _googleSignIn = GoogleSignIn(
     serverClientId:
         '990120265277-jdg3s6s1mrml7h9u6701a8kik8o5ri6h.apps.googleusercontent.com',
@@ -108,7 +107,6 @@ class AuthServices {
         throw Exception('No ID Token found');
       }
 
-      // Sign in to Supabase with Google tokens
       final response = await _supabase.auth.signInWithIdToken(
         provider: OAuthProvider.google,
         idToken: idToken,
@@ -123,7 +121,6 @@ class AuthServices {
     }
   }
 
-  // Alias for sign up with Google (same implementation)
   Future<AuthResponse> signUpWithGoogle() async {
     return await signInWithGoogle();
   }
