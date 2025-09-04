@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:qalbuna_app/app/shared/theme/index.dart';
 import '../../../shared/widgets/shimmer_placeholder.dart';
 import '../controllers/home_controller.dart';
+import 'card_decoration.dart';
 
 class VerseRecommendationWidget extends GetView<HomeController> {
   const VerseRecommendationWidget({super.key});
@@ -17,31 +18,23 @@ class VerseRecommendationWidget extends GetView<HomeController> {
     });
   }
 
-
   Widget _buildEmptyState() {
-    return Column(
-      children: [
-        Center(child: ShimmerPlaceholder()),
-      ],
-    );
+    return Column(children: [Center(child: ShimmerPlaceholder())]);
   }
 
   Widget _buildVerseCard() {
     final verse = controller.currentVerse.value!;
-    
+
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: _cardDecoration(),
+      decoration: CardDecoration.primary(),
       child: Column(
         children: [
           _buildHeader(),
           const SizedBox(height: 16),
           Text(
             verse.arabicText,
-            style: AppTypography.h5Bold.copyWith(
-              height: 1.8,
-              fontSize: 18,
-            ),
+            style: AppTypography.h5Bold.copyWith(height: 1.8, fontSize: 18),
             textAlign: TextAlign.right,
           ),
           const SizedBox(height: 12),
@@ -63,6 +56,28 @@ class VerseRecommendationWidget extends GetView<HomeController> {
           ),
           const SizedBox(height: 16),
           _buildActionButtons(),
+          const SizedBox(height: 16),
+          GestureDetector(
+            // onTap: () => controller.readVerseExplanation(),
+            child: Row(
+              children: [
+                Text(
+                  'Baca Kandungan Ayat',
+                  style: AppTypography.sMedium.copyWith(
+                    color: AppColors.v1Primary500,
+                    decoration: TextDecoration.underline,
+                    decorationColor: AppColors.v1Primary500,
+                  ),
+                ),
+                const SizedBox(width: 4),
+                Icon(
+                  Icons.arrow_forward,
+                  color: AppColors.v1Primary500,
+                  size: 16,
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -71,18 +86,15 @@ class VerseRecommendationWidget extends GetView<HomeController> {
   Widget _buildHeader() {
     String category = '';
     if (controller.currentMoodData.value != null) {
-      final entry = controller.currentMoodData.value!['entry'] as Map<String, dynamic>;
+      final entry =
+          controller.currentMoodData.value!['entry'] as Map<String, dynamic>;
       final moodType = entry['mood_types'] as Map<String, dynamic>;
       category = _getCategoryByEmotion(moodType['value']);
     }
-    
+
     return Row(
       children: [
-        Icon(
-          Icons.auto_awesome,
-          color: AppColors.v1Primary500,
-          size: 18,
-        ),
+        Icon(Icons.auto_awesome, color: AppColors.v1Primary500, size: 18),
         const SizedBox(width: 8),
         Text(
           category,
@@ -97,9 +109,7 @@ class VerseRecommendationWidget extends GetView<HomeController> {
   Widget _buildActionButtons() {
     return Row(
       children: [
-        Expanded(
-          child: _buildAudioButton(),
-        ),
+        Expanded(child: _buildAudioButton()),
         const SizedBox(width: 12),
         Expanded(
           child: OutlinedButton(
@@ -129,24 +139,21 @@ class VerseRecommendationWidget extends GetView<HomeController> {
         );
       }
       if (controller.currentVerseAudioUrl.value != null) {
-        final isPlaying = controller.audioService.isPlaying.value &&
-            controller.audioService.currentUrl.value == controller.currentVerseAudioUrl.value;
-        
+        final isPlaying =
+            controller.audioService.isPlaying.value &&
+            controller.audioService.currentUrl.value ==
+                controller.currentVerseAudioUrl.value;
+
         return ElevatedButton.icon(
           onPressed: controller.togglePlayPause,
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.v1Primary500,
             foregroundColor: Colors.white,
           ),
-          icon: Icon(
-            isPlaying ? Icons.pause : Icons.play_arrow,
-            size: 18,
-          ),
+          icon: Icon(isPlaying ? Icons.pause : Icons.play_arrow, size: 18),
           label: Text(isPlaying ? 'Pause' : 'Dengar'),
         );
       }
-
-      // Audio not available
       return ElevatedButton.icon(
         onPressed: null,
         style: ElevatedButton.styleFrom(
@@ -158,21 +165,6 @@ class VerseRecommendationWidget extends GetView<HomeController> {
     });
   }
 
-  BoxDecoration _cardDecoration() {
-    return BoxDecoration(
-      color: AppColors.white,
-      borderRadius: BorderRadius.circular(16),
-      border: Border.all(color: AppColors.v1Primary100),
-      boxShadow: [
-        BoxShadow(
-          color: AppColors.v1Primary25,
-          blurRadius: 8,
-          offset: const Offset(0, 2),
-        ),
-      ],
-    );
-  }
-
   String _getCategoryByEmotion(String emotion) {
     final categories = {
       'sedih': 'Ayat Penghiburan',
@@ -182,8 +174,7 @@ class VerseRecommendationWidget extends GetView<HomeController> {
       'bahagia': 'Ayat Syukur',
       'takut': 'Ayat Perlindungan',
     };
-    
+
     return categories[emotion] ?? 'Ayat untuk Kehidupan';
   }
 }
-

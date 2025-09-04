@@ -102,9 +102,6 @@ class Verse {
     return 'QS. $actualSurahNumber: $verseNumber';
   }
 
-  /// Getter untuk ayah number global (untuk audio)
   int get ayahNumber => actualVerseNumber;
-  
-  /// Getter untuk nomor surah yang actual
   int get surahNumber => actualSurahNumber;
 }

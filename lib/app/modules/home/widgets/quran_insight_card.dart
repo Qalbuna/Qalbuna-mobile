@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:qalbuna_app/app/shared/theme/index.dart';
 import '../controllers/home_controller.dart';
 
-class QuranInsightCard extends GetView<HomeController> { 
+class QuranInsightCard extends GetView<HomeController> {
   const QuranInsightCard({super.key});
 
   @override
@@ -45,7 +45,7 @@ class QuranInsightCard extends GetView<HomeController> {
             const SizedBox(height: 8),
             Obx(() {
               final moodData = controller.currentMoodData.value;
-              
+
               if (moodData != null) {
                 final entry = moodData['entry'] as Map<String, dynamic>;
                 final moodType = entry['mood_types'] as Map<String, dynamic>;

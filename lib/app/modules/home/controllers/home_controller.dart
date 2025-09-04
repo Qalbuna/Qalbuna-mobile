@@ -18,6 +18,9 @@ class HomeController extends GetxController {
   var isVerseLoading = false.obs;
   var isAudioLoading = false.obs;
   var selectedDate = DateTime.now().obs;
+  var isDhikrActive = false.obs;
+  var dhikrCount = 1.obs;
+  static const int dhikrTarget = 3;
 
   var moodTypes = <MoodType>[].obs;
   var needTypes = <NeedType>[].obs;
@@ -205,5 +208,36 @@ class HomeController extends GetxController {
 
   Future<void> stopAudio() async {
     await audioService.stop();
+  }
+
+  void startDhikr() {
+    isDhikrActive.value = true;
+    dhikrCount.value = 1;
+  }
+
+  void increaseDhikrCount() {
+    if (dhikrCount.value < dhikrTarget) {
+      dhikrCount.value++;
+      if (dhikrCount.value == dhikrTarget) _completeDhikr();
+    }
+  }
+
+  void decreaseDhikrCount() {
+    if (dhikrCount.value > 1) dhikrCount.value--;
+  }
+
+  void resetDhikr() {
+    isDhikrActive.value = false;
+    dhikrCount.value = 1;
+  }
+
+  void _completeDhikr() {
+    Get.snackbar(
+      'Alhamdulillah!',
+      'Dzikir telah selesai. Barakallahu fiik.',
+      snackPosition: SnackPosition.TOP,
+      duration: Duration(seconds: 2),
+    );
+    Future.delayed(Duration(seconds: 1), resetDhikr);
   }
 }

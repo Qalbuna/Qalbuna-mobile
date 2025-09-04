@@ -16,11 +16,22 @@ class InspirationalStoryWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Row(
+            children: [
+              Icon(Icons.auto_stories, color: AppColors.v1Primary500, size: 18),
+              const SizedBox(width: 8),
+              Text(
+                'Kisah Inspiratif',
+                style: AppTypography.sSemiBold.copyWith(
+                  color: AppColors.v1Primary500,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
           Text(
             'Ketenangan Nabi Yusuf AS di Penjara',
-            style: AppTypography.h5Bold.copyWith(
-              color: AppColors.black,
-            ),
+            style: AppTypography.h5Bold.copyWith(color: AppColors.black),
           ),
           const SizedBox(height: 8),
           Text(
@@ -39,6 +50,8 @@ class InspirationalStoryWidget extends StatelessWidget {
                 'Baca Kisah Lengkap',
                 style: AppTypography.sMedium.copyWith(
                   color: AppColors.v1Primary500,
+                  decoration: TextDecoration.underline,
+                  decorationColor: AppColors.v1Primary500,
                 ),
               ),
               const SizedBox(width: 4),
