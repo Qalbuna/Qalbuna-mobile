@@ -5,7 +5,6 @@ import 'package:qalbuna_app/app/shared/theme/index.dart';
 import '../../../data/models/prophet_story.dart';
 import '../../../shared/widgets/shimmer_placeholder.dart';
 import '../controllers/home_controller.dart';
-import 'card_decoration.dart';
 
 class ProphetStoryWidget extends GetView<HomeController> {
   const ProphetStoryWidget({super.key});
@@ -13,7 +12,11 @@ class ProphetStoryWidget extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: CardDecoration.primary(),
+       decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppColors.v1Gray200),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Obx(() {

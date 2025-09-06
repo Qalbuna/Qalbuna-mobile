@@ -59,11 +59,11 @@ class HomeView extends GetView<HomeController> {
                     const SizedBox(height: 16),
                     const VerseRecommendationWidget(),
                     const SizedBox(height: 24),
+                    const ProphetStoryWidget(),
+                    const SizedBox(height: 24),
                     const InspirationalStoryWidget(),
                     const SizedBox(height: 24),
                     const DhikrAmalanWidget(),
-                    const SizedBox(height: 24),
-                    const ProphetStoryWidget(),
                     const SizedBox(height: 24),
                     CustomBotton(
                       text: '↻ Perbarui perasaan',
