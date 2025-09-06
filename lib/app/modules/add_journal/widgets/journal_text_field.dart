@@ -17,32 +17,31 @@ class JournalTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Expanded(
-          child: TextField(
-            controller: controller,
-            onChanged: onChanged,
-            maxLines: null,
-            expands: true,
-            textAlignVertical: TextAlignVertical.top,
-            decoration: InputDecoration(
-              hintText: 'Alhamdulillah, hari ini aku bersyukur karena...',
-              hintStyle: AppTypography.sMedium.copyWith(color: Colors.grey[400]),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide(color: Colors.grey[300]!),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide(color: Colors.grey[300]!),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide(color: Colors.blue[300]!),
-              ),
-              contentPadding: const EdgeInsets.all(16),
+        TextField(
+          controller: controller,
+          onChanged: onChanged,
+          maxLines: null, // Auto-expand berdasarkan content
+          minLines: 6,   // Minimum 6 baris
+          keyboardType: TextInputType.multiline,
+          textAlignVertical: TextAlignVertical.top,
+          decoration: InputDecoration(
+            hintText: 'Alhamdulillah, hari ini aku bersyukur karena...',
+            hintStyle: AppTypography.sMedium.copyWith(color: Colors.grey[400]),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide(color: Colors.grey[300]!),
             ),
-            style: AppTypography.sMedium,
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide(color: Colors.grey[300]!),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide(color: Colors.blue[300]!),
+            ),
+            contentPadding: const EdgeInsets.all(16),
           ),
+          style: AppTypography.sMedium,
         ),
         Padding(
           padding: const EdgeInsets.only(top: 8.0),

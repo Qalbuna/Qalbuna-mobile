@@ -131,12 +131,9 @@ class AddJournalView extends GetView<AddJournalController> {
   }
 
   Widget _buildTextFieldSection() {
-    return Container(
-      height: 200, // Fixed height untuk TextField
-      child: JournalTextField(
-        controller: controller.textController,
-        onChanged: controller.onTextChanged,
-      ),
+    return JournalTextField(
+      controller: controller.textController,
+      onChanged: controller.onTextChanged,
     );
   }
 
