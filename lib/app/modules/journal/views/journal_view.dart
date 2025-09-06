@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import '../../../routes/app_pages.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/theme/app_typography.dart';
 import '../controllers/journal_controller.dart';
-import '../widgets/journal_menu_widget.dart';
 
 class JournalView extends GetView<JournalController> {
   const JournalView({super.key});
@@ -19,28 +19,50 @@ class JournalView extends GetView<JournalController> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              'Qalbuna Jurnal',
-              style: AppTypography.h5SemiBold.copyWith(color: AppColors.white),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Qalbuna Jurnal',
+                  style: AppTypography.h5SemiBold.copyWith(
+                    color: AppColors.white,
+                  ),
+                ),
+                SizedBox(height: 6),
+                Text(
+                  'Certakanlah Perasaanmu Hari ini ❤️',
+                  style: AppTypography.sMedium.copyWith(color: AppColors.white),
+                ),
+              ],
             ),
-            SizedBox(height: 6),
-            Text(
-              'Certakanlah Perasaanmu ❤️',
-              style: AppTypography.sMedium.copyWith(color: AppColors.white),
+            Material(
+              color: Colors.transparent,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(24),
+                onTap: () {
+                  Get.toNamed(Routes.addJournal);
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withAlpha((0.2 * 255).toInt()),
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  child: const Icon(
+                    Icons.add, 
+                    color: AppColors.white, 
+                    size: 24
+                  ),
+                ),
+              ),
             ),
           ],
         ),
         backgroundColor: AppColors.v1Primary500,
         toolbarHeight: 80,
-        actions: [
-          JournalMenuWidget(
-            onAddJournal: controller.addJournal,
-            onDeleteJournal: controller.deleteJournal,
-          ),
-        ],
       ),
       body: const Center(
         child: Text('JournalView is working', style: TextStyle(fontSize: 20)),

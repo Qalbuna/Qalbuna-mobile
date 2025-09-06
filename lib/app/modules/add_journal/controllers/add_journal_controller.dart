@@ -1,63 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 class AddJournalController extends GetxController {
   final textController = TextEditingController();
-
-  var formattedDate = ''.obs;
-  var formattedTime = ''.obs;
+  final titleController = TextEditingController();
   var characterCount = 0.obs;
 
   @override
   void onInit() {
     super.onInit();
-    _updateDateTime();
-  }
-
-  void _updateDateTime() {
-    try {
-      final now = DateTime.now();
-      try {
-        formattedDate.value = DateFormat(
-          'EEEE, d MMMM yyyy',
-          'id_ID',
-        ).format(now);
-      } catch (e) {
-        formattedDate.value = DateFormat('EEEE, d MMMM yyyy').format(now);
-      }
-    } catch (e) {
-      final now = DateTime.now();
-      formattedDate.value =
-          'Hari ini, ${now.day} ${_getMonthName(now.month)} ${now.year}';
-      formattedTime.value =
-          '${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')} WIB';
-    }
-  }
-
-  String _getMonthName(int month) {
-    const months = [
-      'Januari',
-      'Februari',
-      'Maret',
-      'April',
-      'Mei',
-      'Juni',
-      'Juli',
-      'Agustus',
-      'September',
-      'Oktober',
-      'November',
-      'Desember',
-    ];
-    return months[month - 1];
   }
 
   void onTextChanged(String text) {
     characterCount.value = text.length;
   }
 
+  void onTitleChanged(String title) {
+    // Optional: bisa tambah logika untuk title jika diperlukan
+    update(); // Update UI jika diperlukan
+  }
+
   void saveJournal() {
+    if (titleController.text.isEmpty || textController.text.isEmpty) {
+      Get.snackbar('Error', 'Judul dan isi jurnal tidak boleh kosong');
+      return;
+    }
+
     Get.snackbar('Sukses', 'Jurnal berhasil disimpan');
     Get.back();
   }
@@ -69,6 +37,7 @@ class AddJournalController extends GetxController {
   @override
   void onClose() {
     textController.dispose();
+    titleController.dispose();
     super.onClose();
   }
 }
