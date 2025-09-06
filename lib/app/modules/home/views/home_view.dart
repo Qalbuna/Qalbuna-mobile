@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:qalbuna_app/app/modules/home/widgets/quran_insight_card.dart';
 import 'package:qalbuna_app/app/routes/app_pages.dart';
@@ -17,12 +18,13 @@ class HomeView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.white,
-        elevation: 0,
-        toolbarHeight: 0,
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: AppColors.white,
+        statusBarIconBrightness: Brightness.dark,
       ),
+    );
+    return Scaffold(
       body: RefreshIndicator(
         onRefresh: () async {
           controller.loadTodayMood();

@@ -1,7 +1,8 @@
 import 'package:get/get.dart';
-
 import '../modules/account/bindings/account_binding.dart';
 import '../modules/account/views/account_view.dart';
+import '../modules/add_journal/bindings/add_journal_binding.dart';
+import '../modules/add_journal/views/add_journal_view.dart';
 import '../modules/bottom_navigation/bindings/bottom_navigation_binding.dart';
 import '../modules/bottom_navigation/views/bottom_navigation_view.dart';
 import '../modules/challenge/bindings/challenge_binding.dart';
@@ -75,9 +76,14 @@ class AppPages {
       binding: JournalBinding(),
     ),
     GetPage(
-      name: _Paths.account ,
+      name: _Paths.account,
       page: () => const AccountView(),
       binding: AccountBinding(),
+    ),
+    GetPage(
+      name: _Paths.addJournal,
+      page: () => const AddJournalView(),
+      binding: AddJournalBinding(),
     ),
   ];
 }

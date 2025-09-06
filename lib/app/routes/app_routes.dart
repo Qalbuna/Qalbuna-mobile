@@ -13,6 +13,7 @@ abstract class Routes {
   static const challenge = _Paths.challenge;
   static const journal = _Paths.journal;
   static const account = _Paths.account;
+  static const addJournal = _Paths.addJournal;
 }
 
 abstract class _Paths {
@@ -27,4 +28,5 @@ abstract class _Paths {
   static const challenge = '/challenge';
   static const journal = '/journal';
   static const account = '/account';
+  static const addJournal = '/add-journal';
 }
