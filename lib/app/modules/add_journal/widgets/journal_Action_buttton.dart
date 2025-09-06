@@ -23,17 +23,11 @@ class JournalActionButton extends StatelessWidget {
       onPressed: onPressed,
       style: OutlinedButton.styleFrom(
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         side: BorderSide(color: Colors.amber[600]!, width: 1.5),
         minimumSize: const Size(double.infinity, 48),
       ),
-      icon: Icon(
-        icon,
-        color: Colors.amber[600],
-        size: 20,
-      ),
+      icon: Icon(icon, color: Colors.amber[600], size: 20),
       label: Text(
         label,
         style: AppTypography.sMedium.copyWith(
