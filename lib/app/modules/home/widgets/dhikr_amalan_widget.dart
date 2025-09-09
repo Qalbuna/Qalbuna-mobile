@@ -68,7 +68,7 @@ class DhikrAmalanWidget extends GetView<HomeController> {
             color: AppColors.v1Neutral600,
             height: 1.3,
           ),
-          textAlign: TextAlign.justify
+          textAlign: TextAlign.justify,
         ),
         const SizedBox(height: 12),
         Text(
@@ -82,28 +82,33 @@ class DhikrAmalanWidget extends GetView<HomeController> {
         ),
         const SizedBox(height: 12),
         Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          color: AppColors.v1Gray50,
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Keutamaan:', 
-                style: AppTypography.sSemiBold.copyWith(color: AppColors.v1Neutral700)),
-            const SizedBox(height: 4),
-            Text(
-              'Rasulullah SAW. bersabda, "Barangsiapa yang membacanya sebanyak tiga kali ketika pagi dan sore hari, maka tidak ada sesuatu pun yang dapat membahayakan dirinya."',
-              style: AppTypography.sMedium.copyWith(
-                color: AppColors.v1Neutral600,
-                height: 1.3,
+          width: double.infinity,
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: AppColors.v1Gray50,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Keutamaan:',
+                style: AppTypography.sSemiBold.copyWith(
+                  color: AppColors.v1Neutral700,
+                ),
               ),
-              textAlign: TextAlign.justify
-            ),
-          ],
-        ),),
+              const SizedBox(height: 4),
+              Text(
+                'Rasulullah SAW. bersabda, "Barangsiapa yang membacanya sebanyak tiga kali ketika pagi dan sore hari, maka tidak ada sesuatu pun yang dapat membahayakan dirinya."',
+                style: AppTypography.sMedium.copyWith(
+                  color: AppColors.v1Neutral600,
+                  height: 1.3,
+                ),
+                textAlign: TextAlign.justify,
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }
@@ -117,19 +122,23 @@ class DhikrAmalanWidget extends GetView<HomeController> {
   }
 
   Widget _buildStartButton() {
-    return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        onPressed: controller.startDhikr,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.v1Primary500,
-          foregroundColor: AppColors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(12),
+      child: Material(
+        color: AppColors.v1Primary500,
+        child: InkWell(
+          onTap: controller.startDhikr,
+          child: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            child: Center(
+              child: Text(
+                'Mulai Dzikir',
+                style: AppTypography.sMedium.copyWith(color: AppColors.white),
+              ),
+            ),
           ),
-          padding: const EdgeInsets.symmetric(vertical: 12),
         ),
-        child: Text('Mulai Dzikir', style: AppTypography.sMedium),
       ),
     );
   }

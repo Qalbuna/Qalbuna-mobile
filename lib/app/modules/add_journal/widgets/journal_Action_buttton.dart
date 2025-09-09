@@ -19,20 +19,38 @@ class JournalActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return OutlinedButton.icon(
-      onPressed: onPressed,
-      style: OutlinedButton.styleFrom(
-        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        side: BorderSide(color: Colors.amber[600]!, width: 1.5),
-        minimumSize: const Size(double.infinity, 48),
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.amber[600]!, width: 1.5),
+        borderRadius: BorderRadius.circular(12),
       ),
-      icon: Icon(icon, color: Colors.amber[600], size: 20),
-      label: Text(
-        label,
-        style: AppTypography.sMedium.copyWith(
-          color: Colors.amber[600],
-          fontWeight: FontWeight.w600,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(12),
+          onTap: onPressed,
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+            constraints: const BoxConstraints(
+              minWidth: double.infinity,
+              minHeight: 48,
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(icon, color: Colors.amber[600], size: 20),
+                const SizedBox(width: 8),
+                Text(
+                  label,
+                  style: AppTypography.sMedium.copyWith(
+                    color: Colors.amber[600],
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

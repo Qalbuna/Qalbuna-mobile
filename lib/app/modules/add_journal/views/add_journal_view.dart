@@ -88,21 +88,32 @@ class AddJournalView extends GetView<AddJournalController> {
   }
 
   Widget _buildAnalysisButton() {
-    return SizedBox(
+    return Container(
       width: double.infinity,
-      child: ElevatedButton.icon(
-        onPressed: controller.analyzeJournal,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.grey[400],
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+      decoration: BoxDecoration(
+        color: Colors.grey[400],
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(12),
+          onTap: controller.analyzeJournal,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.analytics, color: Colors.white, size: 20),
+                const SizedBox(width: 8),
+                Text(
+                  'Analisis Perasaanku',
+                  style: AppTypography.sMedium.copyWith(color: Colors.white),
+                ),
+              ],
+            ),
           ),
-        ),
-        icon: const Icon(Icons.analytics, color: Colors.white, size: 20),
-        label: Text(
-          'Analisis Perasaanku',
-          style: AppTypography.sMedium.copyWith(color: Colors.white),
         ),
       ),
     );

@@ -6,10 +6,6 @@ class AddJournalController extends GetxController {
   final titleController = TextEditingController();
   var characterCount = 0.obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
   void onTextChanged(String text) {
     characterCount.value = text.length;
