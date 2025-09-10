@@ -27,15 +27,15 @@ class BottomNavigationView extends GetView<BottomNavigationController> {
               }
               return const HomeView();
             case 1:
-              if (!Get.isRegistered<ChallengeController>()) {
-                Get.lazyPut(() => ChallengeController());
-              }
-              return const ChallengeView();
-            case 2:
               if (!Get.isRegistered<JournalController>()) {
                 Get.lazyPut(() => JournalController());
               }
               return const JournalView();
+            case 2:
+              if (!Get.isRegistered<ChallengeController>()) {
+                Get.lazyPut(() => ChallengeController());
+              }
+              return const ChallengeView();
             case 3:
               if (!Get.isRegistered<AccountController>()) {
                 Get.lazyPut(() => AccountController());
@@ -86,25 +86,8 @@ class BottomNavigationView extends GetView<BottomNavigationController> {
                       image: DecorationImage(
                         image: NetworkImage(
                           controller.currentIndex.value == 1
-                              ? challenge
-                              : unchallenge,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                label: 'Tantangan',
-              ),
-              BottomNavigationBarItem(
-                icon: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    height: 25,
-                    width: 25,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: NetworkImage(
-                          controller.currentIndex.value == 2 ? journal : unjournal,
+                              ? journal
+                              : unjournal,
                         ),
                       ),
                     ),
@@ -121,13 +104,35 @@ class BottomNavigationView extends GetView<BottomNavigationController> {
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: NetworkImage(
-                          controller.currentIndex.value == 3 ? account : unaccount,
+                          controller.currentIndex.value == 2
+                              ? challenge
+                              : unchallenge,
                         ),
                       ),
                     ),
                   ),
                 ),
-                label: 'Akun',
+                label: 'Tantangan',
+              ),
+
+              BottomNavigationBarItem(
+                icon: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    height: 25,
+                    width: 25,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage(
+                          controller.currentIndex.value == 3
+                              ? account
+                              : unaccount,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                label: 'Saya',
               ),
             ],
           ),

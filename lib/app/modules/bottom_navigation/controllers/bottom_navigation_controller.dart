@@ -13,16 +13,16 @@ class BottomNavigationController extends GetxController {
 
   final screens = [
     Routes.home,
-    Routes.challenge,
     Routes.journal,
+    Routes.challenge,
     Routes.account,
   ];
   @override
   void onInit() {
     super.onInit();
     Get.put(HomeController());
-    Get.put(ChallengeController());
     Get.put(JournalController());
+    Get.put(ChallengeController());
     Get.put(AccountController());
   }
 
