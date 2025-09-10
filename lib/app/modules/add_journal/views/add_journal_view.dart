@@ -38,78 +38,30 @@ class AddJournalView extends GetView<AddJournalController> {
               children: [
                 DateCard(),
                 const SizedBox(height: 32),
-                _buildTextFieldSection(),
-                const SizedBox(height: 12),
-                _buildQuranSuggestion(),
-                const SizedBox(height: 12),
-                _buildActionButtons(),
-                const SizedBox(height: 12),
-                _buildAnalysisButton(),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildTextFieldSection() {
-    return JournalTextField(
-      controller: controller.textController,
-      onChanged: controller.onTextChanged,
-    );
-  }
-
-  Widget _buildQuranSuggestion() {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: Colors.grey[50],
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Text(
-        'Pilih untuk mendapatkan petikan Qur\'an sesuai suasana hatimu',
-        style: AppTypography.sRegular.copyWith(color: Colors.grey[600]),
-        textAlign: TextAlign.center,
-      ),
-    );
-  }
-
-  Widget _buildActionButtons() {
-    return SizedBox(
-      width: double.infinity,
-      child: JournalActionButton(
-        icon: Icons.bookmark,
-        label: 'Simpan Jurnal',
-        onPressed: controller.saveJournal,
-      ),
-    );
-  }
-
-  Widget _buildAnalysisButton() {
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: Colors.grey[400],
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(12),
-          onTap: controller.analyzeJournal,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Icons.analytics, color: Colors.white, size: 20),
-                const SizedBox(width: 8),
+                JournalTextField(
+                  controller: controller.textController,
+                  onChanged: controller.onTextChanged,
+                ),
+                const SizedBox(height: 24),
                 Text(
-                  'Analisis Perasaanku',
-                  style: AppTypography.sMedium.copyWith(color: Colors.white),
+                  'Pilih untuk mendapatkan petikan Qur\'an sesuai suasana hatimu',
+                  style: AppTypography.sMedium.copyWith(
+                    color: AppColors.v1Neutral600,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 24),
+                JournalActionButton(
+                  label: '✨ Simpan Journal',
+                  description: 'Simpan sebagai kenangan pribadi',
+                  isOutlined: true,
+                  onPressed: () {},
+                ),
+                const SizedBox(height: 18),
+                JournalActionButton(
+                  label: '❤︎ Analisis Perasaanku',
+                  description: 'Dapatkan ayat yang menyentuh hati',
+                  onPressed: () {},
                 ),
               ],
             ),

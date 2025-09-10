@@ -1,27 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:qalbuna_app/app/shared/theme/app_colors.dart';
 import '../../../shared/theme/app_typography.dart';
 
 class JournalActionButton extends StatelessWidget {
-  final IconData icon;
   final String label;
+  final String description;
   final VoidCallback onPressed;
   final Color? backgroundColor;
   final Color? textColor;
+  final Color? descriptionColor;
+  final bool isOutlined;
 
   const JournalActionButton({
     super.key,
-    required this.icon,
     required this.label,
+    required this.description,
     required this.onPressed,
     this.backgroundColor,
     this.textColor,
+    this.descriptionColor,
+    this.isOutlined = false,
   });
 
   @override
   Widget build(BuildContext context) {
+    final defaultBgColor = isOutlined 
+        ? Colors.transparent 
+        : AppColors.v1Primary500;
+    
+    final defaultTextColor = isOutlined 
+        ? AppColors.black
+        : Colors.white;
+    
+    final defaultDescriptionColor = isOutlined 
+        ? AppColors.v1CoolGray600 
+        : Colors.white;
+
     return Container(
+      width: double.infinity,
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.amber[600]!, width: 1.5),
+        color: backgroundColor ?? defaultBgColor,
+        border: isOutlined
+            ? Border.all(color: AppColors.v1Gray300, width: 1.5)
+            : null,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Material(
@@ -31,21 +52,20 @@ class JournalActionButton extends StatelessWidget {
           onTap: onPressed,
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-            constraints: const BoxConstraints(
-              minWidth: double.infinity,
-              minHeight: 48,
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(icon, color: Colors.amber[600], size: 20),
-                const SizedBox(width: 8),
                 Text(
                   label,
-                  style: AppTypography.sMedium.copyWith(
-                    color: Colors.amber[600],
-                    fontWeight: FontWeight.w600,
+                  style: AppTypography.lSemiBold.copyWith(
+                    color: textColor ?? defaultTextColor,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  description,
+                  style: AppTypography.sRegular.copyWith(
+                    color: descriptionColor ?? defaultDescriptionColor
                   ),
                 ),
               ],
