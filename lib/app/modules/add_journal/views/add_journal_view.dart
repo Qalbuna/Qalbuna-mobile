@@ -5,8 +5,8 @@ import '../../../shared/theme/app_colors.dart';
 import '../../../shared/theme/app_typography.dart';
 import '../controllers/add_journal_controller.dart';
 import '../widgets/date_card.dart';
-import '../widgets/journal_action_buttton.dart';
 import '../widgets/journal_text_field.dart';
+import '../widgets/jurnal_action_button.dart';
 
 class AddJournalView extends GetView<AddJournalController> {
   const AddJournalView({super.key});

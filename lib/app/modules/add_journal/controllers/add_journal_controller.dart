@@ -1,19 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../shared/theme/app_colors.dart';
 
 class AddJournalController extends GetxController {
   final textController = TextEditingController();
   final titleController = TextEditingController();
   var characterCount = 0.obs;
-
+  var isFieldFocused = false.obs;
 
   void onTextChanged(String text) {
     characterCount.value = text.length;
   }
 
   void onTitleChanged(String title) {
-    // Optional: bisa tambah logika untuk title jika diperlukan
-    update(); // Update UI jika diperlukan
+    update();
+  }
+
+  void onTitleFocus() {
+    isFieldFocused.value = true;
+    update();
+  }
+
+  void onContentFocus() {
+    isFieldFocused.value = true;
+    update();
+  }
+
+  Color getBorderColor() {
+    return isFieldFocused.value ? AppColors.v1Primary500 : AppColors.v1Gray300;
   }
 
   void saveJournal() {

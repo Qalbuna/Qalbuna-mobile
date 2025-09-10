@@ -40,7 +40,9 @@ class JournalTextField extends StatelessWidget {
         GetBuilder<AddJournalController>(
           builder: (addController) => Container(
             decoration: BoxDecoration(
-              border: Border.all(color: AppColors.v1Gray300),
+              border: Border.all(
+                color: addController.getBorderColor(),
+              ),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Column(
@@ -48,6 +50,7 @@ class JournalTextField extends StatelessWidget {
                 TextField(
                   controller: addController.titleController,
                   onChanged: addController.onTitleChanged,
+                  onTap: addController.onTitleFocus,
                   maxLines: 1,
                   decoration: InputDecoration(
                     hintText: 'Judul',
@@ -65,6 +68,7 @@ class JournalTextField extends StatelessWidget {
                 TextField(
                   controller: controller,
                   onChanged: onChanged,
+                  onTap: addController.onContentFocus,
                   maxLines: null,
                   minLines: 6,
                   keyboardType: TextInputType.multiline,
