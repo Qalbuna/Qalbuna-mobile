@@ -51,18 +51,21 @@ class AddJournalView extends GetView<AddJournalController> {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 24),
-                JournalActionButton(
+                Obx(() => JournalActionButton(
                   label: '✨ Simpan Journal',
                   description: 'Simpan sebagai kenangan pribadi',
                   isOutlined: true,
-                  onPressed: () {},
-                ),
+                  isLoading: controller.isSaving.value,
+                  onPressed: controller.saveJournal,
+                )),
                 const SizedBox(height: 18),
-                JournalActionButton(
-                  label: '❤︎ Analisis Perasaanku',
+                Obx(() => JournalActionButton(
+                  label: '♥︎ Analisis Perasaanku',
                   description: 'Dapatkan ayat yang menyentuh hati',
-                  onPressed: () {},
-                ),
+                  isLoading: controller.isAnalyzing.value,
+                  onPressed: controller.analyzeJournal,
+                )),
+                const SizedBox(height: 18),
               ],
             ),
           ),

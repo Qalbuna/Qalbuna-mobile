@@ -18,3 +18,5 @@ const String account =
     'https://res.cloudinary.com/dg9ol2bdm/image/upload/v1756704396/Profile_ewvjmr.png';
 const String unaccount =
     'https://res.cloudinary.com/dg9ol2bdm/image/upload/v1756704497/Profile_zushbv.png';
+const String empty =
+    'https://res.cloudinary.com/dg9ol2bdm/image/upload/v1757491067/Group_1171275059_yeehkz.png';

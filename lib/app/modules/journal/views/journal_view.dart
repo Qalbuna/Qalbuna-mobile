@@ -5,6 +5,8 @@ import '../../../routes/app_pages.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/theme/app_typography.dart';
 import '../controllers/journal_controller.dart';
+import '../widgets/empty.dart';
+import '../widgets/jurnal_card.dart';
 
 class JournalView extends GetView<JournalController> {
   const JournalView({super.key});
@@ -42,8 +44,9 @@ class JournalView extends GetView<JournalController> {
               color: Colors.transparent,
               child: InkWell(
                 borderRadius: BorderRadius.circular(24),
-                onTap: () {
-                  Get.toNamed(Routes.addJournal);
+                onTap: () async {
+                  await Get.toNamed(Routes.addJournal);
+                  controller.forceRefresh();
                 },
                 child: Container(
                   padding: const EdgeInsets.all(8),
@@ -52,9 +55,9 @@ class JournalView extends GetView<JournalController> {
                     borderRadius: BorderRadius.circular(24),
                   ),
                   child: const Icon(
-                    Icons.add, 
-                    color: AppColors.white, 
-                    size: 24
+                    Icons.add,
+                    color: AppColors.white,
+                    size: 24,
                   ),
                 ),
               ),
@@ -64,9 +67,33 @@ class JournalView extends GetView<JournalController> {
         backgroundColor: AppColors.v1Primary500,
         toolbarHeight: 80,
       ),
-      body: const Center(
-        child: Text('JournalView is working', style: TextStyle(fontSize: 20)),
-      ),
+      body: Obx(() {
+        if (controller.isLoading.value) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        if (controller.journals.isEmpty) {
+          return const Empty();
+        }
+        return RefreshIndicator(
+          onRefresh: controller.forceRefresh,
+          color: AppColors.v1Primary500,
+          child: ListView.builder(
+            padding: const EdgeInsets.all(16),
+            physics: const AlwaysScrollableScrollPhysics(),
+            itemCount: controller.journals.length,
+            itemBuilder: (context, index) {
+              final journal = controller.journals[index];
+              return JournalCard(
+                journal: journal,
+                onTap: () {},
+                onDelete: () {
+                  controller.deleteJournal(journal.id!);
+                },
+              );
+            },
+          ),
+        );
+      }),
     );
   }
 }

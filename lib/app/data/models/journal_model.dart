@@ -3,8 +3,8 @@ class JournalModel {
   final String userId;
   final String title;
   final String content;
-  final DateTime createdAt;
-  final DateTime updatedAt;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
   final String? mood;
   final List<String>? tags;
 
@@ -13,24 +13,11 @@ class JournalModel {
     required this.userId,
     required this.title,
     required this.content,
-    required this.createdAt,
-    required this.updatedAt,
+    this.createdAt,
+    this.updatedAt,
     this.mood,
     this.tags,
   });
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'user_id': userId,
-      'title': title,
-      'content': content,
-      'created_at': createdAt.toIso8601String(),
-      'updated_at': updatedAt.toIso8601String(),
-      'mood': mood,
-      'tags': tags,
-    };
-  }
 
   factory JournalModel.fromJson(Map<String, dynamic> json) {
     return JournalModel(
@@ -38,11 +25,33 @@ class JournalModel {
       userId: json['user_id'],
       title: json['title'],
       content: json['content'],
-      createdAt: DateTime.parse(json['created_at']),
-      updatedAt: DateTime.parse(json['updated_at']),
+      createdAt: json['created_at'] != null 
+          ? DateTime.parse(json['created_at']) 
+          : null,
+      updatedAt: json['updated_at'] != null 
+          ? DateTime.parse(json['updated_at']) 
+          : null,
       mood: json['mood'],
-      tags: json['tags'] != null ? List<String>.from(json['tags']) : null,
+      tags: json['tags'] != null 
+          ? List<String>.from(json['tags']) 
+          : null,
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = {
+      'user_id': userId,
+      'title': title,
+      'content': content,
+    };
+
+    if (id != null) data['id'] = id;
+    if (createdAt != null) data['created_at'] = createdAt!.toIso8601String();
+    if (updatedAt != null) data['updated_at'] = updatedAt!.toIso8601String();
+    if (mood != null) data['mood'] = mood;
+    if (tags != null) data['tags'] = tags;
+
+    return data;
   }
 
   JournalModel copyWith({
