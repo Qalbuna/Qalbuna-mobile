@@ -96,18 +96,20 @@ class SignInController extends GetxController {
       String errorMessage = _getAuthErrorMessage(e.message);
       Get.snackbar(
         'Login Gagal',
-        errorMessage,
+        'email atau password salah',
         backgroundColor: AppColors.v1Error500,
         colorText: AppColors.white,
         duration: Duration(seconds: 3),
       );
+      throw Exception('Login failed: $errorMessage');
     } catch (e) {
       Get.snackbar(
         'Error',
-        'Gagal login: ${e.toString()}',
+        'Gagal login: kesalahan sistem',
         backgroundColor: AppColors.v1Error500,
         colorText: AppColors.white,
       );
+      throw Exception('Login failed: ${e.toString()}');
     } finally {
       isLoading.value = false;
     }
@@ -128,18 +130,20 @@ class SignInController extends GetxController {
       String errorMessage = _getAuthErrorMessage(e.message);
       Get.snackbar(
         'Login Google Gagal',
-        errorMessage,
+        'Email atau password salah',
         backgroundColor: AppColors.v1Error500,
         colorText: AppColors.white,
         duration: Duration(seconds: 3),
       );
+      throw Exception('Login with Google failed: $errorMessage');
     } catch (e) {
       Get.snackbar(
         'Error',
-        'Gagal login dengan Google: ${e.toString()}',
+        'Gagal login dengan Google',
         backgroundColor: AppColors.v1Error500,
         colorText: AppColors.white,
       );
+      throw Exception('Login with Google failed: ${e.toString()}');
     } finally {
       isLoading.value = false;
     }
