@@ -89,7 +89,7 @@ class AddJournalController extends GetxController {
   Future<void> analyzeJournal() async {
     try {
       isAnalyzing.value = true;
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 2));
 
       Get.snackbar(
         'Info',

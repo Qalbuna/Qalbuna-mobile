@@ -46,40 +46,42 @@ class JournalActionButton extends StatelessWidget {
           elevation: isOutlined ? 0 : (isEnabled ? 2 : 0),
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
         ),
-        child: isLoading 
+        child: (isLoading && isOutlined)
             ? SizedBox(
                 height: 20,
                 width: 20,
                 child: CircularProgressIndicator(
                   strokeWidth: 2,
                   valueColor: AlwaysStoppedAnimation<Color>(
-                    isOutlined ? AppColors.v1Gray300 : Colors.white,
+                    isOutlined ? AppColors.v1Primary500 : Colors.white,
                   ),
                 ),
               )
             : Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              label,
-              style: AppTypography.lSemiBold.copyWith(
-                color: isOutlined
-                    ? (isEnabled ? AppColors.black : AppColors.v1Gray400)
-                    : (isEnabled ? Colors.white : AppColors.v1Gray500),
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    label,
+                    style: AppTypography.lSemiBold.copyWith(
+                      color: isOutlined
+                          ? (isEnabled ? AppColors.black : AppColors.v1Gray400)
+                          : (isEnabled ? Colors.white : AppColors.v1Gray500),
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    description,
+                    style: AppTypography.sRegular.copyWith(
+                      color: isOutlined
+                          ? (isEnabled
+                                ? AppColors.v1Gray500
+                                : AppColors.v1Gray400)
+                          : (isEnabled ? Colors.white : AppColors.v1Gray500),
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
               ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              description,
-              style: AppTypography.sRegular.copyWith(
-                color: isOutlined
-                    ? (isEnabled ? AppColors.v1Gray500 : AppColors.v1Gray400)
-                    : (isEnabled ? Colors.white : AppColors.v1Gray500),
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
       ),
     );
   }

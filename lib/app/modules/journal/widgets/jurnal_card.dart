@@ -110,6 +110,7 @@ class JournalCard extends StatelessWidget {
                     horizontal: 12,
                     vertical: 4,
                   ),
+                
                   decoration: BoxDecoration(
                     color: AppColors.v1Primary100,
                     borderRadius: BorderRadius.circular(12),
