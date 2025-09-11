@@ -28,20 +28,19 @@ class EmotionAnalysisCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Header
           Row(
             children: [
               Container(
                 width: 48,
                 height: 48,
                 decoration: BoxDecoration(
-                  color: Colors.orange.shade100,
-                  borderRadius: BorderRadius.circular(12),
+                  color: AppColors.v1Orange25,
+                  borderRadius: BorderRadius.circular(24),
                 ),
                 child: Icon(
-                  Icons.psychology,
-                  color: Colors.orange.shade600,
-                  size: 24,
+                  Icons.tips_and_updates      ,
+                  color: AppColors.v1Orange500,
+                  size: 28,
                 ),
               ),
               const SizedBox(width: 12),
@@ -52,14 +51,14 @@ class EmotionAnalysisCard extends StatelessWidget {
                     Text(
                       'Hasil Analisis Emosi',
                       style: AppTypography.lSemiBold.copyWith(
-                        color: AppColors.v1Neutral900,
+                        color: AppColors.black,
                       ),
                     ),
-                    const SizedBox(height: 2),
+                    const SizedBox(height: 8),
                     Text(
                       'Dianalisis dengan AI',
                       style: AppTypography.sRegular.copyWith(
-                        color: AppColors.v1Gray600,
+                        color: AppColors.black,
                       ),
                     ),
                   ],
@@ -67,18 +66,15 @@ class EmotionAnalysisCard extends StatelessWidget {
               ),
             ],
           ),
-          
           const SizedBox(height: 20),
-          
-          // Dominant Emotion
           Container(
             width: double.infinity,
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: Colors.orange.shade50,
+              color: AppColors.v1Orange25,
               borderRadius: BorderRadius.circular(8),
               border: Border.all(
-                color: Colors.orange.shade200,
+                color: AppColors.v1Orange500,
                 width: 1,
               ),
             ),
@@ -88,10 +84,10 @@ class EmotionAnalysisCard extends StatelessWidget {
                 Row(
                   children: [
                     Container(
-                      width: 8,
-                      height: 8,
+                      width: 14,
+                      height: 14,
                       decoration: BoxDecoration(
-                        color: Colors.orange.shade600,
+                        color: AppColors.v1Orange500,
                         shape: BoxShape.circle,
                       ),
                     ),
@@ -99,45 +95,42 @@ class EmotionAnalysisCard extends StatelessWidget {
                     Text(
                       'Perasaan Dominan: ${analysisResult['dominantEmotion'] ?? 'Cemas'}',
                       style: AppTypography.mSemiBold.copyWith(
-                        color: Colors.orange.shade800,
+                        color: AppColors.v1Orange700,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 12),
                 Text(
                   analysisResult['description'] ?? 
                   'Berdasarkan analisis teks, terdeteksi tingkat kecemasan yang tinggi dengan indikator kata-kata seperti "berat", "cemas", "tidak tenang", dan "tidak tahu".',
                   style: AppTypography.sRegular.copyWith(
-                    color: Colors.orange.shade700,
+                    color: AppColors.v1Orange700,
                     height: 1.4,
                   ),
                 ),
               ],
             ),
           ),
-          
           const SizedBox(height: 20),
-          
-          // Emotion Percentages
           Row(
             children: [
               _buildEmotionPercentage(
                 'Stress',
                 analysisResult['stress'] ?? 75,
-                Colors.red.shade500,
+                AppColors.v1Error500,
               ),
               const SizedBox(width: 16),
               _buildEmotionPercentage(
                 'Cemas',
                 analysisResult['anxiety'] ?? 85,
-                Colors.orange.shade500,
+                AppColors.v1Orange500,
               ),
               const SizedBox(width: 16),
               _buildEmotionPercentage(
                 'Sedih',
                 analysisResult['sadness'] ?? 60,
-                Colors.yellow.shade600,
+                AppColors.v1Gold500,
               ),
             ],
           ),
@@ -148,15 +141,21 @@ class EmotionAnalysisCard extends StatelessWidget {
 
   Widget _buildEmotionPercentage(String label, int percentage, Color color) {
     return Expanded(
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+        decoration: BoxDecoration(
+          color: color.withValues(alpha: 0.1), 
+          borderRadius: BorderRadius.circular(8),
+        ),
       child: Column(
         children: [
           Text(
             label,
             style: AppTypography.sRegular.copyWith(
-              color: AppColors.v1Gray600,
+              color: color,
             ),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: 8),
           Text(
             '$percentage%',
             style: AppTypography.lSemiBold.copyWith(
@@ -164,7 +163,7 @@ class EmotionAnalysisCard extends StatelessWidget {
             ),
           ),
         ],
-      ),
+      ),)
     );
   }
 }

@@ -30,13 +30,13 @@ class AppColors {
   static const Color v1Neutral950 = Color(0xFF0A1F3A); // AAA 17:14
 
   // Error Colors - Red
-  static const Color v1Error25 = Color(0xFFFEF3F2); // AAA 19:47
+  static const Color v1Error25 = Color(0xFFFADFDF); // AAA 19:47
   static const Color v1Error50 = Color(0xFFFEE4E2); // AAA 18:47
   static const Color v1Error100 = Color(0xFFFECDCA); // AAA 16:47
   static const Color v1Error200 = Color(0xFFFDA29B); // AAA 13:47
   static const Color v1Error300 = Color(0xFFF97066); // AAA 10:47
   static const Color v1Error400 = Color(0xFFF04438); // AAA 7:47
-  static const Color v1Error500 = Color(0xFFD92D20); // AAA 5:47
+  static const Color v1Error500 = Color(0xFFDC2626); // AAA 5:47
   static const Color v1Error600 = Color(0xFFB42318); // AAA 5:14
   static const Color v1Error700 = Color(0xFF912018); // AAA 7:14
   static const Color v1Error800 = Color(0xFF7A271A); // AAA 10:14
@@ -201,15 +201,15 @@ class AppColors {
   static const Color v1Rose900 = Color(0xFF7A1736); // AAA 14:14
 
   // Orange
-  static const Color v1Orange25 = Color(0xFFFFFAF5); // AAA 19:47
+  static const Color v1Orange25 = Color(0xFFFEE8DB); // AAA 19:47
   static const Color v1Orange50 = Color(0xFFFFF6ED); // AAA 18:47
   static const Color v1Orange100 = Color(0xFFFFEAD5); // AAA 16:47
   static const Color v1Orange200 = Color(0xFFFDDCB8); // AAA 13:47
   static const Color v1Orange300 = Color(0xFFFAC089); // AAA 10:47
   static const Color v1Orange400 = Color(0xFFF79F5A); // AAA 7:47
-  static const Color v1Orange500 = Color(0xFFF27A2D); // AAA 5:47
+  static const Color v1Orange500 = Color(0xFFFB6514); // AAA 5:47
   static const Color v1Orange600 = Color(0xFFE05A00); // AAA 5:14
-  static const Color v1Orange700 = Color(0xFFB94700); // AAA 7:14
+  static const Color v1Orange700 = Color(0xFFAA3D03); // AAA 7:14
   static const Color v1Orange800 = Color(0xFF953800); // AAA 10:14
   static const Color v1Orange900 = Color(0xFF762E00); // AAA 14:14
 
@@ -290,25 +290,12 @@ class AppColors {
   static const Color v1CoolGray700 = Color(0xFF364152); // AAA 7:14
   static const Color v1CoolGray800 = Color(0xFF202939); // AAA 10:14
   static const Color v1CoolGray900 = Color(0xFF121926); // AAA 14:14
-
+  
+  // Cool Gold
+  static const Color v1Gold25 = Color(0xFFFEF1DC);
+  static const Color v1Gold500  = Color(0xFFF59E0B);
+  
   // Common Colors
   static const Color white = Color(0xFFFFFFFF);
   static const Color black = Color(0xFF000000);
-
-  // Theme Roles
-  static const Color v1LightBackground = Color(0xFFF5F7FA); // AAA 21:00
-  static const Color v1LightError = Color(0xFFD92D20); // AAA 5:47
-  static const Color v1LightPrimary = Color(0xFF2E90FA); // AAA 6:49
-  static const Color v1LightSecondary = Color(0xFF7B97FC); // AAA 9:98
-  static const Color v1LightSuccess = Color(0xFF17B26A); // AAA 5:47
-  static const Color v1LightSurface = Color(0xFFEFF4FB); // AAA 19:48
-  static const Color v1LightWarning = Color(0xFFF79009); // AAA 5:47
-
-  static const Color v1DarkBackground = Color(0xFF0A1F3A); // AAA 17:14
-  static const Color v1DarkError = Color(0xFFF04438); // AAA 7:47
-  static const Color v1DarkPrimary = Color(0xFF0B74EC); // AAA 4:72
-  static const Color v1DarkSecondary = Color(0xFF53A4FB); // AAA 8:07
-  static const Color v1DarkSuccess = Color(0xFF47CD89); // AAA 7:47
-  static const Color v1DarkSurface = Color(0xFF102A4C); // AAA 14:14
-  static const Color v1DarkWarning = Color(0xFFF8B73E); // AAA 7:47
 }
