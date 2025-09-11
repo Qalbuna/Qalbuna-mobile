@@ -7,6 +7,7 @@ import '../../../services/core/journal_service.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../bottom_navigation/controllers/bottom_navigation_controller.dart';
 import '../../journal/controllers/journal_controller.dart';
+import '../widgets/journal_analysis_view.dart';
 
 class AddJournalController extends GetxController {
   final textController = TextEditingController();
@@ -87,14 +88,48 @@ class AddJournalController extends GetxController {
   }
 
   Future<void> analyzeJournal() async {
+    if (titleController.text.trim().isEmpty ||
+        textController.text.trim().isEmpty) {
+      Get.snackbar(
+        'Error',
+        'Judul dan isi jurnal tidak boleh kosong',
+        backgroundColor: AppColors.v1Error500,
+        colorText: AppColors.white,
+      );
+      return;
+    }
     try {
       isAnalyzing.value = true;
       await Future.delayed(const Duration(seconds: 2));
-
+      final journal = JournalModel(
+        userId: userId,
+        title: titleController.text.trim(),
+        content: textController.text.trim(),
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+      );
+      
+      // Mock analysis result - in real app, this would come from AI service
+      final analysisResult = {
+        'dominantEmotion': 'Cemas',
+        'description':
+            'Berdasarkan analisis teks, terdeteksi tingkat kecemasan yang tinggi dengan indikator kata-kata seperti "berat", "cemas", "tidak tenang", dan "tidak tahu".',
+        'stress': 75,
+        'anxiety': 85,
+        'sadness': 60,
+        'timestamp': DateTime.now(),
+      };
+      Get.to(
+        () => JournalAnalysisView(
+          journal: journal,
+          analysisResult: analysisResult,
+        ),
+      );
+    } catch (e) {
       Get.snackbar(
-        'Info',
-        'Fitur analisis akan segera hadir',
-        backgroundColor: AppColors.v1Info500,
+        'Error',
+        'Gagal menganalisis jurnal: ${e.toString()}',
+        backgroundColor: AppColors.v1Error500,
         colorText: AppColors.white,
       );
     } finally {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   // Primary Colors - Blue
-  static const Color v1Primary25 = Color(0xFFE1E2FC); // AAA 17:82
+  static const Color v1Primary25 = Color(0xFFEBECFF); // AAA 17:82
   static const Color v1Primary50 = Color(0xFFDADBFC); // AAA 16:77
   static const Color v1Primary100 = Color(0xFFCDCEFB); // AAA 15:15
   static const Color v1Primary200 = Color(0xFFB3B4F8); // AAA 12:37
