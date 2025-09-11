@@ -6,6 +6,7 @@ import '../../../data/models/journal_model.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/theme/app_typography.dart';
 import '../widgets/emotion_analysis_card.dart';
+import 'quran_recommendation_card.dart';
 
 class JournalAnalysisView extends StatelessWidget {
   final JournalModel journal;
@@ -49,6 +50,9 @@ class JournalAnalysisView extends StatelessWidget {
             JournalAnalysisCard(journal: journal),
             const SizedBox(height: 24),
             EmotionAnalysisCard(analysisResult: analysisResult),
+            const SizedBox(height: 24),
+            QuranRecommendationCard(),
+            const SizedBox(height: 24),
           ],
         ),
       ),

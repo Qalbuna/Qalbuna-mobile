@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qalbuna_app/app/shared/constant/uidata.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/theme/app_typography.dart';
 import '../../../data/models/journal_model.dart';
@@ -28,7 +29,6 @@ class JournalAnalysisCard extends StatelessWidget {
       ),
       child: Column(
         children: [
-          // Header row
           Row(
             children: [
               Container(
@@ -67,10 +67,7 @@ class JournalAnalysisCard extends StatelessWidget {
               ),
             ],
           ),
-          
           const SizedBox(height: 16),
-          
-          // Journal content
           Container(
             width: double.infinity,
             padding: const EdgeInsets.all(16),
@@ -84,7 +81,7 @@ class JournalAnalysisCard extends StatelessWidget {
                 Text(
                   'Judul: ${journal.title}',
                   style: AppTypography.lSemiBold.copyWith(
-                    color: AppColors.v1Neutral900,
+                    color: AppColors.black,
                   ),
                 ),
                 const SizedBox(height: 24),
@@ -100,21 +97,14 @@ class JournalAnalysisCard extends StatelessWidget {
               ],
             ),
           ),
-          
           const SizedBox(height: 12),
-          
-          // Timestamp
           Row(
             children: [
-              Icon(
-                Icons.edit,
-                size: 16,
-                color: AppColors.v1Gray500,
-              ),
+              Image.network(edit, width: 24, height: 24),
               const SizedBox(width: 8),
               Text(
                 'Ditulis baru saja',
-                style: AppTypography.sRegular.copyWith(
+                style: AppTypography.sMedium.copyWith(
                   color: AppColors.v1Gray500,
                 ),
               ),

@@ -57,16 +57,16 @@ class AppColors {
   static const Color v1Warning900 = Color(0xFF7A2E0E); // AAA 14:14
 
   // Success Colors - Green
-  static const Color v1Success25 = Color(0xFFECFDF3); // AAA 19:47
-  static const Color v1Success50 = Color(0xFFDCFAE6); // AAA 18:47
+  static const Color v1Success25 = Color(0xFFDEF9E8); // AAA 19:47
+  static const Color v1Success50 = Color(0xFFD4F8E1); // AAA 18:47
   static const Color v1Success100 = Color(0xFFBDF4D6); // AAA 16:47
   static const Color v1Success200 = Color(0xFF9AEDC2); // AAA 13:47
   static const Color v1Success300 = Color(0xFF75E1AD); // AAA 10:47
   static const Color v1Success400 = Color(0xFF47CD89); // AAA 7:47
-  static const Color v1Success500 = Color(0xFF17B26A); // AAA 5:47
+  static const Color v1Success500 = Color(0xFF22C55E); // AAA 5:47
   static const Color v1Success600 = Color(0xFF079455); // AAA 5:14
   static const Color v1Success700 = Color(0xFF067647); // AAA 7:14
-  static const Color v1Success800 = Color(0xFF085D3A); // AAA 10:14
+  static const Color v1Success800 = Color(0xFF105C2C); // AAA 10:14
   static const Color v1Success900 = Color(0xFF074D31); // AAA 14:14
 
   // Info Colors - Info
