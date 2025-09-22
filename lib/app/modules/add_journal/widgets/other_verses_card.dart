@@ -27,7 +27,6 @@ class OtherVersesCard extends StatelessWidget {
         'tagTextColors': [Colors.green.shade600, Colors.orange.shade600],
       },
     ];
-
     final data = verses ?? defaultVerses;
 
     return Container(
@@ -59,7 +58,7 @@ class OtherVersesCard extends StatelessWidget {
 
   Widget _buildVerseCard(Map<String, dynamic> verse) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
+      margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),

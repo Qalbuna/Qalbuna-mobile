@@ -55,7 +55,6 @@ class JournalAnalysisView extends StatelessWidget {
             QuranRecommendationCard(),
             const SizedBox(height: 24),
             OtherVersesCard(),
-            const SizedBox(height: 24),
           ],
         ),
       ),
