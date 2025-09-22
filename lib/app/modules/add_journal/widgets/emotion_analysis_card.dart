@@ -108,6 +108,7 @@ class EmotionAnalysisCard extends StatelessWidget {
                     color: AppColors.v1Orange700,
                     height: 1.4,
                   ),
+                  textAlign: TextAlign.justify,
                 ),
               ],
             ),

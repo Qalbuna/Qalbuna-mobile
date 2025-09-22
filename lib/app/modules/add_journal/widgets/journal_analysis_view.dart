@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:qalbuna_app/app/modules/add_journal/widgets/other_verses_card.dart';
 import 'package:qalbuna_app/app/modules/add_journal/widgets/journal_analysis_card.dart';
 import '../../../data/models/journal_model.dart';
 import '../../../shared/theme/app_colors.dart';
@@ -52,6 +53,8 @@ class JournalAnalysisView extends StatelessWidget {
             EmotionAnalysisCard(analysisResult: analysisResult),
             const SizedBox(height: 24),
             QuranRecommendationCard(),
+            const SizedBox(height: 24),
+            OtherVersesCard(),
             const SizedBox(height: 24),
           ],
         ),

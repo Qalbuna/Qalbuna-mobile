@@ -93,6 +93,7 @@ class JournalAnalysisCard extends StatelessWidget {
                   ),
                   maxLines: 5,
                   overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.justify,
                 ),
               ],
             ),
