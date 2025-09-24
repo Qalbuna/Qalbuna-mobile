@@ -22,3 +22,11 @@ const String empty =
     'https://res.cloudinary.com/dg9ol2bdm/image/upload/v1757491067/Group_1171275059_yeehkz.png';
 const String edit =
     'https://res.cloudinary.com/dg9ol2bdm/image/upload/v1757577184/copy-writing_1_junqb7.png';
+const String pass =
+    'https://res.cloudinary.com/dg9ol2bdm/image/upload/v1758700848/111_20_nfw9go.png';
+const String active =
+    'https://res.cloudinary.com/dg9ol2bdm/image/upload/v1758700847/111_22_meahdt.png';
+const String inactive =
+    'https://res.cloudinary.com/dg9ol2bdm/image/upload/v1758700847/111_23_eqsusl.png';
+const String completed =
+    'https://res.cloudinary.com/dg9ol2bdm/image/upload/v1758703471/111_21_qfbhxm.png';

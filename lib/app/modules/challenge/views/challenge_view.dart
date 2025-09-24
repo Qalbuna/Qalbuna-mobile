@@ -39,12 +39,17 @@ class ChallengeView extends GetView<ChallengeController> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         physics: const AlwaysScrollableScrollPhysics(),
-          child: Column(
-            children: [
-              const SizedBox(height: 12),
-              ChallengeProgressCard (),
-            ],
-          ),
+        child: Column(
+          children: [
+            const SizedBox(height: 12),
+            ChallengeProgressCard(
+              currentDay: 3,
+              totalDays: 7,
+              completedDays: [1, 3], // Heart akan menampilkan "1" dan "2"
+              passedDays: [2], // Heart pass/gagal tanpa angka
+            ),
+          ],
+        ),
       ),
     );
   }
