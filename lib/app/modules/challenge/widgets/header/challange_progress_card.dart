@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:qalbuna_app/app/shared/theme/app_colors.dart';
-import '../../../data/models/step_state.dart';
-import '../../../shared/theme/app_typography.dart';
-import '../utils/challenge_progress_helper.dart';
+import '../../../../data/models/step_state.dart';
+import '../../../../shared/theme/app_typography.dart';
+import '../../utils/challenge_progress_helper.dart';
 import 'heart_step_widget.dart';
 import 'progress_connector.dart';
 
@@ -51,13 +51,13 @@ class ChallengeProgressCard extends StatelessWidget {
     return Column(
       children: [
         Text(
-          ChallengeProgressHelper.getHeaderTitle(completedDays),
+          ChallengeProgressHelper.getHeaderTitle(completedDays, currentDay),
           style: AppTypography.lSemiBold.copyWith(color: AppColors.black),
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 12),
         Text(
-          'Mulai tantangan Qalbuna hari ini',
+          ChallengeProgressHelper.getHeaderSubtitle(completedDays, totalDays),
           style: AppTypography.sMedium.copyWith(color: AppColors.v1Neutral500),
           textAlign: TextAlign.center,
         ),
@@ -66,13 +66,7 @@ class ChallengeProgressCard extends StatelessWidget {
   }
 
   Widget _buildProgressIndicator() {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: _buildProgressSteps(),
-      ),
-    );
+    return Row(children: _buildProgressSteps());
   }
 
   List<Widget> _buildProgressSteps() {
@@ -80,24 +74,38 @@ class ChallengeProgressCard extends StatelessWidget {
 
     for (int i = 0; i < totalDays; i++) {
       final dayNumber = i + 1;
-      final stepStated = ChallengeProgressHelper.getStepState(
+      final stepState = ChallengeProgressHelper.getStepState(
         dayNumber,
         currentDay,
         completedDays,
         passedDays,
       );
 
-      final completedNumber = stepStated == StepStated.completed
+      final completedNumber = stepState == StepStated.completed
           ? ChallengeProgressHelper.getCompletedNumber(dayNumber, completedDays)
           : 0;
 
       steps.add(
-        HeartStepWidget(state: stepStated, completedNumber: completedNumber),
+        Expanded(
+          flex: 3,
+          child: SizedBox(
+            width: 40,
+            height: 40,
+            child: HeartStepWidget(
+              state: stepState,
+              completedNumber: completedNumber,
+            ),
+          ),
+        ),
       );
-
       if (i < totalDays - 1) {
         steps.add(
-          ProgressConnector(isCompleted: stepStated == StepStated.completed),
+          Expanded(
+            flex: 1,
+            child: ProgressConnector(
+              isCompleted: stepState == StepStated.completed,
+            ),
+          ),
         );
       }
     }

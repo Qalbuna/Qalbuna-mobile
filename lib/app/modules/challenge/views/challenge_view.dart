@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../data/models/challenge_day_status.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/theme/app_typography.dart';
 import '../controllers/challenge_controller.dart';
-import '../widgets/challange_progress_card.dart';
+import '../widgets/header/challange_progress_card.dart';
+import '../widgets/challenge_day_list.dart';
 
 class ChallengeView extends GetView<ChallengeController> {
   const ChallengeView({super.key});
@@ -42,15 +44,40 @@ class ChallengeView extends GetView<ChallengeController> {
         child: Column(
           children: [
             const SizedBox(height: 12),
-            ChallengeProgressCard(
-              currentDay: 3,
-              totalDays: 7,
-              completedDays: [1, 3], // Heart akan menampilkan "1" dan "2"
-              passedDays: [2], // Heart pass/gagal tanpa angka
+            Obx(
+              () => ChallengeProgressCard(
+                currentDay: controller.currentDay.value,
+                totalDays: controller.totalDays.value,
+                completedDays: controller.completedDays.toList(),
+                passedDays: controller.passedDays.toList(),
+              ),
+            ),
+            const SizedBox(height: 24),
+            Obx(
+              () => ChallengeDayList(
+                challengeDays: controller.challengeDays.toList(),
+                onDayTap: (day) {
+                  _handleDayTap(day, controller);
+                },
+              ),
             ),
           ],
         ),
       ),
     );
+  }
+}
+
+void _handleDayTap(ChallengeDay day, ChallengeController controller) {
+  switch (day.status) {
+    case ChallengeDayStatus.active:
+      controller.startChallenge(day);
+      break;
+    case ChallengeDayStatus.completed:
+      break;
+    case ChallengeDayStatus.locked:
+      break;
+    case ChallengeDayStatus.pass:
+      break;
   }
 }

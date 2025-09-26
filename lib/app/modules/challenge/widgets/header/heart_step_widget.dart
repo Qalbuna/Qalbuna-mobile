@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:qalbuna_app/app/data/models/step_state.dart';
-import '../../../shared/constant/uidata.dart';
-import '../../../shared/theme/app_colors.dart';
-import '../../../shared/theme/app_typography.dart';
+import '../../../../shared/constant/uidata.dart';
+import '../../../../shared/theme/app_colors.dart';
+import '../../../../shared/theme/app_typography.dart';
 
 class HeartStepWidget extends StatelessWidget {
   final StepStated state;

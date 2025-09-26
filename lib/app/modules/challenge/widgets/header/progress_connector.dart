@@ -10,11 +10,11 @@ class ProgressConnector extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 16,
-      height: 2,
-      margin: const EdgeInsets.symmetric(horizontal: 4),
+      height: 3,
+      margin: const EdgeInsets.symmetric(horizontal: 1),
       decoration: BoxDecoration(
-        color: AppColors.v1Gray200,
-        borderRadius: BorderRadius.circular(1),
+        color: AppColors.v1Gray300,
+        borderRadius: BorderRadius.circular(2.5),
       ),
     );
   }

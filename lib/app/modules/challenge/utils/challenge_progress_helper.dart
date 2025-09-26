@@ -2,19 +2,19 @@ import '../../../data/models/step_state.dart';
 
 class ChallengeProgressHelper {
   static StepStated getStepState(
-    int dayNumber, 
-    int currentDay, 
-    List<int> completedDays, 
-    List<int> passedDays
+    int dayNumber,
+    int currentDay,
+    List<int> completedDays,
+    List<int> passedDays,
   ) {
     if (completedDays.contains(dayNumber)) {
       return StepStated.completed;
     }
-    
+
     if (passedDays.contains(dayNumber)) {
       return StepStated.pass;
     }
-    
+
     if (dayNumber == currentDay + 1) {
       return StepStated.active;
     }
@@ -27,11 +27,17 @@ class ChallengeProgressHelper {
     return sortedCompleted.indexOf(dayNumber) + 1;
   }
 
-  static String getHeaderTitle(List<int> completedDays) {
-    return completedDays.isEmpty 
-        ? 'Kamu belum memulai tantangan'
-        : 'Progress Tantangan Qalbuna';
+  static String getHeaderTitle(List<int> completedDays, int currentDay) {
+    if (completedDays.isEmpty) {
+      return 'Kamu belum memulai tantangan';
+    }
+    final nextDay = currentDay + 1;
+    return 'Hari ke- $nextDay — Kamu pasti bisa! 💪';
   }
 
-  
+  static String getHeaderSubtitle(List<int> completedDays, int totalDays) {
+    return completedDays.isEmpty
+        ? 'Mulailah tantangan Qalbuna hari ini'
+        : '${completedDays.length} dari $totalDays hari berhasil diselesaikan';
+  }
 }
