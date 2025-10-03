@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../../data/models/challenge_day_status.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/theme/app_typography.dart';
+import '../controllers/challenge_controller.dart';
 
 class ChallengeDayStatusBadge extends StatelessWidget {
   final ChallengeDayStatus status;
   final DateTime? completedDate;
+  final ChallengeDay challengeDay;
 
   const ChallengeDayStatusBadge({
     super.key,
     required this.status,
     this.completedDate,
+    required this.challengeDay,
   });
 
   @override
@@ -50,7 +54,10 @@ class ChallengeDayStatusBadge extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          final controller = Get.find<ChallengeController>();
+          controller.startChallenge(challengeDay);
+        },
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.v1Primary500,
           foregroundColor: Colors.white,
@@ -80,12 +87,12 @@ class ChallengeDayStatusBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: Colors.orange.shade50,
+        color: AppColors.v1Neutral25,
         borderRadius: BorderRadius.circular(6),
       ),
       child: Text(
-        'Dilewati',
-        style: AppTypography.sMedium.copyWith(color: AppColors.v1Orange500),
+        'Terlewat',
+        style: AppTypography.sMedium.copyWith(color: AppColors.v1Neutral300),
       ),
     );
   }

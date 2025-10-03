@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import '../../../data/models/challenge_day_status.dart';
 import '../../../shared/theme/app_colors.dart';
@@ -11,6 +12,12 @@ class ChallengeView extends GetView<ChallengeController> {
   const ChallengeView({super.key});
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: AppColors.v1Primary500,
+        statusBarIconBrightness: Brightness.light,
+      ),
+    );
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -21,7 +28,7 @@ class ChallengeView extends GetView<ChallengeController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Tantangan 7 Hari',
+                  'Tantangan Qur\'ani',
                   style: AppTypography.h5SemiBold.copyWith(
                     color: AppColors.white,
                   ),
@@ -74,6 +81,7 @@ void _handleDayTap(ChallengeDay day, ChallengeController controller) {
       controller.startChallenge(day);
       break;
     case ChallengeDayStatus.completed:
+      controller.completeChallenge(4);
       break;
     case ChallengeDayStatus.locked:
       break;

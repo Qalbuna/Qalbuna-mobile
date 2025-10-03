@@ -55,7 +55,7 @@ class DhikrAmalanWidget extends GetView<HomeController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Membaca Doa Perlindungan 3x', style: AppTypography.lSemiBold),
+        Text('Membaca Doa Ketenangan 3x', style: AppTypography.lSemiBold),
         const SizedBox(height: 16),
         Text(
           'بِسْمِ اللهِ الَّذِي لاَ يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الأَرْضِ وَلاَ فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ',

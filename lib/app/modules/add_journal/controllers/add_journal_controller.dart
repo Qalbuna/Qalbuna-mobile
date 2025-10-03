@@ -76,6 +76,12 @@ class AddJournalController extends GetxController {
 
           final journalController = Get.find<JournalController>();
           await journalController.refreshJournals();
+          Get.snackbar(
+            'Alhamdulillah',
+            'Tantangan hari ini selesai🌟',
+            backgroundColor: AppColors.white,
+            colorText: AppColors.black,
+          );
         } catch (e) {
           throw Exception('Error setting navigation: $e');
         }
@@ -108,8 +114,7 @@ class AddJournalController extends GetxController {
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
       );
-      
-      // Mock analysis result - in real app, this would come from AI service
+
       final analysisResult = {
         'dominantEmotion': 'Cemas',
         'description':

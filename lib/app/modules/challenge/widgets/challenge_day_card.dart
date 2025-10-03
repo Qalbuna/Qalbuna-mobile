@@ -51,6 +51,7 @@ class ChallengeDayCard extends StatelessWidget {
                           ChallengeDayStatusBadge(
                             status: challengeDay.status,
                             completedDate: challengeDay.completedDate,
+                            challengeDay: challengeDay,
                           ),
                         ],
                       ],
@@ -68,6 +69,7 @@ class ChallengeDayCard extends StatelessWidget {
                       ChallengeDayStatusBadge(
                         status: challengeDay.status,
                         completedDate: challengeDay.completedDate,
+                        challengeDay: challengeDay,
                       ),
                     ],
                   ],

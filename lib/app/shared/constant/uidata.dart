@@ -30,3 +30,17 @@ const String inactive =
     'https://res.cloudinary.com/dg9ol2bdm/image/upload/v1758700847/111_23_eqsusl.png';
 const String completed =
     'https://res.cloudinary.com/dg9ol2bdm/image/upload/v1758703471/111_21_qfbhxm.png';
+const String profile =
+    'https://res.cloudinary.com/dg9ol2bdm/image/upload/v1759250676/Ellipse_141_ejictn.png';
+const String rute =
+    'https://res.cloudinary.com/dg9ol2bdm/image/upload/v1759287955/Group_1171275187_3_kn3l1i.png';
+const String statistik =
+    'https://res.cloudinary.com/dg9ol2bdm/image/upload/v1759288369/Group_1171275189_x6yqqr.png';
+const String ayatfav =
+    'https://res.cloudinary.com/dg9ol2bdm/image/upload/v1759288867/Group_1171275190_hbnohe.png';
+const String notiftext =
+    'https://res.cloudinary.com/dg9ol2bdm/image/upload/v1759289999/Group_1171275035_ad0h8m.png';
+const String kandungan =
+    'https://res.cloudinary.com/dg9ol2bdm/image/upload/v1759289656/Group_1171275191_rmjk7c.png';
+const String kisah =
+    'https://res.cloudinary.com/dg9ol2bdm/image/upload/v1759289655/Group_1171275192_khwbkl.png';

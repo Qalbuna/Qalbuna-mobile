@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../../../data/models/challenge_day_status.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/theme/app_typography.dart';
+import '../../challenge/controllers/challenge_controller.dart';
+import '../controllers/add_journal_controller.dart';
 
-class QuranRecommendationCard extends StatelessWidget {
+class QuranRecommendationCard extends GetView<AddJournalController> {
   final Map<String, dynamic>? recommendation;
 
   const QuranRecommendationCard({super.key, this.recommendation});
@@ -12,8 +16,10 @@ class QuranRecommendationCard extends StatelessWidget {
     final defaultRecommendation = {
       'surahName': 'QS. Al-Insyirah: 5-6',
       'arabicText': 'فَإِنَّ مَعَ ٱلْعُسْرِ يُسْرًا...',
-      'translation': '"Karena sesungguhnya bersama kesulitan ada kemudahan. Sesungguhnya bersama kesulitan ada kemudahan."',
-      'reflection': 'Allah SWT mengingatkan bahwa setiap kesulitas pasti diikuti dengan kemudahan. kecemasan yang kamu rasakan adalah bagian dari ujian hidup, dan Allah tidak akan memberikan beban melebihi kemampuan hamba-Nya.',
+      'translation':
+          '"Karena sesungguhnya bersama kesulitan ada kemudahan. Sesungguhnya bersama kesulitan ada kemudahan."',
+      'reflection':
+          'Allah SWT mengingatkan bahwa setiap kesulitas pasti diikuti dengan kemudahan. kecemasan yang kamu rasakan adalah bagian dari ujian hidup, dan Allah tidak akan memberikan beban melebihi kemampuan hamba-Nya.',
     };
 
     final data = recommendation ?? defaultRecommendation;
@@ -162,7 +168,9 @@ class QuranRecommendationCard extends StatelessWidget {
                   icon: const Icon(Icons.play_circle, size: 20),
                   label: Text(
                     'Dengar Audio',
-                    style: AppTypography.sSemiBold.copyWith(color: Colors.white),
+                    style: AppTypography.sSemiBold.copyWith(
+                      color: Colors.white,
+                    ),
                   ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.v1Primary500,
@@ -179,7 +187,18 @@ class QuranRecommendationCard extends StatelessWidget {
               ),
               const SizedBox(width: 12),
               OutlinedButton.icon(
-                onPressed: () {},
+                onPressed: () async {
+                  await controller.saveJournal();
+                  final challengeController = Get.find<ChallengeController>();
+                  final activeDay = challengeController.challengeDays
+                      .firstWhere(
+                        (day) => day.status == ChallengeDayStatus.active,
+                      );
+
+                  if (activeDay.dayNumber != 5) {
+                    challengeController.completeChallenge(activeDay.dayNumber);
+                  } 
+                },
                 icon: Icon(
                   Icons.bookmark,
                   size: 20,

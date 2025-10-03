@@ -122,7 +122,7 @@ class ChallengeProgressCard extends StatelessWidget {
           style: AppTypography.sRegular.copyWith(color: AppColors.v1Neutral600),
         ),
         Text(
-          'Selesai',
+          'Teruskan',
           style: AppTypography.sRegular.copyWith(color: AppColors.v1Neutral600),
         ),
       ],

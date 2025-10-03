@@ -39,7 +39,7 @@ class ChallengeDayIcon extends StatelessWidget {
           ),
         );
       case ChallengeDayStatus.pass:
-        return const Icon(Icons.lock, color: AppColors.v1Neutral25, size: 24);
+        return const Icon(Icons.close_rounded, color: AppColors.v1Neutral500, size: 24);
     }
   }
 

@@ -15,7 +15,7 @@ class ChallengeProgressHelper {
       return StepStated.pass;
     }
 
-    if (dayNumber == currentDay + 1) {
+    if (dayNumber == currentDay + 1 && dayNumber != 5) {
       return StepStated.active;
     }
 
@@ -32,7 +32,11 @@ class ChallengeProgressHelper {
       return 'Kamu belum memulai tantangan';
     }
     final nextDay = currentDay + 1;
-    return 'Hari ke- $nextDay — Kamu pasti bisa! 💪';
+    if (nextDay != 5) {
+      return 'Hari ke- $nextDay~ Kamu pasti bisa! 💪';
+    } else {
+      return 'Alhamdulillah tantangan hari ini selesai🌟';
+    }
   }
 
   static String getHeaderSubtitle(List<int> completedDays, int totalDays) {

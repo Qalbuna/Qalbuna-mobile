@@ -4,6 +4,7 @@ import 'package:qalbuna_app/app/shared/theme/index.dart';
 import '../../../shared/widgets/shimmer_placeholder.dart';
 import '../controllers/home_controller.dart';
 import 'card_decoration.dart';
+import 'kandungan.dart';
 
 class VerseRecommendationWidget extends GetView<HomeController> {
   const VerseRecommendationWidget({super.key});
@@ -58,7 +59,9 @@ class VerseRecommendationWidget extends GetView<HomeController> {
           _buildActionButtons(),
           const SizedBox(height: 16),
           GestureDetector(
-            // onTap: () => controller.readVerseExplanation(),
+            onTap: () {
+              Get.to(() => const Kandungan());
+            },
             child: Row(
               children: [
                 Text(

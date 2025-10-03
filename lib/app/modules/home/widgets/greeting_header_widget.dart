@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:qalbuna_app/app/modules/home/widgets/notification.dart';
 import 'package:qalbuna_app/app/shared/constant/uidata.dart';
 import 'package:qalbuna_app/app/shared/theme/index.dart';
 
@@ -24,7 +25,7 @@ class GreetingHeaderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final HomeController controller = Get.find<HomeController>();
-    
+
     return SizedBox(
       width: double.infinity,
       child: Padding(
@@ -45,7 +46,7 @@ class GreetingHeaderWidget extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    // Handle notification tap
+                    Get.to(() => const NotificationView());
                   },
                   child: Image.network(notif, height: 25, width: 25),
                 ),

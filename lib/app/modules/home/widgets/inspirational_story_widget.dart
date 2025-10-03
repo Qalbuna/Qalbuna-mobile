@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:qalbuna_app/app/shared/theme/index.dart';
+
+import 'kisah.dart';
 
 class InspirationalStoryWidget extends StatelessWidget {
   const InspirationalStoryWidget({super.key});
@@ -44,23 +47,28 @@ class InspirationalStoryWidget extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
           const SizedBox(height: 12),
-          Row(
-            children: [
-              Text(
-                'Baca Kisah Lengkap',
-                style: AppTypography.sMedium.copyWith(
-                  color: AppColors.v1Primary500,
-                  decoration: TextDecoration.underline,
-                  decorationColor: AppColors.v1Primary500,
+          GestureDetector(
+            onTap: () {
+              Get.to(() => const Kisah());
+            },
+            child: Row(
+              children: [
+                Text(
+                  'Baca Kisah Lengkap',
+                  style: AppTypography.sMedium.copyWith(
+                    color: AppColors.v1Primary500,
+                    decoration: TextDecoration.underline,
+                    decorationColor: AppColors.v1Primary500,
+                  ),
                 ),
-              ),
-              const SizedBox(width: 4),
-              Icon(
-                Icons.arrow_forward,
-                color: AppColors.v1Primary500,
-                size: 16,
-              ),
-            ],
+                const SizedBox(width: 4),
+                Icon(
+                  Icons.arrow_forward,
+                  color: AppColors.v1Primary500,
+                  size: 16,
+                ),
+              ],
+            ),
           ),
         ],
       ),

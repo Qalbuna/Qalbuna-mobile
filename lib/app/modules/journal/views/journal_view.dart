@@ -35,7 +35,7 @@ class JournalView extends GetView<JournalController> {
                 ),
                 SizedBox(height: 6),
                 Text(
-                  'Certakanlah Perasaanmu Hari ini ❤️',
+                  'Ceritakan Perasaanmu Hari ini ❤️',
                   style: AppTypography.sMedium.copyWith(color: AppColors.white),
                 ),
               ],
