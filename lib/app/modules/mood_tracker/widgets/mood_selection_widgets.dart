@@ -59,19 +59,62 @@ class MoodSelectionWidget extends GetView<MoodTrackerController> {
                         width: isSelected ? 2 : 1,
                       ),
                     ),
+
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(mood.emoji, style: TextStyle(fontSize: 40)),
-                        const SizedBox(height: 8),
-                        Text(
-                          mood.label,
-                          style: AppTypography.sMedium.copyWith(
-                            color: isSelected
-                                ? AppColors.v1Primary500
-                                : AppColors.black,
+                        // Gambar dengan batasan ukuran
+                        Expanded(
+                          flex: 2,
+                          child: Image.network(
+                            mood.emoji,
+                            fit: BoxFit.contain,
+                            errorBuilder: (context, error, stackTrace) {
+                              // Fallback jika gambar gagal load
+                              return const Icon(
+                                Icons.emoji_emotions,
+                                size: 35,
+                                color: Colors.grey,
+                              );
+                            },
+                            loadingBuilder: (context, child, loadingProgress) {
+                              if (loadingProgress == null) return child;
+                              return Center(
+                                child: SizedBox(
+                                  width: 20,
+                                  height: 20,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    color: AppColors.v1Primary500,
+                                    value:
+                                        loadingProgress.expectedTotalBytes !=
+                                            null
+                                        ? loadingProgress
+                                                  .cumulativeBytesLoaded /
+                                              loadingProgress
+                                                  .expectedTotalBytes!
+                                        : null,
+                                  ),
+                                ),
+                              );
+                            },
                           ),
-                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 8),
+                        Flexible(
+                          flex: 2,
+                          child: Text(
+                            mood.label,
+                            style: AppTypography.sMedium.copyWith(
+                              color: isSelected
+                                  ? AppColors.v1Primary500
+                                  : AppColors.black,
+                            ),
+                            textAlign: TextAlign.center,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                       ],
                     ),
