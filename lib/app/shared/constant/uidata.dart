@@ -44,3 +44,5 @@ const String kandungan =
     'https://res.cloudinary.com/dg9ol2bdm/image/upload/v1759289656/Group_1171275191_rmjk7c.png';
 const String kisah =
     'https://res.cloudinary.com/dg9ol2bdm/image/upload/v1759289655/Group_1171275192_khwbkl.png';
+const String calender =
+    'https://res.cloudinary.com/dg9ol2bdm/image/upload/v1759492729/Group_1171275194_g37fwc.png';

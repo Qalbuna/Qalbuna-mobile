@@ -12,7 +12,7 @@ class MoodStatusWidget extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Obx(() {
       if (controller.isLoading.value) {
-        return const Center(child: ShimmerPlaceholder(),);
+        return const Center(child: ShimmerPlaceholder());
       }
 
       final moodData = controller.currentMoodData.value;
@@ -34,9 +34,13 @@ class MoodStatusWidget extends GetView<HomeController> {
             const SizedBox(height: 8),
             Row(
               children: [
-                Text(
-                  moodType['emoji'] ?? '😊',
-                  style: const TextStyle(fontSize: 42),
+                SizedBox(
+                  width: 42,
+                  height: 42,
+                  child: Image.network(
+                    moodType['emoji'] ?? '😊',
+                    fit: BoxFit.contain,
+                  ),
                 ),
                 const SizedBox(width: 16),
                 Expanded(

@@ -63,6 +63,17 @@ class AccountView extends GetView<AccountController> {
                 ),
               ),
             ),
+            const SizedBox(height: 30),
+            Container(
+              height: 500,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(calender),
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ),
             const SizedBox(height: 20),
             Container(
               height: 320,
