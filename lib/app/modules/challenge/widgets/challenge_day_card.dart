@@ -61,8 +61,9 @@ class ChallengeDayCard extends StatelessWidget {
                       challengeDay.description,
                       style: AppTypography.sRegular.copyWith(
                         color: _getDescriptionColor(),
-                        height: 1.3,
+                        height: 1.4,
                       ),
+                      textAlign: TextAlign.justify,
                     ),
                     if (challengeDay.status == ChallengeDayStatus.active) ...[
                       const SizedBox(height: 8),

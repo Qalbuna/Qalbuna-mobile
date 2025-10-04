@@ -41,8 +41,8 @@ const String ayatfav =
 const String notiftext =
     'https://res.cloudinary.com/dg9ol2bdm/image/upload/v1759289999/Group_1171275035_ad0h8m.png';
 const String kandungan =
-    'https://res.cloudinary.com/dg9ol2bdm/image/upload/v1759289656/Group_1171275191_rmjk7c.png';
+    'https://res.cloudinary.com/dg9ol2bdm/image/upload/v1759535999/Group_1171275191_2_ouhwhf.png';
 const String kisah =
-    'https://res.cloudinary.com/dg9ol2bdm/image/upload/v1759289655/Group_1171275192_khwbkl.png';
+    'https://res.cloudinary.com/dg9ol2bdm/image/upload/v1759536221/Group_1171275192_2_gmda1n.png';
 const String calender =
     'https://res.cloudinary.com/dg9ol2bdm/image/upload/v1759492729/Group_1171275194_g37fwc.png';

@@ -170,9 +170,9 @@ class VerseRecommendationWidget extends GetView<HomeController> {
 
   String _getCategoryByEmotion(String emotion) {
     final categories = {
-      'sedih': 'Ayat Penghiburan',
-      'cemas': 'Ayat Ketenangan',
-      'bersalah': 'Ayat Ampunan',
+      'sedih': 'Ayat Ketenangan',
+      'tenang': 'Ayat Ketenangan',
+      'percaya_diri': 'Ayat Kekuatan',
       'marah': 'Ayat Kesabaran',
       'bahagia': 'Ayat Syukur',
       'takut': 'Ayat Perlindungan',

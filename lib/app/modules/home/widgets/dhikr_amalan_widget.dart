@@ -55,15 +55,15 @@ class DhikrAmalanWidget extends GetView<HomeController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Membaca Doa Ketenangan 3x', style: AppTypography.lSemiBold),
+        Text('Membaca Doa Nabi Yunus 3x', style: AppTypography.lSemiBold),
         const SizedBox(height: 16),
         Text(
-          'بِسْمِ اللهِ الَّذِي لاَ يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الأَرْضِ وَلاَ فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ',
+          'لَا إِلٰهَ إِلَّا أَنْتَ سُبْحَانَكَ إِنِّي كُنْتُ مِنَ الظَّالِمِينَ',
           style: AppTypography.h5Bold.copyWith(height: 1.8),
           textAlign: TextAlign.right,
         ),
         Text(
-          'Bismillāhillażī lā yaḍurru ma\'asmihi syai\'un fil-arḍi wa lā fis-samā\', wa huwas-samī\'ul \'alīm',
+          'Laa ilaaha illa Anta, Subhanaka, inni kuntu minazh-zhalimin',
           style: AppTypography.sMedium.copyWith(
             color: AppColors.v1Neutral600,
             height: 1.3,
@@ -72,7 +72,7 @@ class DhikrAmalanWidget extends GetView<HomeController> {
         ),
         const SizedBox(height: 12),
         Text(
-          '"Dengan Nama Allah, Yang dengan Nama-Nya tidak ada sesuatu pun di bumi dan di langit yang dapat membahayakan, dan Dia-lah Yang Maha Mendengar lagi Maha Mengetahui."',
+          '"Tidak ada tuhan selain Engkau. Mahasuci Engkau. Sesungguhnya aku termasuk orang-orang yang zalim."',
           style: AppTypography.sMedium.copyWith(
             color: AppColors.black,
             fontStyle: FontStyle.italic,
@@ -99,7 +99,7 @@ class DhikrAmalanWidget extends GetView<HomeController> {
               ),
               const SizedBox(height: 4),
               Text(
-                'Rasulullah SAW. bersabda, "Barangsiapa yang membacanya sebanyak tiga kali ketika pagi dan sore hari, maka tidak ada sesuatu pun yang dapat membahayakan dirinya."',
+                'Rasulullah SAW bersabda: "Sungguh, tidak ada seorang Muslim pun yang berdoa dengan doa tersebut (doa Nabi Yunus), melainkan Allah pasti mengabulkannya." \n\n(HR. Tirmidzi dan An-Nasa’i)',
                 style: AppTypography.sMedium.copyWith(
                   color: AppColors.v1Neutral600,
                   height: 1.3,
@@ -210,12 +210,12 @@ class DhikrAmalanWidget extends GetView<HomeController> {
 
   String _getCategoryByEmotion(String emotion) {
     const categories = {
-      'sedih': 'Amalan untuk Mengatasi Kesedihan',
-      'cemas': 'Amalan untuk Mengatasi Kecemasan',
-      'bersalah': 'Amalan untuk Meminta Ampunan',
-      'marah': 'Amalan untuk Mengatasi Kemarahan',
-      'bahagia': 'Amalan untuk Bersyukur',
-      'takut': 'Amalan untuk Meminta Perlindungan',
+      'sedih': 'Amalan Penenang Hati',
+      'tenang': 'Amalan Menjaga Ketenangan',
+      'percaya_diri': 'Amalan Menguatkan Diri',
+      'marah': 'Amalan Meredakan Amarah',
+      'bahagia': 'Amalan Syukur',
+      'takut': 'Amalan Mengusir Ketakutan',
     };
     return categories[emotion] ?? 'Amalan untuk Kehidupan';
   }

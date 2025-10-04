@@ -64,7 +64,6 @@ class MoodSelectionWidget extends GetView<MoodTrackerController> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        // Gambar dengan batasan ukuran
                         Expanded(
                           flex: 2,
                           child: Image.network(

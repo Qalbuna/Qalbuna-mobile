@@ -24,7 +24,7 @@ class Kisah extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              height: 730,
+              height: 1130,
               width: double.infinity,
               decoration: BoxDecoration(
                 image: DecorationImage(

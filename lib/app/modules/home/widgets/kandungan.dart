@@ -11,7 +11,7 @@ class Kandungan extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Kandungan QS. Ar-Ra\'d: 28',
+          'Kandungan QS. Al-Anbiya\': 87',
           style: AppTypography.h5SemiBold.copyWith(color: Colors.black),
         ),
         backgroundColor: AppColors.white,
@@ -24,7 +24,7 @@ class Kandungan extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              height: 790,
+              height: 940,
               width: double.infinity,
               decoration: BoxDecoration(
                 image: DecorationImage(
@@ -33,6 +33,7 @@ class Kandungan extends StatelessWidget {
                 ),
               ),
             ),
+            const SizedBox(height: 16),
           ],
         ),
       ),

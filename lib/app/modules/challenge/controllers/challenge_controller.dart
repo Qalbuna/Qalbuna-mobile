@@ -21,27 +21,28 @@ class ChallengeController extends GetxController {
         dayNumber: 1,
         title: 'Hari 1',
         description:
-            'Baca 1 ayat dengan tenang, lalu tulis di jurnal kenapa kamu merasa sedih hari ini',
+            'Baca QS. Al-A\'raf: 199 tentang memaafkan. Lalu tuliskan di jurnal: siapa yang membuatmu marah hari ini? Apa yang bisa kamu lakukan untuk memaafkan atau melepaskan amarahmu?',
         status: ChallengeDayStatus.completed,
         completedDate: DateTime(2025, 7, 7),
       ),
       ChallengeDay(
         dayNumber: 2,
         title: 'Hari 2',
-        description: 'Yuk baca tafsir ketenangan hari ini, dan tuliskan refleksimu di jurnal',
+        description:
+            'Baca QS. Ibrahim: 7 tentang syukur menambah nikmat. Tuliskan 5 hal yang membuatmu bahagia hari ini, sekecil apapun itu. Praktikkan mengucap "Alhamdulillah" setiap kali mengingat nikmat tersebut.',
         status: ChallengeDayStatus.pass,
       ),
       ChallengeDay(
         dayNumber: 3,
         title: 'Hari 3',
-        description: 'Mari baca kisah inspiratif hari ini, lalu tulis bagaimana kamu mengaplikasikannya hari ini',
+        description:
+            'Baca kisah Nabi Yusuf yang tetap bahagia meski diuji. Tuliskan di jurnal: kebahagiaan apa yang bisa kamu bagikan hari ini? Lakukan satu kebaikan untuk orang lain (senyum, ucapan baik, atau bantuan kecil).',
         status: ChallengeDayStatus.completed,
       ),
       ChallengeDay(
         dayNumber: 4,
         title: 'Hari 4',
-        description:
-            'ceritakan di jurnal kenapa kamu merasa cemas hari ini, ',
+        description: 'Yuk baca kisah Nabi Yunus di QS. Al-Anbiya\': 87. Setelah itu, tulis di jurnalmu: Kesulitan apa yang bikin kamu sedih hari ini? Coba tulis doa Nabi Yunus, lalu renungkan: gimana rasanya kalau kamu jujur sama Allah tentang kelemahanmu?',
         status: ChallengeDayStatus.active,
       ),
       ChallengeDay(

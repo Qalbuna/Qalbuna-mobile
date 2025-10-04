@@ -33,12 +33,12 @@ class InspirationalStoryWidget extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            'Ketenangan Nabi Yusuf AS di Penjara',
+            'Ketika Nabi Yunus AS. di dalam Kegelapan Perut Ikan Paus',
             style: AppTypography.h5Bold.copyWith(color: AppColors.black),
           ),
           const SizedBox(height: 8),
           Text(
-            'Nabi Yusuf dilempar ke dalam sumur oleh saudara-saudaranya karena iri hati. Dalam situasi yang sangat menyakitkan dan menakutkan itu, Yusuf kecil tetap dan tidak membalas dengan...',
+            'Di dalam perut ikan paus, Nabi Yunus berada dalam tiga lapis kegelapan: kegelapan malam, kegelapan laut, dan kegelapan perut ikan. Dalam',
             style: AppTypography.sMedium.copyWith(
               color: AppColors.v1Neutral600,
               height: 1.5,

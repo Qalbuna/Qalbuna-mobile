@@ -13,8 +13,17 @@ class MoodTrackerController extends GetxController {
   var isSubmitting = false.obs;
 
   var moodTypes = <MoodType>[].obs;
-  var needTypes = <NeedType>[].obs;
+  var allNeedTypes = <NeedType>[].obs;
   var connectionTypes = <ConnectionType>[].obs;
+
+  List<NeedType> get filteredNeedTypes {
+    if (selectedMoodValue.value.isEmpty) {
+      return [];
+    }
+    return allNeedTypes
+        .where((need) => need.moodValue == selectedMoodValue.value)
+        .toList();
+  }
 
   bool get isFormValid => selectedMoodValue.value.isNotEmpty;
   bool get isFormCompletelyValid =>
@@ -39,7 +48,7 @@ class MoodTrackerController extends GetxController {
       ]);
 
       moodTypes.value = results[0] as List<MoodType>;
-      needTypes.value = results[1] as List<NeedType>;
+      allNeedTypes.value = results[1] as List<NeedType>;
       connectionTypes.value = results[2] as List<ConnectionType>;
     } catch (e) {
       throw Exception('Failed to fetch connection types: $e');
@@ -50,6 +59,7 @@ class MoodTrackerController extends GetxController {
 
   void selectMood(String moodValue) {
     selectedMoodValue.value = moodValue;
+    selectedNeedValue.value = '';
   }
 
   void selectNeed(String needValue) {
