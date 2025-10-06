@@ -54,7 +54,7 @@ class AccountView extends GetView<AccountController> {
           children: [
             const SizedBox(height: 12),
             Container(
-              height: 230,
+              height: 225,
               width: double.infinity,
               decoration: BoxDecoration(
                 image: DecorationImage(
@@ -65,7 +65,7 @@ class AccountView extends GetView<AccountController> {
             ),
             const SizedBox(height: 30),
             Container(
-              height: 500,
+              height: 485,
               width: double.infinity,
               decoration: BoxDecoration(
                 image: DecorationImage(
@@ -76,7 +76,7 @@ class AccountView extends GetView<AccountController> {
             ),
             const SizedBox(height: 20),
             Container(
-              height: 320,
+              height: 315,
               width: double.infinity,
               decoration: BoxDecoration(
                 image: DecorationImage(

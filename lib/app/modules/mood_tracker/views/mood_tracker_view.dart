@@ -18,7 +18,7 @@ class MoodTrackerView extends GetView<MoodTrackerController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Mood Tracker',
+              'Daily Mood',
               style: AppTypography.h5SemiBold.copyWith(color: AppColors.white),
             ),
             SizedBox(height: 6),

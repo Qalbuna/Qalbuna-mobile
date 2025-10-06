@@ -42,6 +42,6 @@ class ChallengeProgressHelper {
   static String getHeaderSubtitle(List<int> completedDays, int totalDays) {
     return completedDays.isEmpty
         ? 'Mulailah tantangan Qalbuna hari ini'
-        : '${completedDays.length} dari $totalDays hari berhasil diselesaikan';
+        : '${completedDays.length} hari berhasil kamu selesaikan!';
   }
 }

@@ -93,7 +93,7 @@ class EmotionAnalysisCard extends StatelessWidget {
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      'Perasaan Dominan: ${analysisResult['dominantEmotion'] ?? 'Cemas'}',
+                      'Perasaan Dominan: ${analysisResult['dominantEmotion'] ?? 'Sedih'}',
                       style: AppTypography.mSemiBold.copyWith(
                         color: AppColors.v1Orange700,
                       ),
@@ -103,7 +103,7 @@ class EmotionAnalysisCard extends StatelessWidget {
                 const SizedBox(height: 12),
                 Text(
                   analysisResult['description'] ?? 
-                  'Berdasarkan analisis teks, terdeteksi tingkat kecemasan yang tinggi dengan indikator kata-kata seperti "berat", "cemas", "tidak tenang", dan "tidak tahu".',
+                  'Berdasarkan analisis teks, terdeteksi perasaan sedih yang cukup dalam dengan indikator kata-kata seperti "lelah", "kecewa", "sendirian", "kosong", dan "tidak ada artinya".',
                   style: AppTypography.sRegular.copyWith(
                     color: AppColors.v1Orange700,
                     height: 1.4,
@@ -117,20 +117,20 @@ class EmotionAnalysisCard extends StatelessWidget {
           Row(
             children: [
               _buildEmotionPercentage(
-                'Stress',
-                analysisResult['stress'] ?? 75,
+                'Sedih',
+                analysisResult['sadness'] ?? 60,
                 AppColors.v1Error500,
               ),
               const SizedBox(width: 16),
               _buildEmotionPercentage(
-                'Cemas',
-                analysisResult['anxiety'] ?? 85,
+                'Hampa',
+                analysisResult['emptiness'] ?? 23,
                 AppColors.v1Orange500,
               ),
               const SizedBox(width: 16),
               _buildEmotionPercentage(
-                'Sedih',
-                analysisResult['sadness'] ?? 60,
+                'Kesepian',
+                analysisResult['lonely'] ?? 17,
                 AppColors.v1Gold500,
               ),
             ],

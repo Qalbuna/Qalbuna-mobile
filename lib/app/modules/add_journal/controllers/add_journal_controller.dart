@@ -116,12 +116,12 @@ class AddJournalController extends GetxController {
       );
 
       final analysisResult = {
-        'dominantEmotion': 'Cemas',
+        'dominantEmotion': 'Sedih',
         'description':
-            'Berdasarkan analisis teks, terdeteksi tingkat kecemasan yang tinggi dengan indikator kata-kata seperti "berat", "cemas", "tidak tenang", dan "tidak tahu".',
-        'stress': 75,
-        'anxiety': 85,
+            'Berdasarkan analisis teks, terdeteksi perasaan sedih yang cukup dalam dengan indikator kata-kata seperti "lelah", "kecewa", "sendirian", "kosong", dan "tidak ada artinya".',
         'sadness': 60,
+        'emptiness': 23,
+        'lonely': 17,
         'timestamp': DateTime.now(),
       };
       Get.to(

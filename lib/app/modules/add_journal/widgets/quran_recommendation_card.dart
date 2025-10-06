@@ -14,12 +14,13 @@ class QuranRecommendationCard extends GetView<AddJournalController> {
   @override
   Widget build(BuildContext context) {
     final defaultRecommendation = {
-      'surahName': 'QS. Al-Insyirah: 5-6',
-      'arabicText': 'فَإِنَّ مَعَ ٱلْعُسْرِ يُسْرًا...',
+      'surahName': 'QS. Al-Anbiya\': 87',
+      'arabicText':
+          'وَذَا النُّوْنِ اِذْ ذَّهَبَ مُغَاضِبًا فَظَنَّ اَنْ لَّنْ نَّقْدِرَ عَلَيْهِ فَنَادٰى فِى الظُّلُمٰتِ اَنْ لَّآ اِلٰهَ اِلَّآ اَنْتَ سُبْحٰنَكَ اِنِّيْ كُنْتُ مِنَ الظّٰلِمِيْنَۚ',
       'translation':
-          '"Karena sesungguhnya bersama kesulitan ada kemudahan. Sesungguhnya bersama kesulitan ada kemudahan."',
+          '"(Ingatlah pula) Zun Nun (Yunus) ketika dia pergi dalam keadaan marah, lalu dia menyangka bahwa Kami tidak akan menyulitkannya. Maka, dia berdoa dalam kegelapan yang berlapis-lapis, \'Tidak ada tuhan selain Engkau. Mahasuci Engkau. Sesungguhnya aku termasuk orang-orang zalim.\'"',
       'reflection':
-          'Allah SWT mengingatkan bahwa setiap kesulitas pasti diikuti dengan kemudahan. kecemasan yang kamu rasakan adalah bagian dari ujian hidup, dan Allah tidak akan memberikan beban melebihi kemampuan hamba-Nya.',
+          'Nabi Yunus berdoa di dalam tiga kegelapan: malam, laut, dan perut ikan. Ketika kamu merasa terjebak dalam kesulitan yang tampak mustahil, ingatlah bahwa doa dengan ketulusan dan mengakui kelemahan diri kepada Allah adalah jalan menuju pertolongan-Nya. Allah mengabulkan doa Nabi Yunus dan menyelamatkannya, dan Dia berjanji melakukan hal yang sama untuk setiap mukmin yang berdoa dengan tulus.',
     };
 
     final data = recommendation ?? defaultRecommendation;
@@ -197,7 +198,7 @@ class QuranRecommendationCard extends GetView<AddJournalController> {
 
                   if (activeDay.dayNumber != 5) {
                     challengeController.completeChallenge(activeDay.dayNumber);
-                  } 
+                  }
                 },
                 icon: Icon(
                   Icons.bookmark,
